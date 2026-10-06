@@ -7,8 +7,6 @@ Run this script with -h for full usage information.
 Examples:
 
     %(prog)s data/json save/worldname
-    %(prog)s data/mods/Magiclysm .
-    %(prog)s data/mods/Magiclysm data/mods/Aftershock .
     %(prog)s . /tmp -f
 '''
 
