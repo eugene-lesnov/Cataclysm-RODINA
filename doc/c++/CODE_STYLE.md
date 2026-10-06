@@ -1,6 +1,6 @@
 # Code Style Guide
 
-All of the C++ code in the project is styled. You should run any changes you make through astyle before pushing a pull request.
+All of the C++ code in the project is styled. Run C++ changes through astyle before committing them.
 
 We are using astyle version 3.1. Other versions of astyle produce different formatting and should not be used.
 
@@ -8,13 +8,11 @@ Blocks of code can be passed through astyle to ensure that their formatting is c
 
     astyle --style=1tbs --attach-inlines --indent=spaces=4 --align-pointer=name --max-code-length=100 --break-after-logical --indent-classes --indent-preprocessor --indent-switches --indent-col1-comments --min-conditional-indent=0 --pad-oper --unpad-paren --pad-paren-in --add-brackets --convert-tabs --exclude=src/third-party --ignore-exclude-errors-x
 
-These options are mirrored in `.astylerc`, `Cataclysm-DDA.sublime-project` and `doc/CODE_STYLE.txt`
+These options are mirrored in `.astylerc` and `Cataclysm-DDA.sublime-project`.
 
 For example, from `vi`, set marks a and b around the block, then:
 
     :'a,'b ! astyle  --style=1tbs --attach-inlines --indent=spaces=4 --align-pointer=name --max-code-length=100 --break-after-logical --indent-classes --indent-preprocessor --indent-switches --indent-col1-comments --min-conditional-indent=0 --pad-oper --unpad-paren --pad-paren-in --add-brackets --convert-tabs --exclude=src/third-party --ignore-exclude-errors-x
-
-See [DEVELOPER_TOOLING.md](DEVELOPER_TOOLING.md) for other environments.
 
 ## Code Example
 

@@ -449,7 +449,9 @@ install(DIRECTORY doc TYPE DOC)
 if (RELEASE)
     install(FILES
         ${CMAKE_SOURCE_DIR}/README.md
+        ${CMAKE_SOURCE_DIR}/CREDITS.md
         ${CMAKE_SOURCE_DIR}/LICENSE.txt
+        ${CMAKE_SOURCE_DIR}/LICENSE-Apache-Robot-Font.txt
         ${CMAKE_SOURCE_DIR}/LICENSE-OFL-Terminus-Font.txt
         ${CMAKE_SOURCE_DIR}/VERSION.txt
         TYPE DOC)

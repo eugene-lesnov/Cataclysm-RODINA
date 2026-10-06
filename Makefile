@@ -549,7 +549,7 @@ CXXFLAGS += $(WARNINGS) $(DEBUG) $(DEBUGSYMS) $(PROFILE) $(OTHERS)
 TOOL_CXXFLAGS = -DCATA_IN_TOOL
 DEFINES += -DZSTD_STATIC_LINKING_ONLY -DZSTD_DISABLE_ASM
 
-BINDIST_EXTRAS += README.md data doc LICENSE.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
+BINDIST_EXTRAS += README.md CREDITS.md data doc LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
 BINDIST    = $(BUILD_PREFIX)cataclysmdda-$(VERSION).tar.gz
 W32BINDIST = $(BUILD_PREFIX)cataclysmdda-$(VERSION).zip
 BINDIST_CMD    = tar --transform=s@^$(BINDIST_DIR)@cataclysmdda-$(VERSION)@ -czvf $(BINDIST) $(BINDIST_DIR)
@@ -1227,7 +1227,7 @@ ifeq ($(SOUND), 1)
 	cp -R --no-preserve=ownership data/sound $(DATA_PREFIX)
 endif
 	install --mode=644 data/changelog.txt data/cataicon.ico data/fontdata.json \
-                   LICENSE.txt LICENSE-OFL-Terminus-Font.txt -t $(DATA_PREFIX)
+                   CREDITS.md LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt -t $(DATA_PREFIX)
 ifdef LANGUAGES
 	$(MAKE) -C lang install
 endif
@@ -1261,7 +1261,7 @@ ifeq ($(SOUND), 1)
 	cp -R --no-preserve=ownership data/sound $(DATA_PREFIX)
 endif
 	install --mode=644 data/changelog.txt data/cataicon.ico data/fontdata.json \
-                   LICENSE.txt LICENSE-OFL-Terminus-Font.txt -t $(DATA_PREFIX)
+                   CREDITS.md LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt -t $(DATA_PREFIX)
 ifdef LANGUAGES
 	$(MAKE) -C lang install
 endif

@@ -1,4 +1,4 @@
-# Instructions for Cataclysm-DDA translators
+# Gettext catalog format used by RODINA
 
 * [Translation file format](#translation-file-format)
 * [Translation file header](#translation-file-header)
@@ -39,7 +39,7 @@ The header at the top of the ".po" file is the only part that differs from the c
 
 If you are working on an already established translation you will not have to modify it.
 
-For a new translation, it should be mostly set up for you, either by the editor you are using or by the `msginit` program which is the recommended way of initializing a translation (see TRANSLATING.md).
+For a new translation, it should be mostly set up for you, either by the editor you are using or by the `msginit` program which is the recommended way of initializing a translation (see [TRANSLATING.md](../../doc/TRANSLATING.md)).
 
 If you are starting from another translation file however, you might need to change a few things. Just fill it in as best you are able.
 
