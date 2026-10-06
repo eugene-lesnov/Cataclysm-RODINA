@@ -21,8 +21,6 @@
 /data/cache/
 /data/mods/user-default-mods.json
 /dep/
-/doxygen_doc/html/*
-/doxygen_doc/latex/*
 /font/
 /graveyard/
 /memorial/
@@ -73,9 +71,6 @@ Directory.Build.targets
 
 # Visual Studio Code
 .vscode/
-.vscode/**
-!.vscode/settings.json
-!.vscode/extensions.json
 
 # Visual Studio project files
 /msvc-full-features/**/

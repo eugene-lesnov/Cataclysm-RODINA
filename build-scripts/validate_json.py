@@ -13,17 +13,16 @@ def main():
     errors = 0
     total = 0
     for file_path in json_files:
-        if not file_path.startswith("android/app/src/main/assets"):
-            total += 1
-            try:
-                with open(file_path, encoding="utf-8") as fp:
-                    _ = json.load(fp)
-            except OSError as e:
-                print("Error opening {}: {}".format(file_path, e))
-                errors += 1
-            except json.JSONDecodeError as e:
-                print("Error parsing {}: {}".format(file_path, e))
-                errors += 1
+        total += 1
+        try:
+            with open(file_path, encoding="utf-8") as fp:
+                _ = json.load(fp)
+        except OSError as e:
+            print("Error opening {}: {}".format(file_path, e))
+            errors += 1
+        except json.JSONDecodeError as e:
+            print("Error parsing {}: {}".format(file_path, e))
+            errors += 1
     if errors == 0:
         print("All {} JSON files healthy.".format(total))
         return 0

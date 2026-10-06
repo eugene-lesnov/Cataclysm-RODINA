@@ -8,7 +8,7 @@ Blocks of code can be passed through astyle to ensure that their formatting is c
 
     astyle --style=1tbs --attach-inlines --indent=spaces=4 --align-pointer=name --max-code-length=100 --break-after-logical --indent-classes --indent-preprocessor --indent-switches --indent-col1-comments --min-conditional-indent=0 --pad-oper --unpad-paren --pad-paren-in --add-brackets --convert-tabs --exclude=src/third-party --ignore-exclude-errors-x
 
-These options are mirrored in `.astylerc` and `Cataclysm-DDA.sublime-project`.
+These options are mirrored in `.astylerc`.
 
 For example, from `vi`, set marks a and b around the block, then:
 

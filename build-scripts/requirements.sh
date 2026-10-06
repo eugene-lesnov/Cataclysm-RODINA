@@ -115,10 +115,6 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   HOMEBREW_NO_AUTO_UPDATE=yes HOMEBREW_NO_INSTALL_CLEANUP=yes brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gettext ncurses ccache parallel
 fi
 
-if [[ "$NATIVE" == "android" ]]; then
-  yes | sdkmanager "ndk-bundle"
-fi
-
 if [ -n "$WINE" ]
 then
     # The build script will try to run things under wine in parallel, and I

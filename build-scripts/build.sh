@@ -201,20 +201,6 @@ then
         [ -f "${bin_path}cata_test" ] && parallel --verbose --linebuffer "run_test $(printf %q "${bin_path}")'/cata_test' '('{}')=> ' --user-dir=test_user_dir_{#} {}" ::: "crafting_skill_gain" "[slow] ~crafting_skill_gain" "~[slow] ~[.]"
         [ -f "${bin_path}cata_test-tiles" ] && parallel --verbose --linebuffer "run_test $(printf %q "${bin_path}")'/cata_test-tiles' '('{}')=> ' --user-dir=test_user_dir_{#} {}" ::: "crafting_skill_gain" "[slow] ~crafting_skill_gain" "~[slow] ~[.]"
     fi
-elif [ "$NATIVE" == "android" ]
-then
-    export USE_CCACHE=1
-    export NDK_CCACHE="$(which ccache)"
-
-    # Tweak the ccache compiler analysis.  We're using the compiler from the
-    # Android NDK which has an unpredictable mtime, so we need to hash the
-    # content rather than the size+mtime (which is ccache's default behavior).
-    export CCACHE_COMPILERCHECK=content
-
-    cd android
-    # Specify dumb terminal to suppress gradle's constant output of time spent building, which
-    # fills the log with nonsense.
-    TERM=dumb ./gradlew assembleExperimentalRelease -Pj=$num_jobs -Plocalize=false -Pabi_arm_32=false -Pabi_arm_64=true -Pdeps=/home/travis/build/CleverRaven/Cataclysm-DDA/android/app/deps.zip
 else
     make -j "$num_jobs" RELEASE=1 CCACHE=1 CROSS="$CROSS_COMPILATION" LINTJSON=0 LIBBACKTRACE="$LIBBACKTRACE"
 
