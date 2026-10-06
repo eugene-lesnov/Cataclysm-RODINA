@@ -1,37 +1,8 @@
 name: Cataclysm Windows build
 
 on:
-  push:
-    branches:
-    - 0.I-branch
-    paths-ignore:
-    - 'android/**'
-    - 'build-data/osx/**'
-    - 'doc/**'
-    - 'doxygen_doc/**'
-    - 'gfx/**'
-    - 'lang/**'
-    - 'lgtm/**'
-    - 'tools/**'
-    - '!tools/format/**'
-    - 'utilities/**'
-  pull_request:
-    branches:
-    - 0.I-branch
-    paths-ignore:
-    - 'android/**'
-    - 'build-data/osx/**'
-    - 'doc/**'
-    - 'doxygen_doc/**'
-    - 'gfx/**'
-    - 'lang/**'
-    - 'lgtm/**'
-    - 'tools/**'
-    - '!tools/format/**'
-    - 'utilities/**'
-    types: [opened, reopened, synchronize, ready_for_review]
+  workflow_dispatch:
 
-# We only care about the latest revision of a PR, so cancel previous instances.
 concurrency:
   group: msvc-build-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true

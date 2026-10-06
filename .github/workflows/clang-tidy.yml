@@ -1,16 +1,8 @@
 name: Clang-tidy 18
 
 on:
-  push:
-    branches:
-    - master
+  workflow_dispatch:
 
-  pull_request:
-    branches:
-    - master
-    types: [opened, reopened, synchronize, ready_for_review]
-
-# We only care about the latest revision of a PR, so cancel all previous instances.
 concurrency:
   group: clang-tidy-build-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true

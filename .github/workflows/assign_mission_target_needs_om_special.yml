@@ -1,9 +1,7 @@
 name: Detect missions that are missing .start.assign_mission_target.om_special
 
 on:
-  pull_request:
-    paths:
-      - '**.json'
+  workflow_dispatch:
 
 permissions:
   contents: read

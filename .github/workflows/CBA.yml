@@ -1,12 +1,8 @@
 name: Clang Build Analyzer
 
 on:
-  push:
-    branches:
-    - master
   workflow_dispatch:
 
-# Mixing in event_name so that a master push and a workflow dispatch can run at the same time.
 concurrency: clang_build_analyzer-${{ github.event_name }}
 
 jobs:

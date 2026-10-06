@@ -1,0 +1,61 @@
+name: RODINA CI
+
+on:
+  push:
+    branches:
+      - master
+      - 'feature/**'
+      - 'integrate/**'
+  pull_request:
+    branches:
+      - master
+      - 'feature/**'
+      - 'integrate/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rodina-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y astyle gettext python3-pip
+          python3 -m pip install --user polib
+      - name: Validate JSON syntax and style
+        run: |
+          python3 build-scripts/validate_json.py
+          make style-all-json-parallel RELEASE=1
+          git diff --exit-code -- data
+      - name: Check C++ formatting
+        run: |
+          astyle -Q -X --dry-run src/game.h >/dev/null
+          make astyle-check
+      - name: Validate Russian translation
+        run: |
+          msgfmt -c -o /dev/null lang/po/ru.po
+          python3 tools/check_po_printf_format.py ru
+
+  linux-build-and-test:
+    needs: validate
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libncursesw5-dev gettext
+      - name: Build Linux game and tests
+        run: make -j3 TILES=0 SOUND=0 RELEASE=1 LOCALIZE=1 LANGUAGES=ru PCH=0 ASTYLE=0 LINTJSON=0 TESTS=1 RUNTESTS=0
+      - name: Load game data and core mod
+        run: ./cataclysm-rodina --check-mods dda
+      - name: Run unit and integration tests
+        run: ./tests/cata_test --rng-seed time --order lex --user-dir=ci_test_user_dir '~[slow] ~[.],starting_items'

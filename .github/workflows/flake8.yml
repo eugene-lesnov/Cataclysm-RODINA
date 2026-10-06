@@ -1,16 +1,7 @@
 name: Flake8 Python linting
 
 on:
-  push:
-    branches:
-    - master
-    paths:
-    - '**.py'
-  pull_request:
-    branches:
-    - master
-    paths:
-    - '**.py'
+  workflow_dispatch:
 
 permissions:
   contents: read

@@ -1,20 +1,7 @@
 name: IWYU (include-what-you-use)
 on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
-    types: [opened, reopened, synchronize, ready_for_review]
-    paths:
-      - 'src/**'
-      - 'tests/**'
-      - 'tools/iwyu/**'
-      - '**/CMakeLists.txt'
-      - '.github/workflows/iwyu.yml'
+  workflow_dispatch:
 
-# We only care about the latest revision of a PR, so cancel all previous instances.
 concurrency:
   group: iwyu-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
