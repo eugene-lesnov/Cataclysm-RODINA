@@ -503,6 +503,7 @@ void game::load_static_data()
 bool game::check_mod_data( const std::vector<mod_id> &opts )
 {
     dependency_tree &tree = world_generator->get_mod_manager().get_tree();
+    bool success = true;
 
     // deduplicated list of mods to check
     std::set<mod_id> check( opts.begin(), opts.end() );
@@ -529,6 +530,7 @@ bool game::check_mod_data( const std::vector<mod_id> &opts )
             DynamicDataLoader::get_instance().finalize_loaded_data();
         } catch( const std::exception &err ) {
             std::cerr << "Error loading data from json: " << err.what() << std::endl;
+            success = false;
         }
 
         std::string world_name = world_generator->active_world->world_name;
@@ -575,6 +577,7 @@ bool game::check_mod_data( const std::vector<mod_id> &opts )
             DynamicDataLoader::get_instance().finalize_loaded_data();
         } catch( const std::exception &err ) {
             std::cerr << "Error loading data: " << err.what() << std::endl;
+            success = false;
         }
 
         std::string world_name = world_generator->active_world->world_name;
@@ -583,7 +586,7 @@ bool game::check_mod_data( const std::vector<mod_id> &opts )
         MAPBUFFER.clear();
         overmap_buffer.clear();
     }
-    return true;
+    return success;
 }
 
 bool game::is_core_data_loaded() const
