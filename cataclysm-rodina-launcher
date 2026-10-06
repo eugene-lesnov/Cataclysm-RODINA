@@ -34,10 +34,10 @@ cd "$DIR" || {
 }
 
 # If name does not match a binary or is this same script, find the right one
-if [ ! -f "$BIN" ] || [ "$BIN" = "cataclysm-launcher" ]
+if [ ! -f "$BIN" ] || [ "$BIN" = "cataclysm-rodina-launcher" ]
 then
     BIN=
-    for bin in cataclysm-tiles cataclysm
+    for bin in cataclysm-rodina-tiles cataclysm-rodina
     do
     [ -f "$bin" ] && BIN="$bin" break
     done

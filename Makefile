@@ -922,7 +922,7 @@ else
 endif
 
 ifeq ($(TARGETSYSTEM),LINUX)
-  BINDIST_EXTRAS += cataclysm-launcher
+  BINDIST_EXTRAS += cataclysm-rodina-launcher
   ifneq ("$(wildcard LICENSE-SDL.txt)","")
     SDL2_solib = $(shell ldd $(TARGET) | grep libSDL2-2\.0 | cut -d ' ' -f 3)
     INSTALL_EXTRAS += $(SDL2_solib)
@@ -935,7 +935,7 @@ ifeq ($(TARGETSYSTEM),LINUX)
 endif
 
 ifeq ($(TARGETSYSTEM),CYGWIN)
-  BINDIST_EXTRAS += cataclysm-launcher
+  BINDIST_EXTRAS += cataclysm-rodina-launcher
   DEFINES += -D_GLIBCXX_USE_C99_MATH_TR1
 endif
 

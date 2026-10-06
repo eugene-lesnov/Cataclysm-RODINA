@@ -44,6 +44,7 @@ cataclysm
 cataclysm-vcpkg
 cataclysmdda-*
 /cataclysm-rodina*
+!/cataclysm-rodina-launcher
 chkjson*
 debug.log
 logg.txt
