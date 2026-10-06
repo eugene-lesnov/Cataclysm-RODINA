@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.cataclysmrodina.RODINA</id>
+  <metadata_license>CC-BY-SA-3.0</metadata_license>
+  <project_license>CC-BY-SA-3.0</project_license>
+  <name>Cataclysm: RODINA</name>
+  <summary>A survival game based on Cataclysm: Dark Days Ahead</summary>
+  <description>
+    <p>Cataclysm: RODINA is a derivative of Cataclysm: Dark Days Ahead with a new geographic and cultural setting.</p>
+  </description>
+  <categories>
+    <category>Game</category>
+    <category>RolePlaying</category>
+  </categories>
+  <url type="homepage">https://github.com/eugene-lesnov/Cataclysm-RODINA</url>
+  <url type="bugtracker">https://github.com/eugene-lesnov/Cataclysm-RODINA/issues</url>
+  <launchable type="desktop-id">org.cataclysmrodina.RODINA.desktop</launchable>
+  <provides><binary>cataclysm-rodina-tiles</binary></provides>
+</component>

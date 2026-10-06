@@ -62,7 +62,7 @@ extern "C" {
         // But it should usually work in practice, unless for example the
         // program segfaults inside malloc.
 #if defined(_WIN32)
-        dump_to( ".core" );
+        dump_to( ( PATH_INFO::crash() + ".dmp" ).c_str() );
 #endif
         const std::string crash_log_file = PATH_INFO::crash();
         std::ostringstream log_text;

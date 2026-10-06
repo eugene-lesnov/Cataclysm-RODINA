@@ -10,7 +10,7 @@ defines = defines  # noqa: F821
 
 # .. Useful stuff .............................................................
 
-application = defines.get('app', 'Cataclysm.app')
+application = defines.get('app', 'RODINA.app')
 appname = os.path.basename(application)
 
 

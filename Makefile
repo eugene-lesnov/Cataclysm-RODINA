@@ -149,9 +149,9 @@ export CCACHE_COMMENTS=1
 # Explicitly let 'char' to be 'signed char' to fix #18776
 OTHERS += -fsigned-char
 
-VERSION = 0.I
+VERSION = 0.1-dev
 
-TARGET_NAME = cataclysm
+TARGET_NAME = cataclysm-rodina
 TILES_TARGET_NAME = $(TARGET_NAME)-tiles
 ifeq ($(NATIVE), emscripten)
   TILES_TARGET_NAME = $(TARGET_NAME)-tiles.js
@@ -550,9 +550,9 @@ TOOL_CXXFLAGS = -DCATA_IN_TOOL
 DEFINES += -DZSTD_STATIC_LINKING_ONLY -DZSTD_DISABLE_ASM
 
 BINDIST_EXTRAS += README.md CREDITS.md data doc LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
-BINDIST    = $(BUILD_PREFIX)cataclysmdda-$(VERSION).tar.gz
-W32BINDIST = $(BUILD_PREFIX)cataclysmdda-$(VERSION).zip
-BINDIST_CMD    = tar --transform=s@^$(BINDIST_DIR)@cataclysmdda-$(VERSION)@ -czvf $(BINDIST) $(BINDIST_DIR)
+BINDIST    = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).tar.gz
+W32BINDIST = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).zip
+BINDIST_CMD    = tar --transform=s@^$(BINDIST_DIR)@cataclysm-rodina-$(VERSION)@ -czvf $(BINDIST) $(BINDIST_DIR)
 W32BINDIST_CMD = cd $(BINDIST_DIR) && zip -r ../$(W32BINDIST) * && cd $(BUILD_DIR)
 
 
@@ -634,7 +634,7 @@ ifeq ($(NATIVE), osx)
   endif
   TARGETSYSTEM=LINUX
   ifneq ($(OS), Linux)
-    BINDIST_CMD = tar -s"@^$(BINDIST_DIR)@cataclysmdda-$(VERSION)@" -czvf $(BINDIST) $(BINDIST_DIR)
+    BINDIST_CMD = tar -s"@^$(BINDIST_DIR)@cataclysm-rodina-$(VERSION)@" -czvf $(BINDIST) $(BINDIST_DIR)
   endif
 endif
 
@@ -1104,18 +1104,16 @@ $(BUILD_PREFIX)$(TARGET_NAME).a: $(OBJS)
 
 .PHONY: version prefix
 version:
-	@( VERSION_STRING=$(VERSION) ; \
-        [ -e ".git" ] && \
-          GITVERSION=$$( git describe --tags --always --match "[0-9A-Z]*.[0-9A-Z]*" --match "cdda-0.I-*" --exact-match 2>/dev/null || true ) && \
-          GITSHA=$$( git rev-parse --short HEAD ) && \
-          DIRTYFLAG=$$( [ -z "$$(git diff --numstat | grep -v lang/po/)" ] || echo "-dirty") && \
-          VERSION_STRING="$$GITVERSION $$GITSHA$$DIRTYFLAG" && \
-          VERSION_STRING="$${VERSION_STRING## }" ; \
+	@( GITSHA=$$(git rev-parse --short=12 HEAD 2>/dev/null || echo unknown) ; \
+        FULLSHA=$$(git rev-parse HEAD 2>/dev/null || echo unknown) ; \
+        DIRTYFLAG=$$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && { git diff --quiet HEAD -- . || echo -dirty; }) ; \
+        VERSION_STRING="$$GITSHA$$DIRTYFLAG" ; \
         [ -e "$(SRC_DIR)/version.h" ] && \
-          OLDVERSION=$$(grep VERSION $(SRC_DIR)/version.h | cut -d '"' -f2) ; \
+          OLDVERSION=$$(grep '^#define VERSION ' $(SRC_DIR)/version.h | cut -d '"' -f2) ; \
         if [ "x$$VERSION_STRING" != "x$$OLDVERSION" ]; then \
-          printf '// NOLINT(cata-header-guard)\n#define VERSION "%s"\n' "$$VERSION_STRING" | tee $(SRC_DIR)/version.h ; \
-        fi \
+          printf '// NOLINT(cata-header-guard)\n#define VERSION "%s"\n' "$$VERSION_STRING" > $(SRC_DIR)/version.h ; \
+        fi ; \
+        printf 'product: Cataclysm: RODINA\nrodina version: 0.1-dev\nupstream version: CDDA 0.I-1\ncommit sha: %s\ncommit url: https://github.com/eugene-lesnov/Cataclysm-RODINA/commit/%s\n' "$$FULLSHA" "$$FULLSHA" > VERSION.txt \
      )
 
 prefix:
@@ -1182,7 +1180,7 @@ clean: clean-tests clean-object_creator clean-pch clean-lang
 	rm -rf *$(TARGET_NAME) *$(TILES_TARGET_NAME)
 	rm -rf *$(TILES_TARGET_NAME).exe *$(TARGET_NAME).exe *$(TARGET_NAME).a
 	rm -rf *obj *objwin
-	rm -rf *$(BINDIST_DIR) *cataclysmdda-*.tar.gz *cataclysmdda-*.zip
+	rm -rf *$(BINDIST_DIR) *cataclysm-rodina-*.tar.gz *cataclysm-rodina-*.zip
 	rm -f $(SRC_DIR)/version.h $(SRC_DIR)/prefix.h
 	rm -f $(CHKJSON_BIN)
 	rm -f $(TEST_MO)
@@ -1199,7 +1197,7 @@ distclean:
 bindist: $(BINDIST)
 
 ifeq ($(TARGETSYSTEM), LINUX)
-DATA_PREFIX=$(DESTDIR)$(PREFIX)/share/cataclysm-dda/
+DATA_PREFIX=$(DESTDIR)$(PREFIX)/share/cataclysm-rodina/
 BIN_PREFIX=$(DESTDIR)$(PREFIX)/bin
 LOCALE_DIR=$(DESTDIR)$(PREFIX)/share/locale
 SHARE_DIR=$(DESTDIR)$(PREFIX)/share
@@ -1219,9 +1217,9 @@ install: version $(TARGET) $(ZZIP_BIN)
 	cp -R --no-preserve=ownership data/title $(DATA_PREFIX)
 ifeq ($(TILES), 1)
 	cp -R --no-preserve=ownership gfx $(DATA_PREFIX)
-	install -Dm755 -t $(SHARE_DIR)/applications/ data/xdg/org.cataclysmdda.CataclysmDDA.desktop
-	install -Dm644 -t $(SHARE_DIR)/metainfo/ data/xdg/org.cataclysmdda.CataclysmDDA.appdata.xml
-	install -Dm644 -t $(SHARE_DIR)/icons/hicolor/scalable/apps/ data/xdg/org.cataclysmdda.CataclysmDDA.svg
+	install -Dm755 -t $(SHARE_DIR)/applications/ data/xdg/org.cataclysmrodina.RODINA.desktop
+	install -Dm644 -t $(SHARE_DIR)/metainfo/ data/xdg/org.cataclysmrodina.RODINA.appdata.xml
+	install -Dm644 -t $(SHARE_DIR)/icons/hicolor/scalable/apps/ data/xdg/org.cataclysmrodina.RODINA.svg
 endif
 ifeq ($(SOUND), 1)
 	cp -R --no-preserve=ownership data/sound $(DATA_PREFIX)
@@ -1234,7 +1232,7 @@ endif
 endif
 
 ifeq ($(TARGETSYSTEM), CYGWIN)
-DATA_PREFIX=$(DESTDIR)$(PREFIX)/share/cataclysm-dda/
+DATA_PREFIX=$(DESTDIR)$(PREFIX)/share/cataclysm-rodina/
 BIN_PREFIX=$(DESTDIR)$(PREFIX)/bin
 LOCALE_DIR=$(DESTDIR)$(PREFIX)/share/locale
 SHARE_DIR=$(DESTDIR)$(PREFIX)/share
@@ -1253,9 +1251,9 @@ install: version $(TARGET)
 	cp -R --no-preserve=ownership data/title $(DATA_PREFIX)
 ifeq ($(TILES), 1)
 	cp -R --no-preserve=ownership gfx $(DATA_PREFIX)
-	install -Dm755 -t $(SHARE_DIR)/applications/ data/xdg/org.cataclysmdda.CataclysmDDA.desktop
-	install -Dm644 -t $(SHARE_DIR)/metainfo/ data/xdg/org.cataclysmdda.CataclysmDDA.appdata.xml
-	install -Dm644 -t $(SHARE_DIR)/icons/hicolor/scalable/apps/ data/xdg/org.cataclysmdda.CataclysmDDA.svg
+	install -Dm755 -t $(SHARE_DIR)/applications/ data/xdg/org.cataclysmrodina.RODINA.desktop
+	install -Dm644 -t $(SHARE_DIR)/metainfo/ data/xdg/org.cataclysmrodina.RODINA.appdata.xml
+	install -Dm644 -t $(SHARE_DIR)/icons/hicolor/scalable/apps/ data/xdg/org.cataclysmrodina.RODINA.svg
 endif
 ifeq ($(SOUND), 1)
 	cp -R --no-preserve=ownership data/sound $(DATA_PREFIX)
@@ -1269,7 +1267,7 @@ endif
 
 
 ifeq ($(NATIVE), osx)
-APPTARGETDIR=Cataclysm.app
+APPTARGETDIR=RODINA.app
 APPRESOURCESDIR=$(APPTARGETDIR)/Contents/Resources
 APPDATADIR=$(APPRESOURCESDIR)/data
 ifndef FRAMEWORK
@@ -1330,23 +1328,23 @@ endif  # ifdef FRAMEWORK
 	dylibbundler -of -b -x $(APPRESOURCESDIR)/$(APPTARGET) -d $(APPRESOURCESDIR)/ -p @executable_path/
 
 dmgdistclean:
-	rm -rf Cataclysm
-	rm -f Cataclysm.dmg
+	rm -rf RODINA
+	rm -f Cataclysm-RODINA.dmg
 	rm -rf lang/mo
 
 dmgdist: dmgdistclean $(L10N) app
 ifdef OSXCROSS
-	mkdir Cataclysm
-	cp -a $(APPTARGETDIR) Cataclysm/$(APPTARGETDIR)
-	cp build-data/osx/DS_Store Cataclysm/.DS_Store
-	cp build-data/osx/dmgback.png Cataclysm/.background.png
-	ln -s /Applications Cataclysm/Applications
-	genisoimage -quiet -D -V "Cataclysm DDA" -no-pad -r -apple -o Cataclysm-uncompressed.dmg Cataclysm/
-	dmg dmg Cataclysm-uncompressed.dmg Cataclysm.dmg
-	rm Cataclysm-uncompressed.dmg
+	mkdir RODINA
+	cp -a $(APPTARGETDIR) RODINA/$(APPTARGETDIR)
+	cp build-data/osx/DS_Store RODINA/.DS_Store
+	cp build-data/osx/dmgback.png RODINA/.background.png
+	ln -s /Applications RODINA/Applications
+	genisoimage -quiet -D -V "Cataclysm: RODINA" -no-pad -r -apple -o Cataclysm-RODINA-uncompressed.dmg RODINA/
+	dmg dmg Cataclysm-RODINA-uncompressed.dmg Cataclysm-RODINA.dmg
+	rm Cataclysm-RODINA-uncompressed.dmg
 else
-	plutil -convert binary1 Cataclysm.app/Contents/Info.plist
-	dmgbuild -s build-data/osx/dmgsettings.py "Cataclysm DDA" Cataclysm.dmg
+	plutil -convert binary1 $(APPTARGETDIR)/Contents/Info.plist
+	dmgbuild -s build-data/osx/dmgsettings.py "Cataclysm: RODINA" Cataclysm-RODINA.dmg
 endif
 
 endif  # ifeq ($(NATIVE), osx)

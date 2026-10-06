@@ -780,7 +780,7 @@ void DebugFile::init( DebugOutput output_mode, const cata_path &filename )
 #endif
     *file << "\n\n-----------------------------------------\n";
     *file << get_time() << " : Starting log.";
-    DebugLog( D_INFO, D_MAIN ) << "Cataclysm DDA version " << getVersionString();
+    DebugLog( D_INFO, D_MAIN ) << "Cataclysm: " << getVersionString();
     if( rename_failed ) {
         DebugLog( D_ERROR, DC_ALL ) << "Moving the previous log file to "
                                     << oldfile << " failed.\n"

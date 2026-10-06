@@ -75,6 +75,7 @@ if (TILES)
                 ${MESSAGES_CPP})
     endif ()
 
+    set_target_properties(cataclysm-tiles PROPERTIES OUTPUT_NAME cataclysm-rodina-tiles)
     add_dependencies(cataclysm-tiles-common get_version)
 
     target_link_libraries(cataclysm-tiles PRIVATE cataclysm-tiles-common)
@@ -190,6 +191,7 @@ if (CURSES)
                 ${MESSAGES_CPP})
     endif ()
 
+    set_target_properties(cataclysm PROPERTIES OUTPUT_NAME cataclysm-rodina)
     add_dependencies(cataclysm-common get_version)
     target_link_libraries(cataclysm PRIVATE cataclysm-common)
 

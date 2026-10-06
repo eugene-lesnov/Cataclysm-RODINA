@@ -85,20 +85,20 @@ void PATH_INFO::init_user_dir( std::string dir )
 #if defined(_WIN32)
         user_dir = getenv_or_abort( "LOCALAPPDATA" );
         // On Windows userdir without dot
-        dir = std::string( user_dir ) + "/cataclysm-dda/";
+        dir = std::string( user_dir ) + "/cataclysm-rodina/";
 #elif defined(MACOSX)
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/Library/Application Support/Cataclysm/";
+        dir = std::string( user_dir ) + "/Library/Application Support/Cataclysm RODINA/";
 #elif defined(USE_XDG_DIR)
         if( ( user_dir = getenv( "XDG_DATA_HOME" ) ) ) {
-            dir = std::string( user_dir ) + "/cataclysm-dda/";
+            dir = std::string( user_dir ) + "/cataclysm-rodina/";
         } else {
             user_dir = getenv_or_abort( "HOME" );
-            dir = std::string( user_dir ) + "/.local/share/cataclysm-dda/";
+            dir = std::string( user_dir ) + "/.local/share/cataclysm-rodina/";
         }
 #else
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/.cataclysm-dda/";
+        dir = std::string( user_dir ) + "/.cataclysm-rodina/";
 #endif
     }
 
@@ -117,7 +117,7 @@ void PATH_INFO::set_standard_filenames()
 
     if( !base_path_value.empty() ) {
 #if defined(DATA_DIR_PREFIX)
-        datadir_value = base_path_value + "share/cataclysm-dda/";
+        datadir_value = base_path_value + "share/cataclysm-rodina/";
         prefix = datadir_value;
         prefix_path = datadir_path_value;
 #else
@@ -139,7 +139,7 @@ void PATH_INFO::set_standard_filenames()
     // Shared dirs
 
     // Shared files
-    motd_value = datadir_value + "motd/" + "en.motd";
+    motd_value = datadir_value + "motd/" + "en.rodina.motd";
 
     savedir_value = user_dir_value + "save/";
     // Special: savedir is always relative to itself even if in the user dir location.
@@ -153,10 +153,10 @@ void PATH_INFO::set_standard_filenames()
     const char *user_dir;
     std::string dir;
     if( ( user_dir = getenv( "XDG_CONFIG_HOME" ) ) ) {
-        dir = std::string( user_dir ) + "/cataclysm-dda/";
+        dir = std::string( user_dir ) + "/cataclysm-rodina/";
     } else {
         user_dir = getenv_or_abort( "HOME" );
-        dir = std::string( user_dir ) + "/.config/cataclysm-dda/";
+        dir = std::string( user_dir ) + "/.config/cataclysm-rodina/";
     }
     config_dir_value = dir;
     config_dir_path_value = cata_path{ cata_path::root_path::config, std::filesystem::path{} };
@@ -231,7 +231,7 @@ cata_path PATH_INFO::base_path()
 }
 std::string PATH_INFO::cache_dir()
 {
-    return datadir_value + "cache/";
+    return user_dir_value + "cache/";
 }
 cata_path PATH_INFO::colors()
 {
@@ -470,59 +470,46 @@ std::string PATH_INFO::credits()
 
 std::string PATH_INFO::motd()
 {
-    return find_translated_file( datadir_value + "motd/", ".motd", motd_value );
+    return find_translated_file( datadir_value + "motd/", ".rodina.motd", motd_value );
 }
 
 std::string PATH_INFO::title( const holiday current_holiday )
 {
-    std::string theme_basepath = datadir_value + "title/";
-    std::string theme_extension = ".title";
-    std::string theme_fallback = theme_basepath + "en.title";
-
     if( !get_option<bool>( "ENABLE_ASCII_TITLE" ) ) {
-        return _( "Cataclysm: Dark Days Ahead" );
+        return _( "Cataclysm: RODINA" );
     }
 
+    std::string title_file = "rodina.title";
     if( x_in_y( get_option<int>( "ALT_TITLE" ), 100 ) ) {
-        theme_extension = ".alt1";
-        theme_fallback = datadir_value + "title/" + "en.alt1";
+        title_file = "rodina.alt1";
     }
-
-    if( !get_option<bool>( "SEASONAL_TITLE" ) ) {
-        return find_translated_file( theme_basepath, theme_extension, theme_fallback );
+    if( get_option<bool>( "SEASONAL_TITLE" ) ) {
+        switch( current_holiday ) {
+            case holiday::new_year:
+                title_file = "rodina.new_year";
+                break;
+            case holiday::easter:
+                title_file = "rodina.easter";
+                break;
+            case holiday::independence_day:
+                title_file = "rodina.independence_day";
+                break;
+            case holiday::halloween:
+                title_file = "rodina.halloween";
+                break;
+            case holiday::thanksgiving:
+                title_file = "rodina.thanksgiving";
+                break;
+            case holiday::christmas:
+                title_file = "rodina.christmas";
+                break;
+            case holiday::none:
+            case holiday::num_holiday:
+            default:
+                break;
+        }
     }
-
-    switch( current_holiday ) {
-        case holiday::new_year:
-            theme_extension = ".new_year";
-            theme_fallback = datadir_value + "title/" + "en.new_year";
-            break;
-        case holiday::easter:
-            theme_extension = ".easter";
-            theme_fallback = datadir_value + "title/" + "en.easter";
-            break;
-        case holiday::independence_day:
-            theme_extension = ".independence_day";
-            theme_fallback = datadir_value + "title/" + "en.independence_day";
-            break;
-        case holiday::halloween:
-            theme_extension = ".halloween";
-            theme_fallback = datadir_value + "title/" + "en.halloween";
-            break;
-        case holiday::thanksgiving:
-            theme_extension = ".thanksgiving";
-            theme_fallback = datadir_value + "title/" + "en.thanksgiving";
-            break;
-        case holiday::christmas:
-            theme_extension = ".christmas";
-            theme_fallback = datadir_value + "title/" + "en.christmas";
-            break;
-        case holiday::none:
-        case holiday::num_holiday:
-        default:
-            break;
-    }
-    return find_translated_file( theme_basepath, theme_extension, theme_fallback );
+    return datadir_value + "title/" + title_file;
 }
 
 cata_path PATH_INFO::names()
@@ -540,8 +527,8 @@ void PATH_INFO::set_datadir( const std::string &datadir )
     gfxdir_path_value = datadir_path_value / "gfx";
 
     // Shared files
-    motd_value = datadir_value + "motd/" + "en.motd";
-    motd_path_value = datadir_path_value / "motd" / "en.motd";
+    motd_value = datadir_value + "motd/" + "en.rodina.motd";
+    motd_path_value = datadir_path_value / "motd" / "en.rodina.motd";
 }
 
 void PATH_INFO::set_config_dir( const std::string &config_dir )

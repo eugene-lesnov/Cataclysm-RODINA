@@ -127,10 +127,6 @@ jobs:
             ccache_limit: 10G
             ccache_key: macos-llvm-15-universal
 
-          - title: Android x64 (build only)
-            os: ubuntu-latest
-            android: arm64
-
           - compiler: g++-9
             os: ubuntu-22.04
             cmake: 0
@@ -197,7 +193,6 @@ jobs:
         COMPILER: ${{ matrix.compiler }}
         MXE_TARGET: ${{ matrix.mxe_target }}
         WINE: ${{ matrix.wine }}
-        ANDROID: ${{ matrix.android }}
         OS: ${{ matrix.os }}
         TILES: ${{ matrix.tiles }}
         SOUND: ${{ matrix.sound }}
@@ -226,15 +221,15 @@ jobs:
           ( matrix.dont_skip_data_only_changes == 0 && needs.skip-duplicates.outputs.should_skip_code == 'true' ) ||
           ( matrix.dont_skip_data_only_changes != 0 && needs.skip-duplicates-mods.outputs.should_skip_data == 'true' )
           }}
-        SKIP_TESTS: ${{ fromJSON(needs.matrix-variables.outputs.skip_tests) || (matrix.android != '') }}
+        SKIP_TESTS: ${{ fromJSON(needs.matrix-variables.outputs.skip_tests) }}
     steps:
     - name: Maximize build space (ubuntu)
       if: ${{ runner.os == 'Linux' }}
       uses: AdityaGarg8/remove-unwanted-software@v4.1
       with:
-        remove-android: ${{ matrix.android == '' }}
+        remove-android: true
     - name: Maximize build space (mac)
-      if: ${{ runner.os == 'macos' && matrix.android == '' }}
+      if: runner.os == 'macOS'
       run: |
         sudo rm -rf $ANDROID_HOME
     - name: checkout repository
@@ -298,12 +293,6 @@ jobs:
           ccache-0.I-${{ matrix.ccache_key }}--
     - uses: ammaraskar/gcc-problem-matcher@master
 
-    - name: Set up JDK 8 (android)
-      if: runner.os == 'Linux' && matrix.android != 'none'
-      uses: actions/setup-java@v4
-      with:
-        java-version: '11'
-        distribution: 'adopt'
     - name: Build CDDA
       if: ${{ env.SKIP == 'false' }}
       run: bash ./build-scripts/gha_compile_only.sh
@@ -352,8 +341,3 @@ jobs:
         path: tests/cata_test*
         if-no-files-found: ignore
         retention-days: 9
-  #emscripten:
-  #  needs: [ skip-duplicates-code, varied_builds ]
-  #  uses: ./.github/workflows/emscripten.yml
-  #  if: ${{ needs.skip-duplicates.outputs.should_skip_code != 'true' && success() && github.event.pull_request.draft == false }}
-  #  secrets: inherit

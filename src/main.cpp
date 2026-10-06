@@ -228,7 +228,7 @@ void printVersionMessage()
     const bool hasSound = false;
 #endif
 
-    printf( "Cataclysm Dark Days Ahead: %s\n\n"
+    printf( "Cataclysm: %s\n\n"
             "%ctiles, %csound\n\n"
             "data dir: %s\nuser dir: %s\n",
             getVersionString(),
@@ -301,7 +301,7 @@ cli_opts parse_commandline( int argc, const char **argv )
             },
             {
                 "--jsonverify", {},
-                "Checks the CDDA json files and exits",
+                "Checks the RODINA json files and exits",
                 section_default,
                 0,
                 [&result]( int, const char ** ) -> int {
@@ -311,7 +311,7 @@ cli_opts parse_commandline( int argc, const char **argv )
             },
             {
                 "--check-mods", "[mod…]",
-                "Checks the json files belonging to given CDDA mod and exits",
+                "Checks the json files belonging to given RODINA mod and exits",
                 section_default,
                 1,
                 [&result]( int n, const char **params ) -> int {
@@ -678,7 +678,7 @@ int main( int argc, const char *argv[] )
 #   if defined(USE_HOME_DIR) || defined(USE_XDG_DIR) || defined(EMSCRIPTEN)
     PATH_INFO::init_user_dir( "" );
 #   else
-    PATH_INFO::init_user_dir( "." );
+    PATH_INFO::init_user_dir( "./cataclysm-rodina/" );
 #   endif
 #endif
     PATH_INFO::set_standard_filenames();
@@ -688,7 +688,7 @@ int main( int argc, const char *argv[] )
     cli_opts cli = parse_commandline( argc, const_cast<const char **>( argv ) );
 
     if( !dir_exist( PATH_INFO::datadir() ) ) {
-        printf( "Fatal: Can't find data directory \"%s\"\nPlease ensure the current working directory is correct or specify data directory with --datadir.  Perhaps you meant to start \"cataclysm-launcher\"?\n",
+        printf( "Fatal: Can't find data directory \"%s\"\nStart cataclysm-rodina from its distribution directory or specify --datadir.\n",
                 PATH_INFO::datadir().c_str() );
         exit( 1 );
     }

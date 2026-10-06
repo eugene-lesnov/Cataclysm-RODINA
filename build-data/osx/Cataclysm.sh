@@ -13,10 +13,10 @@ else
     K_FRAMEWORK_PATH=DYLD_FALLBACK_FRAMEWORK_PATH
 fi
 
-if [[ -f cataclysm ]]; then
-    V_SHELL_SCRIPT="export PATH=${PATH} ${K_LIBRARY_PATH}=. ${K_FRAMEWORK_PATH}=.; cd '${PWD}' && ./cataclysm; exit"
+if [[ -f cataclysm-rodina ]]; then
+    V_SHELL_SCRIPT="export PATH=${PATH} ${K_LIBRARY_PATH}=. ${K_FRAMEWORK_PATH}=.; cd '${PWD}' && ./cataclysm-rodina; exit"
     osascript -e "tell application \"Terminal\" to activate do script \"${V_SHELL_SCRIPT}\""
 else
     export ${K_LIBRARY_PATH}=. ${K_FRAMEWORK_PATH}=.
-    ./cataclysm-tiles
+    ./cataclysm-rodina-tiles
 fi

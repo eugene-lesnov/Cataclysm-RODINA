@@ -1,54 +1,31 @@
-name: "Experimental Release"
-concurrency: release-candidate
+name: RODINA Release
 on:
   push:
-    branches:
-      - 0.I-branch
-    paths:
-      - '.github/workflows/release.yml'
-      - 'android/**'
-      - 'build-data/**'
-      - 'build-scripts/generate-release-notes.js'
-      - 'cataclysm-launcher'
-      - 'data/**'
-      - 'doc/**'
-      - 'gfx/**'
-      - 'lang/po/*.po'
-      - 'LICENSE*'
-      - 'Makefile'
-      - 'README*'
-      - 'src/**'
-  workflow_dispatch:
+    tags:
+      - 'rodina-*'
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
+permissions:
+  contents: write
 
 jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    permissions: write-all
     outputs:
-      timestamp: ${{ steps.get-timestamp.outputs.time }}
+      timestamp: ${{ steps.vars.outputs.timestamp }}
+      tag_name: ${{ steps.vars.outputs.tag_name }}
     steps:
-      - name: Get build timestamp
-        id: get-timestamp
+      - name: Release identifiers
+        id: vars
         run: |
-          echo "time=$(/bin/date -u "+%Y-%m-%d-%H%M")" >> $GITHUB_OUTPUT
-      - name: Generate environmental variables
-        id: generate_env_vars
+          echo "timestamp=$(/bin/date -u +%Y-%m-%d-%H%M)" >> "$GITHUB_OUTPUT"
+          echo "tag_name=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "tag_name=cdda-0.I-${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
-          echo "release_name=Cataclysm-DDA 0.I release candidate ${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@v4
-      - name: Generate Release Notes
-        id: generate-release-notes
-        run: |
-          npm install @actions/github@8
-          node build-scripts/generate-release-notes.js '${{ secrets.GITHUB_TOKEN }}' '${{ steps.generate_env_vars.outputs.tag_name }}' "$(git log -1 --format='%H')" > notes.txt
-      - run: |
-          gh release create ${{ steps.generate_env_vars.outputs.tag_name }} --notes-file notes.txt --prerelease --title "${{ steps.generate_env_vars.outputs.release_name }}" --target "$(git log -1 --format='%H')"
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+            --generate-notes --prerelease --title "Cataclysm: RODINA $GITHUB_REF_NAME"
 
   builds:
     needs: release
@@ -56,26 +33,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Windows Tiles x64 MSVC
-            artifact: windows-with-graphics-x64
-            arch: x64
-            os: windows-2022
-            mxe: none
-            ext: zip
-            content: application/zip
-            sound: 0
           - name: Windows Tiles Sounds x64 MSVC
             artifact: windows-with-graphics-and-sounds-x64
             arch: x64
             os: windows-2022
-            mxe: none
             ext: zip
             content: application/zip
             sound: 1
           - name: Linux Tiles x64
             os: ubuntu-22.04
-            mxe: none
-            android: none
             libbacktrace: 1
             tiles: 1
             sound: 0
@@ -84,8 +50,6 @@ jobs:
             content: application/gzip
           - name: Linux Tiles Sounds x64
             os: ubuntu-22.04
-            mxe: none
-            android: none
             libbacktrace: 1
             tiles: 1
             sound: 1
@@ -94,8 +58,6 @@ jobs:
             content: application/gzip
           - name: Linux Curses x64
             os: ubuntu-22.04
-            mxe: none
-            android: none
             libbacktrace: 1
             tiles: 0
             sound: 0
@@ -104,7 +66,6 @@ jobs:
             content: application/gzip
           - name: macOS Curses Universal Binary (x64 and arm64)
             os: macos-15
-            mxe: none
             tiles: 0
             sound: 0
             artifact: osx-terminal-only-universal
@@ -112,44 +73,18 @@ jobs:
             content: application/x-apple-diskimage
           - name: macOS Tiles Universal Binary (x64 and arm64)
             os: macos-15
-            mxe: none
             tiles: 1
             sound: 0
             artifact: osx-with-graphics-universal
             ext: dmg
             content: application/x-apple-diskimage
-          - name: Android x64
-            os: ubuntu-latest
-            mxe: none
-            android: arm64
-            artifact: android-x64
-            ext: apk
-            content: application/apk
-          - name: Android x32
-            os: ubuntu-latest
-            mxe: none
-            android: arm32
-            artifact: android-x32
-            ext: apk
-            content: application/apk 
-          #- name: WebAssembly Bundle
-          #  os: ubuntu-latest
-          #  mxe: none
-          #  artifact: wasm
-          #  ext: zip
-          #  content: application/zip
-          #  sound: 0
-          #  wasm: true
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     permissions: write-all
     env:
         ZSTD_CLEVEL: 17
+        GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Maximize build space (mac)
-        if: ${{ runner.os == 'macos' && matrix.android == '' }}
-        run: |
-          sudo rm -rf $ANDROID_HOME
       - uses: actions/checkout@v4
         with:
           fetch-tags: true
@@ -186,22 +121,8 @@ jobs:
           install: >-
             gettext
             make
-      - name: Install dependencies (windows mxe)
-        if: matrix.mxe != 'none'
-        run: |
-          sudo apt install gettext
-      - name: Install MXE
-        if: matrix.mxe != 'none'
-        run: |
-          curl -L -o mxe-${{ matrix.mxe }}.tar.xz https://github.com/BrettDong/MXE-GCC/releases/download/mxe-sdl-2-0-20/mxe-${{ matrix.mxe }}.tar.xz
-          curl -L -o mxe-${{ matrix.mxe }}.tar.xz.sha256 https://github.com/BrettDong/MXE-GCC/releases/download/mxe-sdl-2-0-20/mxe-${{ matrix.mxe }}.tar.xz.sha256
-          shasum -a 256 -c ./mxe-${{ matrix.mxe }}.tar.xz.sha256
-          sudo tar xJf mxe-${{ matrix.mxe }}.tar.xz -C /opt
-          curl -L -o SDL2-devel-2.26.2-mingw.tar.gz https://github.com/libsdl-org/SDL/releases/download/release-2.26.2/SDL2-devel-2.26.2-mingw.tar.gz
-          shasum -a 256 -c ./build-scripts/SDL2-devel-2.26.2-mingw.tar.gz.sha256
-          sudo tar -xzf SDL2-devel-2.26.2-mingw.tar.gz -C /opt/mxe/usr/${{ matrix.mxe }}-w64-mingw32.static.gcc12 --strip-components=2 SDL2-2.26.2/${{ matrix.mxe }}-w64-mingw32
       - name: Install dependencies (Linux)
-        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' && !matrix.wasm
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install libsdl2-dev
@@ -215,9 +136,6 @@ jobs:
           cp ../LICENSE.txt ${{ github.workspace }}/LICENSE-SDL.txt
           sudo apt-get install libncursesw5-dev libsdl2-ttf-dev libsdl2-image-dev \
             libsdl2-mixer-dev libpulse-dev ccache gettext parallel
-      - name: Install Emscripten (WebAssembly)
-        if: matrix.wasm
-        uses: mymindstorm/setup-emsdk@v13
       - name: Install runtime dependencies (mac)
         if: runner.os == 'macOS'
         uses: BrettDong/setup-sdl2-frameworks@v2
@@ -244,6 +162,8 @@ jobs:
           cat >VERSION.txt <<EOL
           build type: ${{ matrix.artifact }}
           build number: ${{ needs.release.outputs.timestamp }}
+          rodina version: 0.1-dev
+          upstream version: CDDA 0.I-1
           commit sha: ${{ github.sha }}
           commit url: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
           EOL
@@ -262,25 +182,12 @@ jobs:
           make -j$((`nproc`+0))
           cp LICENSE ${{ github.workspace }}/LICENSE-libbacktrace.txt
           sudo make install
-      - name: Build CDDA (linux)
-        if: runner.os == 'Linux' && matrix.mxe == 'none' && matrix.android == 'none' && !matrix.wasm
+      - name: Build RODINA (linux)
+        if: runner.os == 'Linux'
         run: |
-          make -j$((`nproc`+0)) TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=1 LIBBACKTRACE=${{ matrix.libbacktrace }} PCH=0 bindist
-          mv cataclysmdda-0.I.tar.gz cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.tar.gz
-      - name: Build CDDA (WebAssembly)
-        if: matrix.wasm && success()
-        run: |
-          ./build-scripts/build-emscripten.sh
-          ./build-scripts/prepare-web.sh
-          (cd build && zip ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }} *)
-      - name: Build CDDA (windows mxe)
-        if: matrix.mxe != 'none'
-        env:
-          PLATFORM: /opt/mxe/usr/bin/${{ matrix.mxe }}-w64-mingw32.static.gcc12-
-        run: |
-          make -j$((`nproc`+0)) CROSS="${PLATFORM}" TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=1 LIBBACKTRACE=${{ matrix.libbacktrace }} PCH=0 bindist
-          mv cataclysmdda-0.I.zip cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
-      - name: Build CDDA (windows msvc)
+          make -j$((`nproc`+0)) TILES=${{ matrix.tiles }} SOUND=${{ matrix.sound }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=1 LIBBACKTRACE=${{ matrix.libbacktrace }} PCH=0 bindist
+          mv cataclysm-rodina-0.1-dev.tar.gz rodina-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.tar.gz
+      - name: Build RODINA (windows msvc)
         if: runner.os == 'Windows'
         env:
           # Enable pretty backtraces
@@ -290,41 +197,11 @@ jobs:
         run: |
           msbuild -m -p:Configuration=Release -p:Platform=${{ matrix.arch }} "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
           .\build-scripts\windist.ps1
-          mv cataclysmdda-0.I.zip cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
-      - name: Build CDDA (osx)
+          mv cataclysm-rodina-0.1-dev.zip rodina-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.zip
+      - name: Build RODINA (osx)
         if: runner.os == 'macOS'
         run: |
-          make -j3 TILES=${{ matrix.tiles }} SOUND=${{ matrix.tiles }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 USE_HOME_DIR=1 FRAMEWORK=1 UNIVERSAL_BINARY=1 dmgdist
-          mv Cataclysm.dmg cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.dmg
-      - name: Set up JDK 8 (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
-        uses: actions/setup-java@v4
-        with:
-          java-version: '11'
-          distribution: 'adopt'   
-      - name: Setup Build and Dependencies (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
-        run: |
-          sudo apt-get update
-          sudo apt-get install gettext          
-      - name: Build CDDA (android)
-        if: runner.os == 'Linux' && matrix.android != 'none' && matrix.mxe == 'none'
-        working-directory: ./android
-        run: |
-          echo "${{ secrets.KEYSTORE }}" > release.keystore.asc   
-          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch release.keystore.asc > app/release.keystore 
-          echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties.asc   
-          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch keystore.properties.asc > keystore.properties
-          export UPSTREAM_BUILD_NUMBER="$((11581 + ${{ github.run_number }}))"
-          chmod +x gradlew
-          if [ ${{ matrix.android }} = arm64 ]
-          then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_32=false assembleExperimentalRelease
-               mv ./app/build/outputs/apk/experimental/release/*.apk ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk
-          elif [ ${{ matrix.android }} = arm32 ]
-          then
-               ./gradlew -Pj=$((`nproc`+0)) -Pabi_arm_64=false assembleExperimentalRelease
-               mv ./app/build/outputs/apk/experimental/release/*.apk ../cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.apk 
-          fi
+          make -j3 TILES=${{ matrix.tiles }} SOUND=${{ matrix.sound }} RELEASE=1 LOCALIZE=1 LANGUAGES=all BACKTRACE=0 PCH=0 USE_HOME_DIR=1 FRAMEWORK=1 UNIVERSAL_BINARY=1 dmgdist
+          mv Cataclysm-RODINA.dmg rodina-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.dmg
       - run: |
-          gh release upload cdda-0.I-${{ needs.release.outputs.timestamp }} cdda-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}
+          gh release upload "${{ needs.release.outputs.tag_name }}" rodina-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}

@@ -45,6 +45,7 @@ cataclysm
 *cataclysm-tiles
 cataclysm-vcpkg
 cataclysmdda-*
+/cataclysm-rodina*
 chkjson*
 debug.log
 logg.txt

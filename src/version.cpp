@@ -3,7 +3,7 @@
 #if (defined(_WIN32) || defined(MINGW)) && !defined(GIT_VERSION) && !defined(CROSS_LINUX) && !defined(_MSC_VER)
 
 #ifndef VERSION
-#define VERSION "0.I"
+#define VERSION "unknown"
 #endif
 
 #else
@@ -14,5 +14,5 @@
 
 const char *getVersionString()
 {
-    return VERSION;
+    return "RODINA 0.1-dev (based on CDDA 0.I-1, commit " VERSION ")";
 }

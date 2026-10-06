@@ -13,7 +13,7 @@ namespace
 {
 flexbuffer_cache &base_cache()
 {
-    static flexbuffer_cache cache{ ( PATH_INFO::base_path() / "cache" ).get_unrelative_path(), PATH_INFO::base_path().get_unrelative_path() };
+    static flexbuffer_cache cache{ ( PATH_INFO::user_dir_path() / "cache" / "base" ).get_unrelative_path(), PATH_INFO::base_path().get_unrelative_path() };
     return cache;
 }
 
@@ -25,7 +25,7 @@ flexbuffer_cache &config_cache()
 
 flexbuffer_cache &data_cache()
 {
-    static flexbuffer_cache cache{ ( PATH_INFO::datadir_path() / "cache" ).get_unrelative_path(), PATH_INFO::datadir_path().get_unrelative_path() };
+    static flexbuffer_cache cache{ ( PATH_INFO::user_dir_path() / "cache" / "data" ).get_unrelative_path(), PATH_INFO::datadir_path().get_unrelative_path() };
     return cache;
 }
 

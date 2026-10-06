@@ -1,50 +1,41 @@
-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/version.h)
-    file(TOUCH ${CMAKE_SOURCE_DIR}/src/version.h)
+if(GIT_BINARY)
+    set(GIT_EXECUTABLE "${GIT_BINARY}")
+else()
+    find_program(GIT_EXECUTABLE git)
 endif()
 
-list(APPEND CMAKE_MODULE_PATH
-    ${CMAKE_SOURCE_DIR}/CMakeModules)
-include(GetGitRevisionDescription)
-
-git_describe(GIT_VERSION --tags --always --match "[0-9A-Z]*.[0-9A-Z]*")
-
-if(EXISTS ${GIT_EXECUTABLE})
-    execute_process(COMMAND ${GIT_EXECUTABLE} -c core.safecrlf=false diff --quiet
-        RESULT_VARIABLE DIRTY_FLAG
-    )
-
-    if(DIRTY_FLAG)
-        string(APPEND GIT_VERSION "-dirty")
+set(GIT_VERSION "unknown")
+set(_sha1 "unknown")
+if(GIT_EXECUTABLE)
+    execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --short=12 HEAD
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        RESULT_VARIABLE _git_result
+        OUTPUT_VARIABLE _short_sha
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET)
+    if(_git_result EQUAL 0)
+        set(GIT_VERSION "${_short_sha}")
+        execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+            OUTPUT_VARIABLE _sha1
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
+        execute_process(COMMAND "${GIT_EXECUTABLE}" diff --quiet HEAD -- .
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+            RESULT_VARIABLE _dirty)
+        if(_dirty)
+            string(APPEND GIT_VERSION "-dirty")
+        endif()
     endif()
 endif()
 
-message(NOTICE ${GIT_VERSION})
-
-if("${GIT_VERSION}" MATCHES "GIT-NOTFOUND")
-    return()
+set(_version_header "// NOLINT(cata-header-guard)\n#define VERSION \"${GIT_VERSION}\"\n")
+set(_existing_header "")
+if(EXISTS "${CMAKE_SOURCE_DIR}/src/version.h")
+    file(READ "${CMAKE_SOURCE_DIR}/src/version.h" _existing_header)
+endif()
+if(NOT "${_version_header}" STREQUAL "${_existing_header}")
+    file(WRITE "${CMAKE_SOURCE_DIR}/src/version.h" "${_version_header}")
 endif()
 
-if(GIT_VERSION)
-    string(REPLACE "-NOTFOUND" "" GIT_VERSION ${GIT_VERSION})
-    file(READ  ${CMAKE_SOURCE_DIR}/src/version.h VERSION_H)
-    string(REGEX MATCH "#define VERSION \"(.+)\"" VERSION_H "${VERSION_H}")
-
-    if(NOT GIT_VERSION STREQUAL VERSION_H)
-        file(WRITE ${CMAKE_SOURCE_DIR}/src/version.h
-                "// NOLINT(cata-header-guard)\n\#define VERSION \"${GIT_VERSION}\"\n")
-    endif()
-endif()
-
-# get_git_head_revision() does not work with worktrees in Windows
-execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-    OUTPUT_VARIABLE _sha1
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(TIMESTAMP _timestamp %Y-%m-%d-%H%M)
-file(WRITE ${CMAKE_SOURCE_DIR}/VERSION.txt "\
-build type: Release\n\
-build number: ${_timestamp}\n\
-commit sha: ${_sha1}\n\
-commit url: https://github.com/CleverRaven/Cataclysm-DDA/commit/${_sha1}"
-)
-
+file(WRITE "${CMAKE_SOURCE_DIR}/VERSION.txt" "product: Cataclysm: RODINA\nrodina version: 0.1-dev\nupstream version: CDDA 0.I-1\ncommit sha: ${_sha1}\ncommit url: https://github.com/eugene-lesnov/Cataclysm-RODINA/commit/${_sha1}\n")
+message(NOTICE "${GIT_VERSION}")
