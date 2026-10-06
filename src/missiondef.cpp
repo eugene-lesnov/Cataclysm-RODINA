@@ -306,7 +306,7 @@ void assign_function( const JsonObject &jo, const std::string &id, Fun &target,
 
 bool mission_type::load( const JsonObject &jo, const std::string &src )
 {
-    const bool strict = src == "dda";
+    const bool strict = src == "rodina";
 
     mandatory( jo, was_loaded, "name", name );
 

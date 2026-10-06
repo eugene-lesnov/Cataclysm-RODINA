@@ -44,16 +44,16 @@ def get_id(jo):
 
 def get_parent_value(id, property, src):
     if id not in items[src]:
-        if src != "dda":
-            return get_parent_value(id, property, "dda")
+        if src != "rodina":
+            return get_parent_value(id, property, "rodina")
         else:
             return None
     if property not in items[src][id]:
         if "copy-from" in items[src][id]:
             if id == items[src][id]["copy-from"]:
-                if src == "dda":
+                if src == "rodina":
                     return None
-                return get_parent_value(id, property, "dda")
+                return get_parent_value(id, property, "rodina")
             return get_parent_value(items[src][id]["copy-from"], property, src)
         else:
             return None
@@ -70,12 +70,12 @@ def get_value(jo, property, src):
 
 def get_jo(id, src):
     if src not in items:
-        if src != "dda":
-            return get_jo(id, "dda")
+        if src != "rodina":
+            return get_jo(id, "rodina")
         return None
     if id not in items[src]:
-        if src != "dda":
-            return get_jo(id, "dda")
+        if src != "rodina":
+            return get_jo(id, "rodina")
         return None
     return items[src][id]
 
@@ -205,15 +205,15 @@ def get_max(entry, property):
 
 def get_changed(id, src):
     if src not in changed:
-        if src != "dda":
-            return get_changed(id, "dda")
+        if src != "rodina":
+            return get_changed(id, "rodina")
         return None
 
     if id in changed[src]:
         return changed[src][id]
 
-    if id in changed["dda"]:
-        return changed["dda"][id]
+    if id in changed["rodina"]:
+        return changed["rodina"][id]
 
     return None
 
@@ -224,8 +224,8 @@ def get_maybe_changed(id, src):
         return changed
 
     if src not in affected:
-        if src != "dda":
-            return get_maybe_changed(id, "dda")
+        if src != "rodina":
+            return get_maybe_changed(id, "rodina")
         return None
 
     if id in affected[src] and affected[src][id] is not None:
@@ -239,17 +239,17 @@ def get_affected_parent(copy_from, src):
         return changed[src][copy_from]
 
     if src not in items or copy_from not in items[src]:
-        if src == "dda":
+        if src == "rodina":
             return None
-        return get_affected_parent(copy_from, "dda")
+        return get_affected_parent(copy_from, "rodina")
 
     if "copy-from" not in items[src][copy_from]:
         return None
 
     if copy_from == items[src][copy_from]["copy-from"]:
-        if src == "dda":
+        if src == "rodina":
             return None
-        return get_affected_parent(copy_from, "dda")
+        return get_affected_parent(copy_from, "rodina")
 
     return get_affected_parent(items[src][copy_from]["copy-from"], src)
 
@@ -302,12 +302,12 @@ def make_group(entry, default_container):
 
 def has_group(id, src):
     if src not in group_migration:
-        if src != "dda":
-            return has_group(id, "dda")
+        if src != "rodina":
+            return has_group(id, "rodina")
         return False
     if id not in group_migration[src]:
-        if src != "dda":
-            return has_group(id, "dda")
+        if src != "rodina":
+            return has_group(id, "rodina")
         return False
     return True
 
@@ -329,7 +329,7 @@ def adjust_item_group(jo, src):
 
         use_src = src
         if src not in affected:
-            use_src = "dda"
+            use_src = "rodina"
         if entry["item"] not in affected[use_src]:
             continue
 
@@ -425,13 +425,13 @@ def adjust_item_group(jo, src):
 
 def get_parent_charges(result, src):
     if src not in recipes:
-        if src != "dda":
-            get_parent_charges(result, "dda")
+        if src != "rodina":
+            get_parent_charges(result, "rodina")
         return None
 
     if result not in recipes[src]:
-        if src != "dda":
-            get_parent_charges(result, "dda")
+        if src != "rodina":
+            get_parent_charges(result, "rodina")
         return None
 
     if "charges" in recipes[src][result]:
@@ -581,7 +581,7 @@ for root, directories, filenames in os.walk(json_path):
             continue
 
         path = os.path.join(root, filename)
-        collect_data(path, "dda")
+        collect_data(path, "rodina")
 
 for f in os.scandir(os.path.join(args_dict["dir"], "mods")):
     if f.is_dir():
@@ -600,7 +600,7 @@ for root, directories, filenames in os.walk(json_path):
             continue
 
         path = os.path.join(root, filename)
-        new = gen_new(path, "dda")
+        new = gen_new(path, "rodina")
         if new is not None:
             with open(path, "w", encoding="utf-8") as jf:
                 json.dump(new, jf, ensure_ascii=False)
@@ -627,7 +627,7 @@ for root, directories, filenames in os.walk(json_path):
             continue
 
         path = os.path.join(root, filename)
-        new = gen_new(path, "dda", False)
+        new = gen_new(path, "rodina", False)
         if new is not None:
             with open(path, "w", encoding="utf-8") as jf:
                 json.dump(new, jf, ensure_ascii=False)

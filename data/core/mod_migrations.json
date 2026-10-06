@@ -1,6 +1,16 @@
 [
   {
     "type": "mod_migration",
+    "id": "dda",
+    "new_id": "rodina"
+  },
+  {
+    "type": "mod_migration",
+    "id": "dda_tutorial",
+    "new_id": "rodina-tutorial"
+  },
+  {
+    "type": "mod_migration",
     "//": "Removed in 0.I",
     "id": "Graphical_Overmap",
     "removal_reason": "Superseded by proper support for overmap tilesets through \"Use tiles to display overmap\" option under Graphics -> Tileset Options."

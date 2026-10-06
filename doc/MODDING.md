@@ -40,10 +40,10 @@ Here is a full list of supported values for MOD_INFO:
     "authors": [ "Me", "A really cool friend" ],    // Optional, but you probably want to put your name here. More than one entry can be added, as shown.
     "description": "The best mod ever!",            // Optional
     "category": "graphical",                        // Optional, see below for a full list of supported values. The category is just for information purposes, so don't worry if your mod might fit more than one category.
-    "dependencies": [ "dda" ],                      // Optional. What other mods are required for this mod to function? If your mod depends on another one to work properly, adding that mod's `id` attribute to the array causes Cataclysm to force that mod to load before yours.
+    "dependencies": [ "rodina" ],                   // Optional. What other mods are required for this mod to function? If your mod depends on another one to work properly, adding that mod's `id` attribute to the array causes Cataclysm to force that mod to load before yours.
     "loading_images": [ "cool.png", "cool2.png" ],  // Optional. Filenames for any loading screen images the mod may have. Loading screens are only present on the graphical/"tiles" version. Only supports .png files. Actual loading screen image will be picked randomly from among all mod loading screens, including other loaded mods that have loading screens.
     "version": "1.3.bacon",                         // Optional. For informational purposes only. No versioning system is provided, so whatever you put here is up to you. Feel free to name your versions after ice cream.
-    "core": false,                                  // Optional, default false. Core mods will be loaded before anything else. Used for DDA, third-party use will not be supported.
+    "core": false,                                  // Optional, default false. Core mods will be loaded before anything else. Used for RODINA, third-party use will not be supported.
     "obsolete": false,                              // Optional, default false. Obsolete mods are loaded for legacy saves but cannot be used when starting new worlds
     "path": "my_mod_files/"                         // Optional, this directory relative to modinfo.json's location will be considered the mod's actual directory. e.g. if modinfo.json is located at C:\CDDA\my_mod\modinfo.json, then the mod files would be considered to be at C:\CDDA\my_mod\my_mod_files\. A file such as C:\CDDA\my_mod\some_other_file.json would be ignored, it isn't located inside the specified directory.
   }
@@ -335,7 +335,7 @@ Currently, adjusting multiple stats or flags requires separate `monster_adjustme
 External options control a variety of global settings not appropriate for region settings, from `SHOW_MUTATION_SELECTOR` that lets the
 player choose mutations you get on mutation, to `ETERNAL_WEATHER` which let's you pick a type of weather to always be active.
 All the external options available are located in `/core/external_options.json` along with comments explaining their purpose and their DDA values.
-To change the values in a mod you just define an identical object to the dda one with the value changed.
+To change the values in a mod you just define an identical object to the core one with the value changed.
 
 You can also override any source defined option with an external option of the same name in the same way (Eg if the player has `AUTO_FEATURES` set to false
 but you make an external option `AUTO_FEATURES` set to true when the player loads the mod their value will be changed to true).

@@ -1,0 +1,11 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "rodina",
+    "name": "Cataclysm: RODINA",
+    "description": "Core content for Cataclysm: RODINA",
+    "category": "content",
+    "core": true,
+    "path": "../../json"
+  }
+]

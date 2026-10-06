@@ -57,6 +57,6 @@ jobs:
       - name: Build Linux game and tests
         run: make -j3 TILES=0 SOUND=0 RELEASE=1 LOCALIZE=1 LANGUAGES=ru PCH=0 ASTYLE=0 LINTJSON=0 TESTS=1 RUNTESTS=0
       - name: Load game data and core mod
-        run: ./cataclysm-rodina --check-mods dda
+        run: ./cataclysm-rodina --check-mods rodina
       - name: Run unit and integration tests
         run: ./tests/cata_test --rng-seed time --order lex --user-dir=ci_test_user_dir '~[slow] ~[.],starting_items'

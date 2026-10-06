@@ -1138,7 +1138,7 @@ void ter_t::load( const JsonObject &jo, const std::string &src )
 {
     map_data_common_t::load( jo, src );
     optional( jo, was_loaded, "move_cost", movecost );
-    assign( jo, "max_volume", max_volume, src == "dda" );
+    assign( jo, "max_volume", max_volume, src == "rodina" );
     optional( jo, was_loaded, "trap", trap_id_str );
     optional( jo, was_loaded, "heat_radiation", heat_radiation );
 

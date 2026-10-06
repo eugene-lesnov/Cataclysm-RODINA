@@ -271,7 +271,7 @@ void vpart_info::handle_inheritance( const vpart_info &copy_from,
 
 void vpart_info::load( const JsonObject &jo, const std::string &src )
 {
-    const bool strict = src == "dda";
+    const bool strict = src == "rodina";
 
     assign( jo, "name", name_, strict );
     assign( jo, "item", base_item, strict );

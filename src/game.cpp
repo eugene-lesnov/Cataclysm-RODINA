@@ -313,7 +313,7 @@ static const json_character_flag json_flag_VINE_RAPPEL( "VINE_RAPPEL" );
 static const json_character_flag json_flag_WALL_CLING( "WALL_CLING" );
 static const json_character_flag json_flag_WEB_RAPPEL( "WEB_RAPPEL" );
 
-static const mod_id MOD_INFORMATION_dda( "dda" );
+static const mod_id MOD_INFORMATION_rodina( "rodina" );
 
 static const mongroup_id GROUP_BLACK_ROAD( "GROUP_BLACK_ROAD" );
 
@@ -3413,11 +3413,11 @@ void game::load_world_modfiles()
         }
     } ), mods.end() );
 
-    // require at least one core mod (saves before version 6 may implicitly require dda pack)
+    // require at least one core mod (saves before version 6 may implicitly require the core pack)
     if( std::none_of( mods.begin(), mods.end(), []( const mod_id & e ) {
     return e->core;
 } ) ) {
-        mods.insert( mods.begin(), MOD_INFORMATION_dda );
+        mods.insert( mods.begin(), MOD_INFORMATION_rodina );
     }
 
     // this code does not care about mod dependencies,

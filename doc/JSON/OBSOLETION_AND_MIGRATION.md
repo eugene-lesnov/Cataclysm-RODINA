@@ -336,7 +336,7 @@ if ! lang/extract_json_strings.py \
     "name": "Military Profession Pack",
     "description": "Numerous military themed professions",
     "category": "rebalance",
-    "dependencies": [ "dda" ],
+    "dependencies": [ "rodina" ],
     "obsolete": true
   }
 ```
@@ -376,4 +376,3 @@ The above would lead to this (translated) query:
 Mod old_mod_id has been removed with reason: Removed because it hasn't been maintained in a decade.
 Remove it from this world's modlist?
 ```
-

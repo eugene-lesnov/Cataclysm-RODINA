@@ -26,6 +26,17 @@ static const mod_id MOD_INFORMATION_user_default( "user:default" );
 
 static const std::string MOD_SEARCH_FILE( "modinfo.json" );
 
+static mod_id migrate_legacy_mod_id( const mod_id &id )
+{
+    if( id.str() == "dda" ) {
+        return mod_id( "rodina" );
+    }
+    if( id.str() == "dda_tutorial" ) {
+        return mod_id( "rodina-tutorial" );
+    }
+    return id;
+}
+
 mod_id get_mod_base_id_from_src( mod_id src )
 {
     mod_id base_mod_id;
@@ -289,7 +300,13 @@ void mod_manager::load_modfile( const JsonObject &jo, const cata_path &path )
     assign( jo, "description", modfile.description );
     assign( jo, "version", modfile.version );
     assign( jo, "dependencies", modfile.dependencies );
+    for( mod_id &dependency : modfile.dependencies ) {
+        dependency = migrate_legacy_mod_id( dependency );
+    }
     assign( jo, "conflicts", modfile.conflicts );
+    for( mod_id &conflict : modfile.conflicts ) {
+        conflict = migrate_legacy_mod_id( conflict );
+    }
     assign( jo, "core", modfile.core );
     assign( jo, "obsolete", modfile.obsolete );
     assign( jo, "loading_images", modfile.loading_images );

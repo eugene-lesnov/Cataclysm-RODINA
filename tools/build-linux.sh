@@ -55,11 +55,11 @@ python3 build-scripts/validate_json.py
 
 smoke_dir=$(mktemp -d)
 trap 'rm -r -- "$smoke_dir"' EXIT
-mkdir -p "$smoke_dir/cataclysm-rodina"
+mkdir -p "$smoke_dir/config"
 if ! XDG_CONFIG_HOME="$smoke_dir" XDG_DATA_HOME="$smoke_dir" \
-    timeout 300 "$binary" --userdir "$smoke_dir" --check-mods dda; then
+    timeout 300 "$binary" --userdir "$smoke_dir" --configdir "$smoke_dir/config" --check-mods rodina; then
     echo "Game data smoke check failed. Recent game log:" >&2
-    tail -n 40 "$smoke_dir/cataclysm-rodina/debug.log" >&2 || true
+    tail -n 40 "$smoke_dir/config/debug.log" >&2 || true
     exit 1
 fi
 

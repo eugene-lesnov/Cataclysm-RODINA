@@ -1,10 +1,11 @@
 [
   {
     "type": "MOD_INFO",
-    "id": "dda_tutorial",
+    "id": "rodina-tutorial",
     "name": "Tutorial",
-    "description": "Tutorial for Cataclysm-DDA",
+    "description": "Tutorial for Cataclysm: RODINA",
     "category": "content",
+    "dependencies": [ "rodina" ],
     "//": "Marked as obsolete so it doesn't appear in the mod selection list",
     "obsolete": true
   }

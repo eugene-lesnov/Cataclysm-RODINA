@@ -110,7 +110,7 @@ def write_mutations(mutations: list[Mutation], filename: Path) -> None:
             fd.write("\n\n")
 
 
-def extract_mutations(file: Path, mod: str = "dda") -> list[Mutation]:
+def extract_mutations(file: Path, mod: str = "rodina") -> list[Mutation]:
     """Extract mutations from :file:."""
 
     with open(file, "rb") as fd:
@@ -203,9 +203,9 @@ def cli(paths, outfile, include_mods) -> None:
         write_mutations(mutations, outfile)
         click.echo(f"Mutations written to {outfile}")
     else:
-        dda = Mod("dda", [], [])
-        mod_stack: list[tuple[Mod, str]] = [(dda, "PLACEHOLDER")]
-        mods: dict[str, Mod] = {"dda": dda}
+        rodina = Mod("rodina", [], [])
+        mod_stack: list[tuple[Mod, str]] = [(rodina, "PLACEHOLDER")]
+        mods: dict[str, Mod] = {"rodina": rodina}
 
         def move_stack(
             file, mod_stack: list[tuple[Mod, str]]
@@ -225,8 +225,8 @@ def cli(paths, outfile, include_mods) -> None:
                     extract_mutations(file, mod_stack[-1][0].id_)
                 )
 
-            elif os.path.split(os.path.split(file)[0])[1] == "dda":
-                # Skip DDA
+            elif os.path.split(os.path.split(file)[0])[1] == "rodina":
+                # Skip the core mod
                 continue
             else:
                 # Add a new mod to the stack.
@@ -285,7 +285,7 @@ def cli(paths, outfile, include_mods) -> None:
             except AttributeError:
                 breakpoint()
 
-            if mod.id_ == "dda":
+            if mod.id_ == "rodina":
                 writepath = outfile
             else:
                 writepath = outfile.parent.joinpath(mod.id_ + ".md")

@@ -1926,7 +1926,7 @@ std::string game_info::mods_loaded()
     mod_names.reserve( mod_ids.size() );
     std::transform( mod_ids.begin(), mod_ids.end(),
     std::back_inserter( mod_names ), []( const mod_id & mod ) -> std::string {
-        // e.g. "Dark Days Ahead [dda]".
+        // e.g. "Cataclysm: RODINA [rodina]".
         return string_format( "%s [%s]", mod->name(), mod->ident.str() );
     } );
 
