@@ -9,17 +9,17 @@ if [[ $(uname -s) != Linux ]]; then
     exit 1
 fi
 
-for tool in make g++ pkg-config msgfmt python3 timeout; do
+for tool in make g++ pkg-config msgfmt python3 tar timeout; do
     if ! command -v "$tool" >/dev/null 2>&1; then
         echo "Missing build tool: $tool" >&2
         exit 1
     fi
 done
 
-for package in sdl2 SDL2_image SDL2_ttf freetype2 zlib; do
+for package in sdl2 SDL2_image SDL2_ttf SDL2_mixer freetype2 zlib; do
     if ! pkg-config --exists "$package"; then
         echo "Missing development package for $package (pkg-config)." >&2
-        echo "Install the SDL2, SDL2_image, SDL2_ttf, FreeType and zlib development packages." >&2
+        echo "Install the SDL2, SDL2_image, SDL2_ttf, SDL2_mixer, FreeType and zlib development packages." >&2
         exit 1
     fi
 done
@@ -30,15 +30,18 @@ if [[ ! $jobs =~ ^[1-9][0-9]*$ ]]; then
     exit 1
 fi
 
-make -j"$jobs" TILES=1 SOUND=0 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
-    BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=0 \
-    USE_XDG_DIR=1 all
+build_flags=(TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru
+    BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=0
+    USE_XDG_DIR=1)
+make -j"$jobs" "${build_flags[@]}" all
 make -C lang LANGUAGES=ru
+make "${build_flags[@]}" bindist
 
 binary="$repo_root/cataclysm-rodina-tiles"
 catalog="$repo_root/lang/mo/ru/LC_MESSAGES/cataclysm-dda.mo"
-if [[ ! -x $binary || ! -s $catalog ]]; then
-    echo "Build is missing the executable or Russian localization catalog." >&2
+archive="$repo_root/cataclysm-rodina-0.1-dev.tar.gz"
+if [[ ! -x $binary || ! -s $catalog || ! -s $archive ]]; then
+    echo "Build is missing the executable, Russian localization catalog, or archive." >&2
     exit 1
 fi
 
@@ -60,4 +63,4 @@ if ! XDG_CONFIG_HOME="$smoke_dir" XDG_DATA_HOME="$smoke_dir" \
     exit 1
 fi
 
-echo "Linux graphical build and smoke check passed: $binary"
+echo "Linux graphical build and smoke check passed: $archive"

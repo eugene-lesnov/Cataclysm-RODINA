@@ -11,17 +11,8 @@
 #   or make CROSS=i586-mingw32msvc-
 #   or whichever prefix your crosscompiler uses
 #      as long as its name contains mingw32
-# Linux cross-compile to OSX with osxcross
-#   make CROSS=x86_64-apple-darwin15-
-#        NATIVE=osx
-#        CLANG=1
-#        OSXCROSS=1
-#        LIBSDIR=../libs
-#        FRAMEWORKSDIR=../Frameworks
 # Win32 (non-Cygwin)
 #   Run: make NATIVE=win32
-# OS X
-#   Run: make NATIVE=osx
 # Emscripten
 #   Run: make NATIVE=emscripten
 
@@ -159,11 +150,6 @@ endif
 
 TARGET = $(BUILD_PREFIX)$(TARGET_NAME)
 TILESTARGET = $(BUILD_PREFIX)$(TILES_TARGET_NAME)
-ifeq ($(TILES), 1)
-  APPTARGET = $(TILESTARGET)
-else
-  APPTARGET = $(TARGET)
-endif
 W32TILESTARGET = $(BUILD_PREFIX)$(TILES_TARGET_NAME).exe
 W32TARGET = $(BUILD_PREFIX)$(TARGET_NAME).exe
 CHKJSON_BIN = $(BUILD_PREFIX)chkjson
@@ -549,7 +535,7 @@ CXXFLAGS += $(WARNINGS) $(DEBUG) $(DEBUGSYMS) $(PROFILE) $(OTHERS)
 TOOL_CXXFLAGS = -DCATA_IN_TOOL
 DEFINES += -DZSTD_STATIC_LINKING_ONLY -DZSTD_DISABLE_ASM
 
-BINDIST_EXTRAS += README.md CREDITS.md data doc LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
+BINDIST_EXTRAS += README.md CREDITS.md doc LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
 BINDIST    = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).tar.gz
 W32BINDIST = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).zip
 BINDIST_CMD    = tar --transform=s@^$(BINDIST_DIR)@cataclysm-rodina-$(VERSION)@ -czvf $(BINDIST) $(BINDIST_DIR)
@@ -750,7 +736,6 @@ endif
 
 ifeq ($(TILES), 1)
   SDL = 1
-  BINDIST_EXTRAS += gfx
   ifeq ($(NATIVE),osx)
     ifdef FRAMEWORK
       OSX_INC = -F$(FRAMEWORKSDIR) \
@@ -860,6 +845,10 @@ else
     CXXFLAGS += -DNCURSES_INTERNALS
   endif
 endif # TILES
+
+ifneq ($(TILES),1)
+  BINDIST_EXTRAS += data
+endif
 
 ifeq ($(SOUND), 1)
   ifeq ($(NATIVE),osx)
@@ -1266,95 +1255,16 @@ endif
 endif
 
 
-ifeq ($(NATIVE), osx)
-APPTARGETDIR=RODINA.app
-APPRESOURCESDIR=$(APPTARGETDIR)/Contents/Resources
-APPDATADIR=$(APPRESOURCESDIR)/data
-ifndef FRAMEWORK
-  SDLLIBSDIR=$(shell sdl2-config --libs | sed -n 's/.*-L\([^ ]*\) .*/\1/p')
-endif  # ifndef FRAMEWORK
-
-appclean:
-	rm -rf $(APPTARGETDIR)
-	rm -f data/options.txt
-	rm -f data/keymap.txt
-	rm -f data/auto_pickup.txt
-	rm -f data/fontlist.txt
-
-build-data/osx/AppIcon.icns: build-data/osx/AppIcon.iconset
-	iconutil -c icns $<
-
-ifdef OSXCROSS
-app: appclean version $(APPTARGET) $(ZZIP_BIN)
-else
-app: appclean version build-data/osx/AppIcon.icns $(APPTARGET) $(ZZIP_BIN)
-endif
-	mkdir -p $(APPTARGETDIR)/Contents
-	cp build-data/osx/Info.plist $(APPTARGETDIR)/Contents/
-	mkdir -p $(APPTARGETDIR)/Contents/MacOS
-	cp build-data/osx/Cataclysm.sh $(APPTARGETDIR)/Contents/MacOS/
-	mkdir -p $(APPRESOURCESDIR)
-	cp $(APPTARGET) $(APPRESOURCESDIR)/
-	cp $(ZZIP_BIN) $(APPRESOURCESDIR)/
-	cp build-data/osx/AppIcon.icns $(APPRESOURCESDIR)/
-	mkdir -p $(APPDATADIR)
-	cp data/fontdata.json $(APPDATADIR)
-	cp -R data/core $(APPDATADIR)
-	cp -R data/font $(APPDATADIR)
-	cp -R data/json $(APPDATADIR)
-	cp -R data/mods $(APPDATADIR)
-	cp -R data/names $(APPDATADIR)
-	cp -R data/raw $(APPDATADIR)
-	cp -R data/motd $(APPDATADIR)
-	cp -R data/credits $(APPDATADIR)
-	cp -R data/title $(APPDATADIR)
-ifdef LANGUAGES
-	$(MAKE) -C lang
-	mkdir -p $(APPRESOURCESDIR)/lang/mo/
-	cp -pR lang/mo/* $(APPRESOURCESDIR)/lang/mo/
-endif
-ifeq ($(SOUND), 1)
-	cp -R data/sound $(APPDATADIR)
-endif  # ifeq ($(SOUND), 1)
-	cp -R gfx $(APPRESOURCESDIR)/
-ifdef FRAMEWORK
-	cp -R $(FRAMEWORKSDIR)/SDL2.framework $(APPRESOURCESDIR)/
-	cp -R $(FRAMEWORKSDIR)/SDL2_image.framework $(APPRESOURCESDIR)/
-	cp -R $(FRAMEWORKSDIR)/SDL2_ttf.framework $(APPRESOURCESDIR)/
-ifeq ($(SOUND), 1)
-	cp -R $(FRAMEWORKSDIR)/SDL2_mixer.framework $(APPRESOURCESDIR)/
-endif  # ifeq ($(SOUND), 1)
-endif  # ifdef FRAMEWORK
-	dylibbundler -of -b -x $(APPRESOURCESDIR)/$(APPTARGET) -d $(APPRESOURCESDIR)/ -p @executable_path/
-
-dmgdistclean:
-	rm -rf RODINA
-	rm -f Cataclysm-RODINA.dmg
-	rm -rf lang/mo
-
-dmgdist: dmgdistclean $(L10N) app
-ifdef OSXCROSS
-	mkdir RODINA
-	cp -a $(APPTARGETDIR) RODINA/$(APPTARGETDIR)
-	cp build-data/osx/DS_Store RODINA/.DS_Store
-	cp build-data/osx/dmgback.png RODINA/.background.png
-	ln -s /Applications RODINA/Applications
-	genisoimage -quiet -D -V "Cataclysm: RODINA" -no-pad -r -apple -o Cataclysm-RODINA-uncompressed.dmg RODINA/
-	dmg dmg Cataclysm-RODINA-uncompressed.dmg Cataclysm-RODINA.dmg
-	rm Cataclysm-RODINA-uncompressed.dmg
-else
-	plutil -convert binary1 $(APPTARGETDIR)/Contents/Info.plist
-	dmgbuild -s build-data/osx/dmgsettings.py "Cataclysm: RODINA" Cataclysm-RODINA.dmg
-endif
-
-endif  # ifeq ($(NATIVE), osx)
-
 $(BINDIST): distclean version $(TARGET) $(ZZIP_BIN) $(L10N) $(BINDIST_EXTRAS) $(BINDIST_LOCALE)
 	mkdir -p $(BINDIST_DIR)
 	cp -R $(TARGET) $(ZZIP_BIN) $(BINDIST_EXTRAS) $(BINDIST_DIR)
 	$(foreach lib,$(INSTALL_EXTRAS), install --strip $(lib) $(BINDIST_DIR))
 ifdef LANGUAGES
 	cp -R --parents lang/mo $(BINDIST_DIR)
+endif
+ifeq ($(TILES),1)
+	git archive --format=tar HEAD data gfx | tar -xf - -C $(BINDIST_DIR)
+	printf 'data %s\ngfx %s\n' "$$(git rev-parse HEAD:data)" "$$(git rev-parse HEAD:gfx)" > $(BINDIST_DIR)/RESOURCE-TREES.txt
 endif
 	$(BINDIST_CMD)
 
