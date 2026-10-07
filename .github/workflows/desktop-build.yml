@@ -122,8 +122,20 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "MSBuild failed." }
       - name: Load game data and core mod
         run: |
-          .\cataclysm-rodina-tiles.exe --check-mods rodina
-          if ($LASTEXITCODE -ne 0) { throw "Game data smoke check failed." }
+          $smokeDir = Join-Path $env:RUNNER_TEMP 'rodina-smoke'
+          $configDir = (Join-Path $smokeDir 'config') + [IO.Path]::DirectorySeparatorChar
+          New-Item -ItemType Directory -Force -Path $configDir | Out-Null
+          .\cataclysm-rodina-tiles.exe --userdir "$smokeDir" --configdir "$configDir" --check-mods rodina
+          if ($LASTEXITCODE -ne 0) {
+            $debugLog = Join-Path $configDir 'debug.log'
+            if (Test-Path $debugLog) {
+              Get-Content $debugLog | Select-String 'ERROR :'
+              Get-Content $debugLog -Tail 120
+            } else {
+              Write-Host "No debug log found at $debugLog"
+            }
+            throw "Game data smoke check failed."
+          }
       - name: Run unit and integration tests
         run: |
           .\Cataclysm-test-vcpkg-static-Release-x64.exe --rng-seed time --order lex '~[slow] ~[.],starting_items'
