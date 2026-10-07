@@ -138,7 +138,7 @@ jobs:
           $smokeDir = Join-Path $env:RUNNER_TEMP 'rodina-smoke'
           $configDir = (Join-Path $smokeDir 'config') + [IO.Path]::DirectorySeparatorChar
           New-Item -ItemType Directory -Force -Path $configDir | Out-Null
-          .\cataclysm-rodina-tiles.exe --userdir "$smokeDir" --configdir "$configDir" --check-mods rodina
+          .\cataclysm-rodina-tiles.exe --userdir "$smokeDir" --configdir "$configDir" --check-mods rodina | Out-Host
           if ($LASTEXITCODE -ne 0) {
             $debugLog = Join-Path $configDir 'debug.log'
             if (Test-Path $debugLog) {
