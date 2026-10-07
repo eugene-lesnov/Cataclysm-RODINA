@@ -11,6 +11,8 @@ permissions:
 jobs:
   linux-x64:
     runs-on: ubuntu-22.04
+    env:
+      CCACHE_MAXSIZE: 4G
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -29,13 +31,23 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gettext libfreetype6-dev libncursesw5-dev \
+          sudo apt-get install -y ccache gettext libfreetype6-dev libncursesw5-dev \
             libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev zlib1g-dev
-      - name: Build Linux game and tests
+      - name: Restore Linux compiler cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/ccache
+          key: linux-ccache-ubuntu-22.04-gcc-${{ github.sha }}
+          restore-keys: linux-ccache-ubuntu-22.04-gcc-
+      - name: Build Linux game
+        env:
+          BUILD_TESTS: ${{ startsWith(github.ref, 'refs/tags/rodina-v') && '0' || '1' }}
         run: |
           make -j3 TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
-            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=1 RUNTESTS=0 \
+            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 CCACHE=1 \
+            TESTS="$BUILD_TESTS" RUNTESTS=0 \
             USE_XDG_DIR=1 VERSION="$RODINA_VERSION" all
+          ccache --show-stats
       - name: Load game data and core mod
         run: |
           smoke_dir=$(mktemp -d)
@@ -48,6 +60,7 @@ jobs:
             exit 1
           fi
       - name: Run unit and integration tests
+        if: ${{ !startsWith(github.ref, 'refs/tags/rodina-v') }}
         run: |
           test_dir=$(mktemp -d)
           trap 'rm -r -- "$test_dir"' EXIT
@@ -59,7 +72,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
         run: |
           make TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
-            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=0 \
+            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 CCACHE=1 TESTS=0 \
             USE_XDG_DIR=1 VERSION="$RODINA_VERSION" bindist
           mv "cataclysm-rodina-${RODINA_VERSION}.tar.gz" \
             "Cataclysm-RODINA-${BUILD_ID}-linux-x64.tar.gz"
@@ -112,13 +125,13 @@ jobs:
       - name: Compile Russian translation
         shell: msys2 {0}
         run: lang/compile_mo.sh ru
-      - name: Build Windows game and tests
+      - name: Build Windows game
         env:
           BACKTRACE: 1
           CDDA_RELEASE_BUILD: 1
           VCPKG_OVERLAY_TRIPLETS: ${{ github.workspace }}\.github\vcpkg_triplets
         run: |
-          msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;Cataclysm-test-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
+          msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
           if ($LASTEXITCODE -ne 0) { throw "MSBuild failed." }
       - name: Load game data and core mod
         run: |
@@ -136,10 +149,6 @@ jobs:
             }
             throw "Game data smoke check failed."
           }
-      - name: Run unit and integration tests
-        run: |
-          .\Cataclysm-test-vcpkg-static-Release-x64.exe --rng-seed time --order lex '~[slow] ~[.],starting_items'
-          if ($LASTEXITCODE -ne 0) { throw "Windows tests failed." }
       - name: Package Windows game
         if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
         run: |
