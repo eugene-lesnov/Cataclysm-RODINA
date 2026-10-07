@@ -44,10 +44,13 @@ jobs:
         run: |
           astyle -Q -X --dry-run src/game.h >/dev/null
           make astyle-check
-      - name: Validate Russian translation
+      - name: Validate translations
         run: |
-          msgfmt -c -o /dev/null lang/po/ru.po
-          python3 tools/check_po_printf_format.py ru
+          for po_file in lang/po/*.po; do
+            echo "Checking $po_file"
+            msgfmt -c -o /dev/null "$po_file"
+          done
+          python3 tools/check_po_printf_format.py
 
   desktop-build:
     needs: validate

@@ -150,7 +150,7 @@ def print_message(msg, segments):
 
 po_files = []
 for file in sorted(os.listdir("lang/po")):
-    if file.endswith(".po") and not file.endswith("en.po"):
+    if file.endswith(".po"):
         po_files.append(file)
 files_to_check = []
 if len(sys.argv) == 1:

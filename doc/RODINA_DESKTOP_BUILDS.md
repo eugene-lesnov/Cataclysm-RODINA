@@ -4,7 +4,7 @@ RODINA supports Linux x64 and Windows x64 archives. macOS builds are not support
 
 ## Continuous integration
 
-[RODINA CI](../.github/workflows/rodina-ci.yml) runs on pull requests to `master`, pushes to `master`, and `rodina-v*` tag pushes. It validates JSON, C++ formatting, and the Russian catalog. The same source commit is then built on Linux and Windows. Both platforms load the RODINA core data and run the regular C++ test suite, excluding slow and hidden tests.
+[RODINA CI](../.github/workflows/rodina-ci.yml) runs on pull requests to `master`, pushes to `master`, and `rodina-v*` tag pushes. It validates JSON, C++ formatting, and every translation catalog in `lang/po/`. The same source commit is then built on Linux and Windows. Both platforms load the RODINA core data and run the regular C++ test suite, excluding slow and hidden tests.
 
 Pull request builds cancel older runs for the same pull request. Builds on `master` and release tags run to completion. CI also has a manual `workflow_dispatch` entry point.
 
