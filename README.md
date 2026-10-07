@@ -1,12 +1,6 @@
 # Cataclysm: RODINA
 
-Cataclysm: RODINA is a fork of [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA) based on the stable `0.I-1` release. It adapts the game's places, names, characters, items, and text to a post-Soviet setting while retaining CDDA's gameplay systems.
-
-RODINA is in early development. Much of the original game content is still present, and there is no stable RODINA release yet.
-
-## Builds
-
-GitHub Actions builds and checks Linux x64 and Windows x64 on pull requests and pushes to `master`. Release tags produce draft prereleases with both archives. See the [desktop build guide](doc/RODINA_DESKTOP_BUILDS.md) for supported configurations and local Linux builds. macOS builds are not supported.
+Cataclysm: RODINA is a fork of [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA) based on the stable release. It adapts the game's places, names, characters, items, and text to a post-Soviet setting while retaining CDDA's gameplay systems.
 
 ## Feedback
 
