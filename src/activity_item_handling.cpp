@@ -3503,7 +3503,7 @@ bool generic_multi_activity_handler( player_activity &act, Character &you, bool 
     if( !check_only && you.is_npc() ) {
         if( src_sorted.empty() ) {
             add_msg( m_neutral,
-                     _( "%1s failed to perform the %2$s activity because no suitable locations were found." ),
+                     _( "%1$s failed to perform the %2$s activity because no suitable locations were found." ),
                      you.disp_name(), activity_to_restore.c_str() );
         } else if( reason.no_path ) {
             add_msg( m_neutral,

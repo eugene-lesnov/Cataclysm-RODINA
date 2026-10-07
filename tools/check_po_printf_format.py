@@ -111,6 +111,8 @@ def check_po_file(file):
     pofile = polib.pofile(file)
     errors = []
     for entry in pofile.translated_entries():
+        if "no-c-format" in entry.flags:
+            continue
         if entry.msgid_plural:
             # TODO: implement proper check for plural messages
             continue
