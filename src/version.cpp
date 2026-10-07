@@ -12,7 +12,11 @@
 
 #endif
 
+#ifndef RODINA_VERSION
+#define RODINA_VERSION "0.1-dev"
+#endif
+
 const char *getVersionString()
 {
-    return "RODINA 0.1-dev (based on CDDA 0.I-1, commit " VERSION ")";
+    return "RODINA " RODINA_VERSION " (based on CDDA 0.I-1, commit " VERSION ")";
 }

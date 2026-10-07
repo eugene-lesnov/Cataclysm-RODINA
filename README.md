@@ -6,7 +6,7 @@ RODINA is in early development. Much of the original game content is still prese
 
 ## Builds
 
-Linux x64 and Windows x64 archives are built on demand with GitHub Actions. See the [desktop build guide](doc/RODINA_DESKTOP_BUILDS.md) for the supported configurations, local Linux build, and artifact verification. macOS builds are not supported.
+GitHub Actions builds and checks Linux x64 and Windows x64 on pull requests and pushes to `master`. Release tags produce draft prereleases with both archives. See the [desktop build guide](doc/RODINA_DESKTOP_BUILDS.md) for supported configurations and local Linux builds. macOS builds are not supported.
 
 ## Feedback
 

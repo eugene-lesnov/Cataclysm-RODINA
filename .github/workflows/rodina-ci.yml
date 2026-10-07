@@ -5,27 +5,31 @@ on:
   push:
     branches:
       - master
-      - 'feature/**'
-      - 'integrate/**'
+    tags:
+      - 'rodina-v*'
   pull_request:
     branches:
       - master
-      - 'feature/**'
-      - 'integrate/**'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: rodina-ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: rodina-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate release tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^rodina-v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]
       - name: Install validation tools
         run: |
           sudo apt-get update
@@ -45,18 +49,54 @@ jobs:
           msgfmt -c -o /dev/null lang/po/ru.po
           python3 tools/check_po_printf_format.py ru
 
-  linux-build-and-test:
-    if: github.event_name == 'workflow_dispatch'
+  desktop-build:
+    needs: validate
+    uses: ./.github/workflows/desktop-build.yml
+    permissions:
+      contents: read
+
+  draft-release:
+    if: startsWith(github.ref, 'refs/tags/rodina-v')
+    needs: [validate, desktop-build]
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Install build dependencies
+      - name: Download game archives
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: Cataclysm-RODINA-${{ github.sha }}-*
+          path: dist
+          merge-multiple: true
+      - name: Verify archives and resource trees
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libncursesw5-dev gettext
-      - name: Build Linux game and tests
-        run: make -j3 TILES=0 SOUND=0 RELEASE=1 LOCALIZE=1 LANGUAGES=ru PCH=0 ASTYLE=0 LINTJSON=0 TESTS=1 RUNTESTS=0
-      - name: Load game data and core mod
-        run: ./cataclysm-rodina --check-mods rodina
-      - name: Run unit and integration tests
-        run: ./tests/cata_test --rng-seed time --order lex --user-dir=ci_test_user_dir '~[slow] ~[.],starting_items'
+          version="${GITHUB_REF_NAME#rodina-v}"
+          linux="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-linux-x64.tar.gz"
+          windows="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-windows-x64.zip"
+          tar -tzf "$linux" >/dev/null
+          unzip -tq "$windows" >/dev/null
+          tar -xOf "$linux" "cataclysm-rodina-${version}/VERSION.txt" | grep -Fx "rodina version: $version"
+          unzip -p "$windows" VERSION.txt | tr -d '\r' | grep -Fx "rodina version: $version"
+          tar -xOf "$linux" "cataclysm-rodina-${version}/VERSION.txt" | grep -Fx "commit sha: $GITHUB_SHA"
+          unzip -p "$windows" VERSION.txt | tr -d '\r' | grep -Fx "commit sha: $GITHUB_SHA"
+          tar -xOf "$linux" "cataclysm-rodina-${version}/RESOURCE-TREES.txt" > linux-trees.txt
+          unzip -p "$windows" RESOURCE-TREES.txt > windows-trees.txt
+          tr -d '\r' < windows-trees.txt > windows-normalized.txt
+          cmp linux-trees.txt windows-normalized.txt
+          cd dist
+          sha256sum *.tar.gz *.zip > SHA256SUMS.txt
+      - name: Create draft prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          printf 'Cataclysm: RODINA %s\n\nBased on CDDA 0.I-1. Commit: %s\n\nLinux requires system SDL2 libraries.\n' \
+            "$GITHUB_REF_NAME" "$GITHUB_SHA" > release-notes.txt
+          if gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft > release-state.txt 2>/dev/null; then
+            test "$(cat release-state.txt)" = true
+            gh release upload "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/SHA256SUMS.txt --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/SHA256SUMS.txt \
+              --verify-tag --draft --prerelease --latest=false \
+              --title "Cataclysm: RODINA $GITHUB_REF_NAME" --notes-file release-notes.txt
+          fi

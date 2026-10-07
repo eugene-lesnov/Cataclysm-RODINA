@@ -33,7 +33,7 @@
 #  make BACKTRACE=0
 # Use libbacktrace. Only has effect if BACKTRACE=1. (currently only for MinGW and Linux builds)
 #  make LIBBACKTRACE=1
-# Instruct $(AR) to create a thick archive, copying to object files to cataclysm.a
+# Instruct $(AR) to create a thick archive, copying object files to $(TARGET_NAME).a
 #  make THIN_AR=0
 # Compile localization files for specified languages
 #  make localization LANGUAGES="<lang_id_1>[ lang_id_2][ ...]"
@@ -1095,10 +1095,12 @@ version:
         VERSION_STRING="$$GITSHA$$DIRTYFLAG" ; \
         [ -e "$(SRC_DIR)/version.h" ] && \
           OLDVERSION=$$(grep '^#define VERSION ' $(SRC_DIR)/version.h | cut -d '"' -f2) ; \
-        if [ "x$$VERSION_STRING" != "x$$OLDVERSION" ]; then \
-          printf '// NOLINT(cata-header-guard)\n#define VERSION "%s"\n' "$$VERSION_STRING" > $(SRC_DIR)/version.h ; \
+        [ -e "$(SRC_DIR)/version.h" ] && \
+          OLDRODINA_VERSION=$$(grep '^#define RODINA_VERSION ' $(SRC_DIR)/version.h | cut -d '"' -f2) ; \
+        if [ "x$$VERSION_STRING" != "x$$OLDVERSION" ] || [ "x$(VERSION)" != "x$$OLDRODINA_VERSION" ]; then \
+          printf '// NOLINT(cata-header-guard)\n#define VERSION "%s"\n#define RODINA_VERSION "%s"\n' "$$VERSION_STRING" "$(VERSION)" > $(SRC_DIR)/version.h ; \
         fi ; \
-        printf 'product: Cataclysm: RODINA\nrodina version: 0.1-dev\nupstream version: CDDA 0.I-1\ncommit sha: %s\ncommit url: https://github.com/eugene-lesnov/Cataclysm-RODINA/commit/%s\n' "$$FULLSHA" "$$FULLSHA" > VERSION.txt \
+        printf 'product: Cataclysm: RODINA\nrodina version: %s\nupstream version: CDDA 0.I-1\ncommit sha: %s\ncommit url: https://github.com/eugene-lesnov/Cataclysm-RODINA/commit/%s\n' "$(VERSION)" "$$FULLSHA" "$$FULLSHA" > VERSION.txt \
      )
 
 prefix:
@@ -1345,10 +1347,10 @@ $(ZZIP_BIN): $(ZZIP_SOURCES) $(BUILD_PREFIX)zstd.a
 python-check:
 	flake8
 
-tests: version $(BUILD_PREFIX)cataclysm.a $(LOCALIZE_TEST_DEPS)
+tests: version $(BUILD_PREFIX)$(TARGET_NAME).a $(LOCALIZE_TEST_DEPS)
 	$(MAKE) -C tests
 
-check: version $(BUILD_PREFIX)cataclysm.a $(LOCALIZE_TEST_DEPS)
+check: version $(BUILD_PREFIX)$(TARGET_NAME).a $(LOCALIZE_TEST_DEPS)
 	$(MAKE) -C tests check
 
 clean-tests:

@@ -7,7 +7,7 @@
 SOURCES = $(wildcard *.cpp)
 OBJS = $(sort $(SOURCES:%.cpp=$(ODIR)/%.o))
 
-CATA_LIB=../$(BUILD_PREFIX)cataclysm.a
+CATA_LIB=../$(BUILD_PREFIX)cataclysm-rodina.a
 
 # If you invoke this makefile directly and the parent directory was
 # built with BUILD_PREFIX set, you must set it for this invocation as well.

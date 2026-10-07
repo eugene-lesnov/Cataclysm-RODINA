@@ -1,5 +1,9 @@
 $ErrorActionPreference = 'Stop'
 
+if (-not $env:RODINA_VERSION) {
+  $env:RODINA_VERSION = '0.1-dev'
+}
+
 if (Test-path bindist) {
   rm -Force -Recurse bindist
 }
@@ -27,4 +31,4 @@ Remove-Item $resourceArchive
 $dataTree = git rev-parse HEAD:data
 $gfxTree = git rev-parse HEAD:gfx
 "data $dataTree`ngfx $gfxTree" | Set-Content -Encoding ascii bindist/RESOURCE-TREES.txt
-Compress-Archive -Force -Path bindist/* -DestinationPath "cataclysm-rodina-0.1-dev.zip"
+Compress-Archive -Force -Path bindist/* -DestinationPath "cataclysm-rodina-$($env:RODINA_VERSION).zip"

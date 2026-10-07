@@ -2,6 +2,7 @@ name: RODINA Desktop Build
 run-name: "RODINA Desktop Build / ${{ github.head_ref || github.ref_name }} / ${{ github.event_name }}"
 
 on:
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -16,26 +17,58 @@ jobs:
           persist-credentials: false
       - name: Verify source commit
         run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Prepare build version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/rodina-v* ]]; then
+            echo "RODINA_VERSION=${GITHUB_REF_NAME#rodina-v}" >> "$GITHUB_ENV"
+            echo "BUILD_ID=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
+          else
+            echo "RODINA_VERSION=0.1-dev" >> "$GITHUB_ENV"
+            echo "BUILD_ID=$GITHUB_SHA" >> "$GITHUB_ENV"
+          fi
       - name: Install build dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext libfreetype6-dev libncursesw5-dev \
             libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev zlib1g-dev
-      - name: Build Linux archive
+      - name: Build Linux game and tests
         run: |
           make -j3 TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
-            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=0 \
-            USE_XDG_DIR=1 all
+            BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=1 RUNTESTS=0 \
+            USE_XDG_DIR=1 VERSION="$RODINA_VERSION" all
+      - name: Load game data and core mod
+        run: |
+          smoke_dir=$(mktemp -d)
+          trap 'rm -r -- "$smoke_dir"' EXIT
+          mkdir -p "$smoke_dir/config"
+          if ! XDG_CONFIG_HOME="$smoke_dir" XDG_DATA_HOME="$smoke_dir" \
+              timeout 300 ./cataclysm-rodina-tiles --userdir "$smoke_dir" \
+              --configdir "$smoke_dir/config" --check-mods rodina; then
+            tail -n 40 "$smoke_dir/config/debug.log" || true
+            exit 1
+          fi
+      - name: Run unit and integration tests
+        run: |
+          test_dir=$(mktemp -d)
+          trap 'rm -r -- "$test_dir"' EXIT
+          mkdir -p "$test_dir/cataclysm-rodina"
+          XDG_CONFIG_HOME="$test_dir" XDG_DATA_HOME="$test_dir" \
+            ./tests/cata_test --rng-seed time --order lex --user-dir="$test_dir" \
+            '~[slow] ~[.],starting_items'
+      - name: Package Linux game
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        run: |
           make TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
             BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 TESTS=0 \
-            USE_XDG_DIR=1 bindist
-          mv cataclysm-rodina-0.1-dev.tar.gz \
-            "Cataclysm-RODINA-${GITHUB_SHA}-linux-x64.tar.gz"
+            USE_XDG_DIR=1 VERSION="$RODINA_VERSION" bindist
+          mv "cataclysm-rodina-${RODINA_VERSION}.tar.gz" \
+            "Cataclysm-RODINA-${BUILD_ID}-linux-x64.tar.gz"
       - name: Upload Linux archive
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Cataclysm-RODINA-${{ github.sha }}-linux-x64
-          path: Cataclysm-RODINA-${{ github.sha }}-linux-x64.tar.gz
+          path: Cataclysm-RODINA-*-linux-x64.tar.gz
           if-no-files-found: error
           compression-level: 0
 
@@ -48,6 +81,15 @@ jobs:
       - name: Verify source commit
         run: |
           if ((git rev-parse HEAD) -ne $env:GITHUB_SHA) { throw "Checkout does not match GITHUB_SHA." }
+      - name: Prepare build version
+        run: |
+          if ($env:GITHUB_REF -like 'refs/tags/rodina-v*') {
+            "RODINA_VERSION=$($env:GITHUB_REF_NAME -replace '^rodina-v', '')" >> $env:GITHUB_ENV
+            "BUILD_ID=$env:GITHUB_REF_NAME" >> $env:GITHUB_ENV
+          } else {
+            "RODINA_VERSION=0.1-dev" >> $env:GITHUB_ENV
+            "BUILD_ID=$env:GITHUB_SHA" >> $env:GITHUB_ENV
+          }
       - name: Install CMake 3.31.6
         uses: lukka/get-cmake@56d043d188c3612951d8755da8f4b709ec951ad6 # v3.31.6
         with:
@@ -70,20 +112,32 @@ jobs:
       - name: Compile Russian translation
         shell: msys2 {0}
         run: lang/compile_mo.sh ru
-      - name: Build Windows archive
+      - name: Build Windows game and tests
         env:
           BACKTRACE: 1
           CDDA_RELEASE_BUILD: 1
           VCPKG_OVERLAY_TRIPLETS: ${{ github.workspace }}\.github\vcpkg_triplets
         run: |
-          msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
+          msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;Cataclysm-test-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
           if ($LASTEXITCODE -ne 0) { throw "MSBuild failed." }
+      - name: Load game data and core mod
+        run: |
+          .\cataclysm-rodina-tiles.exe --check-mods rodina
+          if ($LASTEXITCODE -ne 0) { throw "Game data smoke check failed." }
+      - name: Run unit and integration tests
+        run: |
+          .\Cataclysm-test-vcpkg-static-Release-x64.exe --rng-seed time --order lex '~[slow] ~[.],starting_items'
+          if ($LASTEXITCODE -ne 0) { throw "Windows tests failed." }
+      - name: Package Windows game
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        run: |
           .\build-scripts\windist.ps1
-          Move-Item cataclysm-rodina-0.1-dev.zip "Cataclysm-RODINA-$($env:GITHUB_SHA)-windows-x64.zip"
+          Move-Item "cataclysm-rodina-$($env:RODINA_VERSION).zip" "Cataclysm-RODINA-$($env:BUILD_ID)-windows-x64.zip"
       - name: Upload Windows archive
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Cataclysm-RODINA-${{ github.sha }}-windows-x64
-          path: Cataclysm-RODINA-${{ github.sha }}-windows-x64.zip
+          path: Cataclysm-RODINA-*-windows-x64.zip
           if-no-files-found: error
           compression-level: 0
