@@ -23,7 +23,8 @@
 
 #if defined(LOCALIZE)
 
-TEST_CASE( "localized_bite_events_use_real_creature_and_body_names", "[localized-event][translations]" )
+TEST_CASE( "localized_bite_events_use_real_creature_and_body_names",
+           "[localized-event][translations]" )
 {
     const std::string previous_language = TranslationManager::GetInstance().GetCurrentLanguage();
     on_out_of_scope restore_language( [&]() {
@@ -67,7 +68,8 @@ TEST_CASE( "localized_bite_events_use_real_creature_and_body_names", "[localized
            "Оса-переросток кусает вас в левую руку!" );
 }
 
-TEST_CASE( "localized_impact_events_choose_surface_and_number_forms", "[localized-event][translations]" )
+TEST_CASE( "localized_impact_events_choose_surface_and_number_forms",
+           "[localized-event][translations]" )
 {
     const std::string previous_language = TranslationManager::GetInstance().GetCurrentLanguage();
     on_out_of_scope restore_language( [&]() {
@@ -100,14 +102,14 @@ TEST_CASE( "localized_impact_events_choose_surface_and_number_forms", "[localize
            "Вас швырнуло на траву, и вы получили 2 единицы урона." );
 
     for( const auto &[damage, expected] : std::vector<std::pair<int, std::string>> {
-            { 0, "Вы приземлились на траву и получили 0 единиц урона." },
-            { 1, "Вы приземлились на траву и получили 1 единицу урона." },
-            { 2, "Вы приземлились на траву и получили 2 единицы урона." },
-            { 5, "Вы приземлились на траву и получили 5 единиц урона." },
-            { 11, "Вы приземлились на траву и получили 11 единиц урона." },
-            { 21, "Вы приземлились на траву и получили 21 единицу урона." },
-            { 22, "Вы приземлились на траву и получили 22 единицы урона." }
-        } ) {
+    { 0, "Вы приземлились на траву и получили 0 единиц урона." },
+    { 1, "Вы приземлились на траву и получили 1 единицу урона." },
+    { 2, "Вы приземлились на траву и получили 2 единицы урона." },
+    { 5, "Вы приземлились на траву и получили 5 единиц урона." },
+    { 11, "Вы приземлились на траву и получили 11 единиц урона." },
+    { 21, "Вы приземлились на траву и получили 21 единицу урона." },
+    { 22, "Вы приземлились на траву и получили 22 единицы урона." }
+} ) {
         CHECK( format_impact_event( grass, impact_event_result::landing_damage, damage ) == expected );
     }
 
@@ -174,7 +176,8 @@ TEST_CASE( "localized_item_events_keep_composite_labels_and_full_fallback",
     const recipe &product = product_id.obj();
 
     CHECK( format_toolmod_event( mod, tool ) ==
-           "На инструмент «" + tool.tname() + "» установлена модификация «" + mod.tname() + "»." );
+           "На инструмент «" + tool.tname() +
+           "» установлена модификация «" + mod.tname() + "»." );
     CHECK( format_craft_event( product, true ) ==
            "Изготовлено по памяти: " + product.result_name() + "." );
     CHECK( format_craft_event( product, false ) ==
@@ -199,12 +202,12 @@ TEST_CASE( "localized_quantity_keeps_visible_fraction_and_plural_category",
     set_language( "ru" );
 
     for( const auto &[decimal, display, category] :
-         std::vector<std::tuple<std::string, std::string, std::string>> {
-             { "0", "0", "many" }, { "1", "1", "one" }, { "2", "2", "few" },
-             { "5", "5", "many" }, { "11", "11", "many" }, { "21", "21", "one" },
-             { "22", "22", "few" }, { "1.5", "1,5", "other" },
-             { "2.0", "2,0", "other" }
-         } ) {
+    std::vector<std::tuple<std::string, std::string, std::string>> {
+    { "0", "0", "many" }, { "1", "1", "one" }, { "2", "2", "few" },
+    { "5", "5", "many" }, { "11", "11", "many" }, { "21", "21", "one" },
+    { "22", "22", "few" }, { "1.5", "1,5", "other" },
+    { "2.0", "2,0", "other" }
+} ) {
         const std::optional<localized_quantity> quantity = format_localized_quantity( decimal, "ru" );
         REQUIRE( quantity );
         CHECK( quantity->display == display );

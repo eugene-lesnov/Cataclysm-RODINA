@@ -36,7 +36,7 @@ namespace
 struct Argument {
     std::string role;
     std::variant<const Creature *, bodypart_id, const map_data_common_t *, const item *,
-                 const recipe *, int, std::string> value;
+        const recipe *, int, std::string> value;
 };
 
 struct PreparedMessage {
@@ -362,7 +362,8 @@ std::optional<std::string> format_bite_event( const monster &attacker, const Cre
                              "A creature bites another creature, but does no damage." ) :
                            ( player ? "A creature bites you." : "A creature bites another creature." );
     return format_event( context, source, { { "attacker", &attacker }, { "target", &target },
-        { "body", body } }, fallback );
+        { "body", body }
+    }, fallback );
 }
 
 std::optional<std::string> format_impact_event( const map_data_common_t &surface,
@@ -426,8 +427,8 @@ std::optional<std::string> format_shot_event( const Creature &attacker, const Cr
     const char *source = translate_marker_context( "rodina.event.shot.hit",
                          "{attacker_nomcap} shoots {target_acc}." );
     return format_event( "rodina.event.shot.hit", source,
-                         { { "attacker", &attacker }, { "target", &target } },
-                         "One creature shoots another creature." );
+    { { "attacker", &attacker }, { "target", &target } },
+    "One creature shoots another creature." );
 }
 
 std::optional<std::string> format_dodge_event( const Creature &defender, const monster &attacker )
@@ -439,13 +440,13 @@ std::optional<std::string> format_dodge_event( const Creature &defender, const m
         const char *source = translate_marker_context( "rodina.event.dodge.player",
                              "You dodge an attack from {attacker_nom}." );
         return format_event( "rodina.event.dodge.player", source,
-                             { { "attacker", &attacker } }, "You dodge an attack." );
+        { { "attacker", &attacker } }, "You dodge an attack." );
     }
     const char *source = translate_marker_context( "rodina.event.dodge.other",
                          "{defender_nomcap} dodges an attack from {attacker_nom}." );
     return format_event( "rodina.event.dodge.other", source,
-                         { { "defender", &defender }, { "attacker", &attacker } },
-                         "A creature dodges an attack." );
+    { { "defender", &defender }, { "attacker", &attacker } },
+    "A creature dodges an attack." );
 }
 
 std::optional<std::string> format_rapid_no_damage_event( const Creature &target )
@@ -457,7 +458,7 @@ std::optional<std::string> format_rapid_no_damage_event( const Creature &target 
     const char *source = translate_marker_context( "rodina.event.rapid.no_damage",
                          "You quickly strike {target_acc}, but deal no damage." );
     return format_event( "rodina.event.rapid.no_damage", source, { { "target", &target } },
-                         "You strike a creature quickly, but deal no damage." );
+    "You strike a creature quickly, but deal no damage." );
 }
 
 std::optional<std::string> format_toolmod_event( const item &mod, const item &tool )
@@ -465,8 +466,8 @@ std::optional<std::string> format_toolmod_event( const item &mod, const item &to
     const char *source = translate_marker_context( "rodina.event.toolmod.attached",
                          "You successfully attach {mod_label} to {tool_label}." );
     return format_event( "rodina.event.toolmod.attached", source,
-                         { { "mod", &mod }, { "tool", &tool } },
-                         "You attach a modification to a tool." );
+    { { "mod", &mod }, { "tool", &tool } },
+    "You attach a modification to a tool." );
 }
 
 std::optional<std::string> format_craft_event( const recipe &product, bool from_memory )
@@ -475,12 +476,12 @@ std::optional<std::string> format_craft_event( const recipe &product, bool from_
         const char *source = translate_marker_context( "rodina.event.craft.memory",
                              "Crafted from memory: {product_label}." );
         return format_event( "rodina.event.craft.memory", source, { { "product", &product } },
-                             "An item was crafted from memory." );
+        "An item was crafted from memory." );
     }
     const char *source = translate_marker_context( "rodina.event.craft.reference",
                          "Crafted using a reference: {product_label}." );
     return format_event( "rodina.event.craft.reference", source, { { "product", &product } },
-                         "An item was crafted using a reference." );
+    "An item was crafted using a reference." );
 }
 
 std::optional<std::string> format_burning_duration_event( int count, bool hours )
@@ -500,14 +501,14 @@ std::optional<std::string> format_burning_duration_event( const std::string &dec
         const char *source = translate_marker_context( "rodina.event.burning.hours",
                              "{count_category, select, one {It will finish burning in about {count_display} hour.} other {It will finish burning in about {count_display} hours.}}" );
         return format_event( "rodina.event.burning.hours", source,
-                             { { "count", decimal } },
-                             "It will finish burning in about an hour." );
+        { { "count", decimal } },
+        "It will finish burning in about an hour." );
     }
     const char *source = translate_marker_context( "rodina.event.burning.minutes",
                          "{count_category, select, one {It should take about {count_display} minute to finish burning.} other {It should take about {count_display} minutes to finish burning.}}" );
     return format_event( "rodina.event.burning.minutes", source,
-                         { { "count", decimal } },
-                         "It should finish burning soon." );
+    { { "count", decimal } },
+    "It should finish burning soon." );
 }
 
 #else
