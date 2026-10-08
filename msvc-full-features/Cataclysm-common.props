@@ -114,6 +114,9 @@
         FLAC.lib;
         FLAC++.lib;
         freetype$(VcpkgLibSuffix).lib;
+        icuin$(VcpkgLibSuffix).lib;
+        icuuc$(VcpkgLibSuffix).lib;
+        icudt$(VcpkgLibSuffix).lib;
         jpeg.lib;
         libpng16$(VcpkgLibSuffix).lib;
         modplug.lib;

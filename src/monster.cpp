@@ -48,6 +48,7 @@
 #include "magic_enchantment.h"
 #include "make_static.h"
 #include "map.h"
+#include "localized_event.h"
 #include "map_iterator.h"
 #include "map_scale_constants.h"
 #include "mapdata.h"
@@ -723,6 +724,29 @@ std::string monster::name( unsigned int quantity ) const
         result = string_format( pgettext( "fused mission monster", "*%s" ), result );
     }
     return result;
+}
+
+std::string monster::source_name() const
+{
+    if( !type ) {
+        return {};
+    }
+    if( !nickname.empty() ) {
+        return nickname;
+    }
+    std::string result = type->source_name();
+    if( !unique_name.empty() ) {
+        result += ": " + unique_name;
+    }
+    if( !mission_fused.empty() ) {
+        result.insert( result.begin(), '*' );
+    }
+    return result;
+}
+
+bool monster::has_custom_name() const
+{
+    return !nickname.empty() || !unique_name.empty() || !mission_fused.empty();
 }
 
 // TODO: MATERIALS put description in materials.json?
@@ -2162,15 +2186,30 @@ bool monster::melee_attack( Creature &target, float accuracy )
                 if( monster_missed ) {
                     add_msg( _( "%s misses you." ), u_see_me ? disp_name( false, true ) : _( "Something" ) );
                 } else {
-                    add_msg( _( "You dodge %s." ), u_see_me ? disp_name() : _( "something" ) );
+                    if( u_see_me ) {
+                        if( const std::optional<std::string> message = format_dodge_event( target, *this ) ) {
+                            add_msg( *message );
+                        } else {
+                            add_msg( _( "You dodge %s." ), disp_name() );
+                        }
+                    } else {
+                        add_msg( _( "You dodge %s." ), _( "something" ) );
+                    }
                 }
             } else if( target.is_npc() ) {
                 if( monster_missed ) {
                     add_msg( _( "%1$s misses %2$s!" ),
                              u_see_me ? disp_name( false, true ) : _( "Something" ), target.disp_name() );
                 } else {
-                    add_msg( _( "%1$s dodges %2$s attack." ),
-                             target.disp_name(), u_see_me ? name() : _( "something" ) );
+                    if( u_see_me ) {
+                        if( const std::optional<std::string> message = format_dodge_event( target, *this ) ) {
+                            add_msg( *message );
+                        } else {
+                            add_msg( _( "%1$s dodges %2$s attack." ), target.disp_name(), name() );
+                        }
+                    } else {
+                        add_msg( _( "%1$s dodges %2$s attack." ), target.disp_name(), _( "something" ) );
+                    }
                 }
             }
         } else if( target.is_avatar() ) {

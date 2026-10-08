@@ -90,7 +90,8 @@ if (TILES)
                 ${ICONV_INCLUDE_DIR})
         target_link_libraries(cataclysm-tiles-common PUBLIC
                 ${LIBINTL_LIBRARIES}
-                ${ICONV_LIBRARIES})
+                ${ICONV_LIBRARIES}
+                ICU::i18n ICU::uc ICU::data)
     endif ()
 
     if (CMAKE_USE_PTHREADS_INIT)
@@ -201,7 +202,8 @@ if (CURSES)
                 ${ICONV_INCLUDE_DIR})
         target_link_libraries(cataclysm-common PUBLIC
                 ${LIBINTL_LIBRARIES}
-                ${ICONV_LIBRARIES})
+                ${ICONV_LIBRARIES}
+                ICU::i18n ICU::uc ICU::data)
     endif ()
 
     target_include_directories(cataclysm-common PUBLIC

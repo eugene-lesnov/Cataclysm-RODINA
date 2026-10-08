@@ -36,6 +36,7 @@ class TranslationManager::Impl
         const char *Translate( const char *message ) const;
         const char *TranslatePlural( const char *singular, const char *plural, std::size_t n ) const;
         const char *TranslateWithContext( const char *context, const char *message ) const;
+        bool HasTranslation( const char *context, const char *message ) const;
         const char *TranslatePluralWithContext( const char *context, const char *singular,
                                                 const char *plural, std::size_t n ) const;
 };

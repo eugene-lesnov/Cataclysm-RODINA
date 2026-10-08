@@ -912,6 +912,8 @@ endif
 
 ifeq ($(LOCALIZE),1)
   DEFINES += -DLOCALIZE
+  CXXFLAGS += $(shell $(PKG_CONFIG) --cflags icu-i18n icu-uc)
+  LDFLAGS += $(shell $(PKG_CONFIG) --libs icu-i18n icu-uc)
   LOCALIZE_TEST_DEPS = localization $(TEST_MO)
 endif
 

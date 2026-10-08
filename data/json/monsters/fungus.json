@@ -448,6 +448,8 @@
     "id": "mon_wasp_small_fungus",
     "type": "MONSTER",
     "name": { "str": "fungal wasp" },
+    "name_accusative": { "ctxt": "monster_name_accusative", "str": "fungal wasp" },
+    "name_genitive": { "ctxt": "monster_name_genitive", "str": "fungal wasp" },
     "description": "A huge wasp the size of a large cat.  It's bright yellow markings have faded and ripped to show a disgusting mass of mold and rot beneath.  Her wings jut into extremely odd angles, making flight impossible.  Even still, it chases anything without any sense of self-preservation.",
     "default_faction": "fungus",
     "bodytype": "flying insect",
@@ -475,6 +477,7 @@
       },
       {
         "type": "bite",
+        "localized_event_messages": true,
         "cooldown": 4,
         "move_cost": 130,
         "damage_max_instance": [ { "damage_type": "cut", "amount": 4 } ],

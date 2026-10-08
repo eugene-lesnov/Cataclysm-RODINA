@@ -140,6 +140,8 @@ class monster : public Creature
         // Access
         std::string get_name() const override;
         std::string name( unsigned int quantity = 1 ) const; // Returns the monster's formal name
+        std::string source_name() const;
+        bool has_custom_name() const;
         std::string name_with_armor() const; // Name, with whatever our armor is called
         // the creature-class versions of the above
         std::string disp_name( bool possessive = false, bool capitalize_first = false ) const override;

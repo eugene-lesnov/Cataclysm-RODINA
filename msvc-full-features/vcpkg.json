@@ -15,6 +15,7 @@
           "features": [ "libflac", "mpg123", "libmodplug" ]
         },
         "sdl2-ttf",
+        "icu",
         {
           "name": "pdcurses",
           "version>=": "3.9#4"

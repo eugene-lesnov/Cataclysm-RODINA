@@ -70,6 +70,7 @@
 #include "lightmap.h"
 #include "line.h"
 #include "localized_comparator.h"
+#include "localized_event.h"
 #include "magic.h"
 #include "magic_enchantment.h"
 #include "make_static.h"
@@ -12767,6 +12768,7 @@ int Character::impact( const int force, const tripoint_bub_ms &p )
     // control the impact as well
     const bool slam = p != pos_bub();
     std::string target_name = "a swarm of bugs";
+    const map_data_common_t *impact_surface = nullptr;
     Creature *critter = get_creature_tracker().creature_at( p );
     map &here = get_map();
     if( critter != this && critter != nullptr ) {
@@ -12796,6 +12798,9 @@ int Character::impact( const int force, const tripoint_bub_ms &p )
     } else {
         // Slamming into terrain/furniture
         target_name = here.disp_name( p );
+        impact_surface = here.has_furn( p ) ?
+                         static_cast<const map_data_common_t *>( &here.furn( p ).obj() ) :
+                         static_cast<const map_data_common_t *>( &here.ter( p ).obj() );
         int hard_ground = here.has_flag( ter_furn_flag::TFLAG_DIGGABLE, p ) ? 0 : 3;
         armor_eff = 0.25f; // Not much
         // Get cut by stuff
@@ -12848,9 +12853,24 @@ int Character::impact( const int force, const tripoint_bub_ms &p )
         }
     }
 
+    const auto add_surface_message = [&]( impact_event_result result, game_message_type type,
+    int damage ) {
+        if( !impact_surface || !is_avatar() ) {
+            return false;
+        }
+        if( const std::optional<std::string> message = format_impact_event( *impact_surface, result,
+                damage ) ) {
+            add_msg_if_player( type, *message );
+            return true;
+        }
+        return false;
+    };
+
     if( !slam && mod < 1.0f && mod * force < 5 ) {
         // Perfect landing, no damage (regardless of armor)
-        add_msg_if_player( m_warning, _( "You land on %s." ), target_name );
+        if( !add_surface_message( impact_event_result::landing, m_warning, 0 ) ) {
+            add_msg_if_player( m_warning, _( "You land on %s." ), target_name );
+        }
         return 0;
     }
 
@@ -12880,23 +12900,35 @@ int Character::impact( const int force, const tripoint_bub_ms &p )
 
     if( total_dealt > 0 && is_avatar() ) {
         // "You slam against the dirt" is fine
-        add_msg( m_bad, _( "You are slammed against %1$s for %2$d damage." ),
-                 target_name, total_dealt );
+        const impact_event_result result = slam ? impact_event_result::slam_damage :
+                                           impact_event_result::landing_damage;
+        if( !add_surface_message( result, m_bad, total_dealt ) ) {
+            add_msg( m_bad, _( "You are slammed against %1$s for %2$d damage." ),
+                     target_name, total_dealt );
+        }
     } else if( is_avatar() && shock_absorbers ) {
-        add_msg( m_bad, _( "You are slammed against %s!" ),
-                 target_name, total_dealt );
-        add_msg( m_good, _( "…but your shock absorbers negate the damage!" ) );
+        const impact_event_result result = slam ? impact_event_result::slam_shock_absorbed :
+                                           impact_event_result::landing_shock_absorbed;
+        if( !add_surface_message( result, m_good, 0 ) ) {
+            add_msg( m_bad, _( "You are slammed against %s!" ),
+                     target_name, total_dealt );
+            add_msg( m_good, _( "…but your shock absorbers negate the damage!" ) );
+        }
     } else if( slam ) {
         // Only print this line if it is a slam and not a landing
         // Non-players should only get this one: player doesn't know how much damage was dealt
         // and landing messages for each slammed creature would be too much
-        add_msg_player_or_npc( m_bad,
-                               _( "You are slammed against %s." ),
-                               _( "<npcname> is slammed against %s." ),
-                               target_name );
+        if( !add_surface_message( impact_event_result::slam_no_damage, m_bad, 0 ) ) {
+            add_msg_player_or_npc( m_bad,
+                                   _( "You are slammed against %s." ),
+                                   _( "<npcname> is slammed against %s." ),
+                                   target_name );
+        }
     } else {
         // No landing message for NPCs
-        add_msg_if_player( m_warning, _( "You land on %s." ), target_name );
+        if( !add_surface_message( impact_event_result::landing, m_warning, 0 ) ) {
+            add_msg_if_player( m_warning, _( "You land on %s." ), target_name );
+        }
     }
 
     if( x_in_y( mod, 1.0f ) && !here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, p ) ) {

@@ -2044,6 +2044,8 @@
     "id": "mon_wasp_small",
     "type": "MONSTER",
     "name": { "str": "oversized wasp" },
+    "name_accusative": { "ctxt": "monster_name_accusative", "str": "oversized wasp" },
+    "name_genitive": { "ctxt": "monster_name_genitive", "str": "oversized wasp" },
     "description": "A huge wasp the size of a large cat with bright yellow markings on her jet-black carapace and a threatening stinger.  She flies around erratically, searching for smaller prey.",
     "default_faction": "wasp",
     "bodytype": "flying insect",
@@ -2071,6 +2073,7 @@
       },
       {
         "type": "bite",
+        "localized_event_messages": true,
         "cooldown": 4,
         "move_cost": 130,
         "damage_max_instance": [ { "damage_type": "cut", "amount": 10 } ],

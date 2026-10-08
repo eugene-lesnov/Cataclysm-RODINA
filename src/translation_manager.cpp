@@ -50,6 +50,11 @@ const char *TranslationManager::TranslateWithContext( const char *context,
     return impl->TranslateWithContext( context, message );
 }
 
+bool TranslationManager::HasTranslation( const char *context, const char *message ) const
+{
+    return impl->HasTranslation( context, message );
+}
+
 const char *TranslationManager::TranslatePluralWithContext( const char *context,
         const char *singular,
         const char *plural, std::size_t n ) const

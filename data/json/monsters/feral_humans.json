@@ -3,6 +3,8 @@
     "id": "mon_feral_human_pipe",
     "type": "MONSTER",
     "name": { "str": "feral human" },
+    "name_accusative": { "ctxt": "monster_name_accusative", "str": "feral human" },
+    "name_genitive": { "ctxt": "monster_name_genitive", "str": "feral human" },
     "description": "Their pupils are dilated and what can be seen of the iris and sclera are bloodshot.  This pipe-wielding maniac still breathes, but the zombies treat them like one of their own.",
     "default_faction": "zombie",
     "looks_like": "chud",

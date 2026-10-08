@@ -44,6 +44,7 @@
 #include "lightmap.h"
 #include "line.h"
 #include "localized_comparator.h"
+#include "localized_event.h"
 #include "magic_enchantment.h"
 #include "map.h"
 #include "map_iterator.h"
@@ -1259,9 +1260,13 @@ void Creature::messaging_projectile_attack( const Creature *source,
                 }
             } else if( source != this ) {
                 if( hit_selection.wp_hit.empty() ) {
-                    //~ 1$ - shooter, 2$ - target
-                    add_msg( _( "%1$s shoots %2$s." ),
-                             source->disp_name(), disp_name() );
+                    if( const std::optional<std::string> message = format_shot_event( *source, *this ) ) {
+                        add_msg( *message );
+                    } else {
+                        //~ 1$ - shooter, 2$ - target
+                        add_msg( _( "%1$s shoots %2$s." ),
+                                 source->disp_name(), disp_name() );
+                    }
                 } else {
                     //~ 1$ - shooter, 2$ - target, 3$ - weakpoint
                     add_msg( _( "%1$s shoots %2$s in %3$s." ),

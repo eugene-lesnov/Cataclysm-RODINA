@@ -72,15 +72,13 @@ class translation
          **/
         std::string translated( int num = 1 ) const;
 
+        const std::string &source_text() const;
+        bool has_translation() const;
+
         /**
-         * Methods exposing the underlying raw strings are not implemented, and
-         * probably should not if there's no good reason to do so. Most importantly,
-         * the underlying strings should not be re-saved to JSON: doing so risk
-         * the original string being changed during development and the saved
-         * string will then not be properly translated when loaded back. If you
-         * really want to save a translation, translate it early on, store it using
-         * `no_translation`, and retrieve it using `translated()` when saving.
-         * This ensures consistent behavior before and after saving and loading.
+         * The source text must not be re-saved to JSON: it may change during
+         * development, leaving a saved string without its translation. Use
+         * `no_translation` and `translated()` when saving displayed text.
          **/
         std::string untranslated() const = delete;
 

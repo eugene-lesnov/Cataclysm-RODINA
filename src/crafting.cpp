@@ -47,6 +47,7 @@
 #include "itype.h"
 #include "iuse.h"
 #include "line.h"
+#include "localized_event.h"
 #include "magic_enchantment.h"
 #include "map.h"
 #include "map_iterator.h"
@@ -1539,13 +1540,21 @@ void Character::complete_craft( item &craft, const std::optional<tripoint_bub_ms
         // TODO: reconsider recipe memorization
         if( knows_recipe( &making ) ) {
             if( is_avatar() ) {
-                add_msg( _( "You craft %s from memory." ), making.result_name() );
+                if( const std::optional<std::string> message = format_craft_event( making, true ) ) {
+                    add_msg( *message );
+                } else {
+                    add_msg( _( "You craft %s from memory." ), making.result_name() );
+                }
             } else {
                 add_msg( _( "%1s crafts %2s from memory." ), get_name(), making.result_name() );
             }
         } else {
             if( is_avatar() ) {
-                add_msg( _( "You craft %s using a reference." ), making.result_name() );
+                if( const std::optional<std::string> message = format_craft_event( making, false ) ) {
+                    add_msg( *message );
+                } else {
+                    add_msg( _( "You craft %s using a reference." ), making.result_name() );
+                }
             } else {
                 add_msg( _( "%1s crafts %2s using a reference." ), get_name(), making.result_name() );
             }
