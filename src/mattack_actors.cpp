@@ -34,7 +34,6 @@
 #include "item_location.h"
 #include "item_pocket.h"
 #include "line.h"
-#include "localized_event.h"
 #include "map.h"
 #include "map_iterator.h"
 #include "map_scale_constants.h"
@@ -700,23 +699,6 @@ int melee_actor::do_grab( monster &z, Creature *target, bodypart_id bp_id ) cons
     return 1;
 }
 
-static bool add_localized_bite_message( const monster &attacker, Creature &target,
-                                        const bodypart_id &body, bite_event_result result,
-                                        game_message_type type )
-{
-    const map &here = get_map();
-    if( !get_player_character().sees( here, attacker.pos_bub( here ) ) ||
-        ( !target.is_avatar() && !get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ) ) {
-        return false;
-    }
-    const std::optional<std::string> message = format_bite_event( attacker, target, body, result );
-    if( !message ) {
-        return false;
-    }
-    target.add_msg_player_or_npc( type, *message, *message );
-    return true;
-}
-
 bool melee_actor::call( monster &z ) const
 {
     map &here = get_map();
@@ -773,12 +755,9 @@ bool melee_actor::call( monster &z ) const
         game_message_type msg_type = target->is_avatar() ? m_warning : m_info;
         sfx::play_variant_sound( "mon_bite", "bite_miss", sfx::get_heard_volume( z.pos_bub() ),
                                  sfx::get_heard_angle( z.pos_bub() ) );
-        if( !localized_bite_event || !add_localized_bite_message( z, *target, bp_id,
-                bite_event_result::miss, msg_type ) ) {
-            target->add_msg_player_or_npc( msg_type, miss_msg_u,
-                                           get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? miss_msg_npc : translation(),
-                                           z.name(), body_part_name_accusative( bp_id ) );
-        }
+        target->add_msg_player_or_npc( msg_type, miss_msg_u,
+                                       get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? miss_msg_npc : translation(),
+                                       z.name(), body_part_name_accusative( bp_id ) );
         return true;
     }
 
@@ -786,12 +765,9 @@ bool melee_actor::call( monster &z ) const
         if( hitspread < 0 ) {
             sfx::play_variant_sound( "mon_bite", "bite_miss", sfx::get_heard_volume( z.pos_bub() ),
                                      sfx::get_heard_angle( z.pos_bub() ) );
-            if( !localized_bite_event || !add_localized_bite_message( z, *target, bp_id,
-                    bite_event_result::miss, msg_type ) ) {
-                target->add_msg_player_or_npc( msg_type, miss_msg_u,
-                                               get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? miss_msg_npc : translation(),
-                                               mon_name, body_part_name_accusative( bp_id ) );
-            }
+            target->add_msg_player_or_npc( msg_type, miss_msg_u,
+                                           get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? miss_msg_npc : translation(),
+                                           mon_name, body_part_name_accusative( bp_id ) );
             return true;
         }
     }
@@ -924,13 +900,9 @@ bool melee_actor::call( monster &z ) const
     } else {
         sfx::play_variant_sound( "mon_bite", "bite_miss", sfx::get_heard_volume( z.pos_bub() ),
                                  sfx::get_heard_angle( z.pos_bub() ) );
-        const bodypart_id &message_body = grabbed_bp_id ? *grabbed_bp_id : bp_id;
-        if( !localized_bite_event || !add_localized_bite_message( z, *target, message_body,
-                bite_event_result::no_damage, msg_type ) ) {
-            target->add_msg_player_or_npc( msg_type, no_dmg_msg_u,
-                                           get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? no_dmg_msg_npc : translation(),
-                                           mon_name, body_part_name_accusative( message_body ) );
-        }
+        target->add_msg_player_or_npc( msg_type, no_dmg_msg_u,
+                                       get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? no_dmg_msg_npc : translation(),
+                                       mon_name, body_part_name_accusative( grabbed_bp_id.value_or( bp_id ) ) );
         if( !effects_require_dmg ) {
             for( const mon_effect_data &eff : effects ) {
                 if( x_in_y( eff.chance, 100 ) ) {
@@ -1004,12 +976,9 @@ void melee_actor::on_damage( monster &z, Creature &target, dealt_damage_instance
     const bodypart_id &bp = dealt.bp_hit ;
     const std::string mon_name = get_player_character().sees( here, z.pos_bub( here ) ) ?
                                  z.disp_name( false, true ) : _( "Something" );
-    if( !localized_bite_event || !add_localized_bite_message( z, target, bp,
-            bite_event_result::damage, msg_type ) ) {
-        target.add_msg_player_or_npc( msg_type, hit_dmg_u,
-                                      get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? hit_dmg_npc : translation(),
-                                      mon_name, body_part_name_accusative( bp ) );
-    }
+    target.add_msg_player_or_npc( msg_type, hit_dmg_u,
+                                  get_option<bool>( "LOG_MONSTER_ATTACK_MONSTER" ) ? hit_dmg_npc : translation(),
+                                  mon_name, body_part_name_accusative( bp ) );
 
     for( const mon_effect_data &eff : effects ) {
         if( x_in_y( eff.chance, 100 ) ) {
@@ -1044,7 +1013,6 @@ void bite_actor::load_internal( const JsonObject &obj, const std::string &src )
 {
     // Infection chance is a % (i.e. 5/100)
     melee_actor::load_internal( obj, src );
-    optional( obj, was_loaded, "localized_event_messages", localized_bite_event, false );
     // If min hitsize is undefined restrict it to not biting eyes/mouths
     // Hands are fair game, though
     if( hitsize_min == -1 ) {

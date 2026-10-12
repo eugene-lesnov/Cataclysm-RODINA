@@ -58,7 +58,6 @@
 #include "magic_teleporter_list.h"
 #include "make_static.h"
 #include "map.h"
-#include "localized_event.h"
 #include "map_iterator.h"
 #include "map_scale_constants.h"
 #include "map_selector.h"
@@ -3410,22 +3409,15 @@ void iexamine::kiln_full( Character &, const tripoint_bub_ms &examp )
         int hours = to_hours<int>( time_left );
         int minutes = to_minutes<int>( time_left ) + 1;
         if( minutes > 60 ) {
-            if( const std::optional<std::string> message = format_burning_duration_event( hours, true ) ) {
-                add_msg( *message );
-            } else {
-                add_msg( n_gettext( "It will finish burning in about %d hour.",
-                                    "It will finish burning in about %d hours.", hours ), hours );
-            }
+            add_msg( n_gettext( "It will finish burning in about %d hour.",
+                                "It will finish burning in about %d hours.",
+                                hours ), hours );
         } else if( minutes > 30 ) {
             add_msg( _( "It will finish burning in less than an hour." ) );
         } else {
-            if( const std::optional<std::string> message = format_burning_duration_event( minutes,
-                    false ) ) {
-                add_msg( *message );
-            } else {
-                add_msg( n_gettext( "It should take about %d minute to finish burning.",
-                                    "It should take about %d minutes to finish burning.", minutes ), minutes );
-            }
+            add_msg( n_gettext( "It should take about %d minute to finish burning.",
+                                "It should take about %d minutes to finish burning.",
+                                minutes ), minutes );
         }
         return;
     }
@@ -3549,22 +3541,15 @@ void iexamine::arcfurnace_full( Character &, const tripoint_bub_ms &examp )
         int hours = to_hours<int>( time_left );
         int minutes = to_minutes<int>( time_left ) + 1;
         if( minutes > 60 ) {
-            if( const std::optional<std::string> message = format_burning_duration_event( hours, true ) ) {
-                add_msg( *message );
-            } else {
-                add_msg( n_gettext( "It will finish burning in about %d hour.",
-                                    "It will finish burning in about %d hours.", hours ), hours );
-            }
+            add_msg( n_gettext( "It will finish burning in about %d hour.",
+                                "It will finish burning in about %d hours.",
+                                hours ), hours );
         } else if( minutes > 30 ) {
             add_msg( _( "It will finish burning in less than an hour." ) );
         } else {
-            if( const std::optional<std::string> message = format_burning_duration_event( minutes,
-                    false ) ) {
-                add_msg( *message );
-            } else {
-                add_msg( n_gettext( "It should take about %d minute to finish burning.",
-                                    "It should take about %d minutes to finish burning.", minutes ), minutes );
-            }
+            add_msg( n_gettext( "It should take about %d minute to finish burning.",
+                                "It should take about %d minutes to finish burning.",
+                                minutes ), minutes );
         }
         return;
     }

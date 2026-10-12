@@ -430,23 +430,8 @@ struct mtype {
     private:
 
         translation name;
-        translation name_accusative;
-        translation name_genitive;
         translation description;
     public:
-
-        const translation &accusative_name() const {
-            return name_accusative;
-        }
-        const translation &genitive_name() const {
-            return name_genitive;
-        }
-        const std::string &source_name() const {
-            return name.source_text();
-        }
-        bool has_localized_name() const {
-            return name.has_translation();
-        }
 
         // Pet food category this monster is in
         pet_food_data petfood;

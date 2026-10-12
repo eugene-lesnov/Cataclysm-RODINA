@@ -48,7 +48,6 @@
 #include "item_location.h"
 #include "itype.h"
 #include "line.h"
-#include "localized_event.h"
 #include "magic_enchantment.h"
 #include "make_static.h"
 #include "map.h"
@@ -153,7 +152,6 @@ static const move_mode_id move_mode_prone( "prone" );
 
 static const skill_id skill_melee( "melee" );
 static const skill_id skill_spellcraft( "spellcraft" );
-static const matec_id tec_rapid_event( "RAPID" );
 static const skill_id skill_unarmed( "unarmed" );
 
 static const trait_id trait_ARM_TENTACLES( "ARM_TENTACLES" );
@@ -173,8 +171,7 @@ static const trait_id trait_VINES3( "VINES3" );
 static const weapon_category_id weapon_category_UNARMED( "UNARMED" );
 
 static void player_hit_message( Character *attacker, const std::string &message,
-                                Creature &t, int dam, bool crit = false, const matec_id &technique_id = tec_none,
-                                const std::string &wp_hit = {} );
+                                Creature &t, int dam, bool crit = false, bool technique = false, const std::string &wp_hit = {} );
 static int stumble( Character &u, const item_location &weap );
 static std::string melee_message( const ma_technique &tec, Character &p,
                                   const dealt_damage_instance &ddi );
@@ -903,7 +900,7 @@ bool Character::melee_attack_abstract( Creature &t, bool allow_special,
             // Treat monster as seen if we see it before or after the attack
             if( seen || player_character.sees( here, t ) ) {
                 std::string message = melee_message( technique, *this, dealt_dam );
-                player_hit_message( this, message, t, dam, critical_hit, technique.id,
+                player_hit_message( this, message, t, dam, critical_hit, technique.id != tec_none,
                                     dealt_dam.wp_hit );
             } else {
                 add_msg_player_or_npc( m_good, _( "You hit something." ),
@@ -2595,15 +2592,8 @@ std::string melee_message( const ma_technique &tec, Character &p,
 
 // display the hit message for an attack
 void player_hit_message( Character *attacker, const std::string &message,
-                         Creature &t, int dam, bool crit, const matec_id &technique_id,
-                         const std::string &wp_hit )
+                         Creature &t, int dam, bool crit, bool technique, const std::string &wp_hit )
 {
-    if( dam <= 0 && attacker->is_avatar() && technique_id == tec_rapid_event && wp_hit.empty() ) {
-        if( const std::optional<std::string> localized = format_rapid_no_damage_event( t ) ) {
-            attacker->add_msg_if_player( m_neutral, *localized );
-            return;
-        }
-    }
     map &here = get_map();
     const tripoint_bub_ms pos = attacker->pos_bub( here );
     const tripoint_bub_ms t_pos = t.pos_bub( here );
@@ -2628,7 +2618,7 @@ void player_hit_message( Character *attacker, const std::string &message,
         if( attacker->is_npc() && !player_character.has_trait( trait_DEBUG_NIGHTVISION ) ) {
             //~ NPC hits something (critical)
             msg = string_format( _( "%s.  Critical!" ), message );
-        } else if( technique_id != tec_none && !wp_hit.empty() ) {
+        } else if( technique && !wp_hit.empty() ) {
             //~ %1$s: "someone hits something", %2$d: damage dealt, %3$s: the weakpoint hit
             msg = string_format( _( "%1$s for %2$d damage, and hit it in %3$s.  Critical!" ), message, dam,
                                  wp_hit );
@@ -2642,7 +2632,7 @@ void player_hit_message( Character *attacker, const std::string &message,
         if( attacker->is_npc() && !player_character.has_trait( trait_DEBUG_NIGHTVISION ) ) {
             //~ NPC hits something
             msg = string_format( _( "%s." ), message );
-        } else if( technique_id != tec_none && !wp_hit.empty() ) {
+        } else if( technique && !wp_hit.empty() ) {
             //~ %1$s: "someone hits something", %2$d: damage dealt, %3$s: the weakpoint hit
             msg = string_format( _( "%1$s for %2$d damage, and hit it in %3$s." ), message, dam, wp_hit );
         } else {

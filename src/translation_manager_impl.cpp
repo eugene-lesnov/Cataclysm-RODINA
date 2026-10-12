@@ -215,13 +215,6 @@ const char *TranslationManager::Impl::TranslateWithContext( const char *context,
     return message;
 }
 
-bool TranslationManager::Impl::HasTranslation( const char *context, const char *message ) const
-{
-    const std::string query = context ? ConstructContextualQuery( context, message ) : message;
-    const auto entry = LookupString( query.c_str() );
-    return entry && documents[entry->first].GetTranslatedString( entry->second )[0] != '\0';
-}
-
 const char *TranslationManager::Impl::TranslatePluralWithContext( const char *context,
         const char *singular,
         const char *plural,

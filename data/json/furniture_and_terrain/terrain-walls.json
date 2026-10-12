@@ -115,8 +115,6 @@
     "id": "t_wall",
     "copy-from": "t_abstract_wall_wood",
     "name": "wall",
-    "name_accusative": { "ctxt": "terrain_name_accusative", "str": "wall" },
-    "impact_relation": "barrier",
     "description": "A standard wall consisting of a wooden support structure filled with insulation and drywalled.  Painted a neutral off-white or cream color, it could use some more vibrant paint.  Looks flammable.",
     "roof": "t_flat_roof",
     "extend": { "flags": [ "WIRED_WALL" ] },

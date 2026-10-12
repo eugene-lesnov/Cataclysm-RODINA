@@ -753,14 +753,6 @@ void mtype::load( const JsonObject &jo, const std::string &src )
 
     name.make_plural();
     mandatory( jo, was_loaded, "name", name );
-    if( jo.has_member( "name" ) && !jo.has_member( "name_accusative" ) ) {
-        name_accusative = translation();
-    }
-    optional( jo, was_loaded, "name_accusative", name_accusative );
-    if( jo.has_member( "name" ) && !jo.has_member( "name_genitive" ) ) {
-        name_genitive = translation();
-    }
-    optional( jo, was_loaded, "name_genitive", name_genitive );
 
     optional( jo, was_loaded, "description", description );
 

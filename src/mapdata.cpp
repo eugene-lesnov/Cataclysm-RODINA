@@ -1005,11 +1005,6 @@ void init_mapdata()
 void map_data_common_t::load( const JsonObject &jo, const std::string &src )
 {
     mandatory( jo, was_loaded, "name", name_ );
-    if( jo.has_member( "name" ) && !jo.has_member( "name_accusative" ) ) {
-        name_accusative_ = translation();
-    }
-    optional( jo, was_loaded, "name_accusative", name_accusative_ );
-    optional( jo, was_loaded, "impact_relation", impact_relation_ );
     mandatory( jo, was_loaded, "description", description );
 
     if( jo.has_member( "copy-from" ) ) {

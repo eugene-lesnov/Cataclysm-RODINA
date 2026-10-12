@@ -2179,8 +2179,6 @@
     "id": "t_grass",
     "copy-from": "t_natural_floor_abstract",
     "name": "grass",
-    "name_accusative": { "ctxt": "terrain_name_accusative", "str": "grass" },
-    "impact_relation": "ground",
     "description": "An area of hardy Kentucky bluegrass about ankle high.  Cutting the grass short enough would destroy the root system, causing this area to turn into a patch of dirt.",
     "color": "green",
     "transforms_into": "t_grass_grazed",

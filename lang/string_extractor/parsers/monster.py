@@ -58,12 +58,6 @@ def parse_monster(json, origin):
         write_text(json["name"], origin, comment="Monster name", plural=True)
     elif "id" in json:
         name = json["id"]
-    if "name_accusative" in json:
-        write_text(json["name_accusative"], origin,
-                   comment="Accusative name of monster \"{}\"".format(name))
-    if "name_genitive" in json:
-        write_text(json["name_genitive"], origin,
-                   comment="Genitive name of monster \"{}\"".format(name))
 
     parse_monster_concrete(json, origin, name)
 

@@ -7,9 +7,6 @@ def parse_furniture(json, origin):
     name = get_singular_name(json.get("name", json["id"]))
     if "name" in json:
         write_text(json["name"], origin, comment="Furniture name")
-    if "name_accusative" in json:
-        write_text(json["name_accusative"], origin,
-                   comment="Accusative name of furniture \"{}\"".format(name))
     if "description" in json:
         write_text(json["description"], origin,
                    comment="Description of furniture \"{}\"".format(name))

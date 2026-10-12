@@ -8,9 +8,6 @@ def parse_terrain(json, origin):
     if "name" in json:
         name = get_singular_name(json["name"])
         write_text(json["name"], origin, comment="Terrain name")
-    if "name_accusative" in json:
-        write_text(json["name_accusative"], origin,
-                   comment="Accusative name of terrain \"{}\"".format(name))
     if "description" in json:
         write_text(json["description"], origin,
                    comment="Description of terrain \"{}\"".format(name))

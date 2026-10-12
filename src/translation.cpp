@@ -326,27 +326,6 @@ std::string translation::translated( const int num ) const
     return *cached_translation;
 }
 
-const std::string &translation::source_text() const
-{
-    return raw;
-}
-
-bool translation::has_translation() const
-{
-    if( raw.empty() ) {
-        return false;
-    }
-    if( !needs_translation ) {
-        return true;
-    }
-#if defined(LOCALIZE)
-    return TranslationManager::GetInstance().HasTranslation( ctxt ? ctxt->c_str() : nullptr,
-            raw.c_str() );
-#else
-    return false;
-#endif
-}
-
 bool translation::empty() const
 {
     return raw.empty();

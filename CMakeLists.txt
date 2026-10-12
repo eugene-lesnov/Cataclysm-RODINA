@@ -404,7 +404,6 @@ endif()
 
 # Ok. Now create build and install recipes
 if (LOCALIZE)
-    find_package(ICU REQUIRED COMPONENTS i18n uc data)
     add_subdirectory(lang)
     add_definitions(-DLOCALIZE)
 endif ()

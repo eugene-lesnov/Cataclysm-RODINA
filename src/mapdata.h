@@ -497,8 +497,6 @@ struct map_data_common_t {
         friend ter_t null_terrain_t();
         // The (untranslated) plaintext name of the terrain/furniture type the user would see (i.e. dirt)
         translation name_;
-        translation name_accusative_;
-        std::string impact_relation_;
 
         // Hardcoded examination function; what happens when the terrain/furniture is examined
         iexamine_functions examine_func;
@@ -518,18 +516,6 @@ struct map_data_common_t {
         }
 
         std::string name() const;
-        const translation &accusative_name() const {
-            return name_accusative_;
-        }
-        const std::string &source_name() const {
-            return name_.source_text();
-        }
-        bool has_localized_name() const {
-            return name_.has_translation();
-        }
-        const std::string &impact_relation() const {
-            return impact_relation_;
-        }
 
         /*
         * The symbol drawn on the screen for the terrain/furniture. Please note that

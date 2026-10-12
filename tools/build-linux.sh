@@ -16,10 +16,10 @@ for tool in make g++ pkg-config msgfmt python3 tar timeout; do
     fi
 done
 
-for package in sdl2 SDL2_image SDL2_ttf SDL2_mixer freetype2 zlib icu-i18n icu-uc; do
+for package in sdl2 SDL2_image SDL2_ttf SDL2_mixer freetype2 zlib; do
     if ! pkg-config --exists "$package"; then
         echo "Missing development package for $package (pkg-config)." >&2
-        echo "Install the SDL2, SDL2_image, SDL2_ttf, SDL2_mixer, FreeType, zlib and ICU development packages." >&2
+        echo "Install the SDL2, SDL2_image, SDL2_ttf, SDL2_mixer, FreeType and zlib development packages." >&2
         exit 1
     fi
 done

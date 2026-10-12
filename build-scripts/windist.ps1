@@ -21,11 +21,6 @@ $extras = "doc", "LICENSE.txt", "LICENSE-OFL-Terminus-Font.txt", "README.md", "V
 ForEach ($extra in $extras) {
 	cp -r $extra bindist
 }
-$icuCopyright = 'msvc-full-features/vcpkg_installed/x64-windows-static/share/icu/copyright'
-if (-not (Test-Path $icuCopyright)) {
-  throw "ICU license is missing: $icuCopyright"
-}
-cp $icuCopyright bindist/LICENSE-ICU.txt
 
 $resourceArchive = Join-Path $env:TEMP ("rodina-resources-" + [guid]::NewGuid() + ".tar")
 git archive --format=tar --output="$resourceArchive" HEAD data gfx

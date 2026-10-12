@@ -31,7 +31,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ccache gettext libfreetype6-dev libicu-dev libncursesw5-dev \
+          sudo apt-get install -y ccache gettext libfreetype6-dev libncursesw5-dev \
             libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev zlib1g-dev
       - name: Restore Linux compiler cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0

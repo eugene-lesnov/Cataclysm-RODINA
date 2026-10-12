@@ -140,7 +140,6 @@ class melee_actor : public mattack_actor
         bool attack_upper = true;
         grab grab_data;
         bool is_grab = false;
-        bool localized_bite_event = false;
 
         std::vector<effect_on_condition_id> eoc;
 

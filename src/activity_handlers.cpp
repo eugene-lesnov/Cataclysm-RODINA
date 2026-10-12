@@ -56,7 +56,6 @@
 #include "magic.h"
 #include "make_static.h"
 #include "map.h"
-#include "localized_event.h"
 #include "map_iterator.h"
 #include "mapdata.h"
 #include "map_selector.h"
@@ -1572,12 +1571,8 @@ void activity_handlers::toolmod_add_finish( player_activity *act, Character *you
     }
     item &tool = *act->targets[0];
     item &mod = *act->targets[1];
-    if( const std::optional<std::string> message = format_toolmod_event( mod, tool ) ) {
-        you->add_msg_if_player( m_good, *message );
-    } else {
-        you->add_msg_if_player( m_good, _( "You successfully attached the %1$s to your %2$s." ),
-                                mod.tname(), tool.tname() );
-    }
+    you->add_msg_if_player( m_good, _( "You successfully attached the %1$s to your %2$s." ),
+                            mod.tname(), tool.tname() );
     tool.put_in( mod, pocket_type::MOD );
     tool.on_contents_changed();
     act->targets[1].remove_item();
