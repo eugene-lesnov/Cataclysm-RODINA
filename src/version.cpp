@@ -16,6 +16,11 @@
 #define RODINA_VERSION "0.1-dev"
 #endif
 
+const char *getRodinaVersion()
+{
+    return RODINA_VERSION;
+}
+
 const char *getVersionString()
 {
     return "RODINA " RODINA_VERSION " (based on CDDA 0.I-1, commit " VERSION ")";

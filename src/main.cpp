@@ -554,7 +554,6 @@ bool assure_essential_dirs_exist()
 {
     using namespace PATH_INFO;
     std::vector<std::string> essential_paths{
-        config_dir(),
         savedir(),
         templatedir(),
         user_font(),
@@ -696,6 +695,11 @@ int main( int argc, const char *argv[] )
     if( !assure_dir_exist( PATH_INFO::user_dir() ) ) {
         printf( "Can't open or create %s. Check permissions.\n",
                 PATH_INFO::user_dir().c_str() );
+        exit( 1 );
+    }
+    if( !assure_dir_exist( PATH_INFO::config_dir() ) ) {
+        printf( "Can't open or create %s. Check permissions.\n",
+                PATH_INFO::config_dir().c_str() );
         exit( 1 );
     }
 
