@@ -17,9 +17,12 @@ cp zzip.exe bindist/zzip.exe
 mkdir bindist/lang
 cp -r lang/mo bindist/lang
 
-$extras = "doc", "LICENSE.txt", "LICENSE-OFL-Terminus-Font.txt", "README.md", "VERSION.txt"
+$extras = "doc", "CREDITS.md", "LICENSE.txt", "LICENSE-Apache-Robot-Font.txt", "LICENSE-OFL-Terminus-Font.txt", "README.md", "VERSION.txt"
 ForEach ($extra in $extras) {
 	cp -r $extra bindist
+}
+if ($env:RELEASE_MANIFEST -eq '1') {
+  cp BUILD-MANIFEST.json bindist
 }
 
 $resourceArchive = Join-Path $env:TEMP ("rodina-resources-" + [guid]::NewGuid() + ".tar")

@@ -2,12 +2,21 @@
 #define RESOURCE_RC_INCLUDED
 
 #include <windows.h>
+#include "version.h"
+
+#ifndef RODINA_VERSION
+#define RODINA_VERSION "0.1-dev"
+#endif
+#ifndef RODINA_VERSION_RESOURCE
+#define RODINA_VERSION_RESOURCE 0,1,0,0
+#endif
+
 0  ICON  "../data/cataicon.ico"
 1  RT_MANIFEST "../data/application_manifest.xml"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,1,0,0
- PRODUCTVERSION 0,1,0,0
+ FILEVERSION RODINA_VERSION_RESOURCE
+ PRODUCTVERSION RODINA_VERSION_RESOURCE
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -20,7 +29,8 @@ BEGIN
         BEGIN
             VALUE "FileDescription", "Cataclysm: RODINA"
             VALUE "ProductName", "Cataclysm: RODINA"
-            VALUE "ProductVersion", "0.1-dev"
+            VALUE "FileVersion", RODINA_VERSION
+            VALUE "ProductVersion", RODINA_VERSION
         END
     END
     BLOCK "VarFileInfo"

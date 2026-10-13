@@ -8,15 +8,19 @@ for /F "tokens=*" %%i in ('git rev-parse HEAD') do set FULLSHA=%%i
 if "%VERSION%"=="" set VERSION=unknown
 if "%FULLSHA%"=="" set FULLSHA=unknown
 if "%RODINA_VERSION%"=="" set RODINA_VERSION=0.1-dev
+if "%RODINA_VERSION_RESOURCE%"=="" set RODINA_VERSION_RESOURCE=0,1,0,0
 set WRITE_VERSION=
 findstr /c:%VERSION% ..\src\version.h > NUL 2> NUL
 if %ERRORLEVEL% NEQ 0 set WRITE_VERSION=1
 findstr /c:%RODINA_VERSION% ..\src\version.h > NUL 2> NUL
 if %ERRORLEVEL% NEQ 0 set WRITE_VERSION=1
+findstr /c:"RODINA_VERSION_RESOURCE %RODINA_VERSION_RESOURCE%" ..\src\version.h > NUL 2> NUL
+if %ERRORLEVEL% NEQ 0 set WRITE_VERSION=1
 if defined WRITE_VERSION (
   (
     echo #define VERSION "%VERSION%"
     echo #define RODINA_VERSION "%RODINA_VERSION%"
+    echo #define RODINA_VERSION_RESOURCE %RODINA_VERSION_RESOURCE%
   ) > ..\src\version.h
 )
 (

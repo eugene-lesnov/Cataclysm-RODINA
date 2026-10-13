@@ -1,0 +1,151 @@
+name: RODINA Release
+run-name: "RODINA Release / ${{ github.ref_name }} / ${{ github.event_name }}"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rodina-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Validate release tag and source
+        run: |
+          [[ "$GITHUB_REF" == refs/tags/rodina-v* ]]
+          [[ "$GITHUB_REF_NAME" =~ ^rodina-v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/master
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y astyle gettext python3-pip
+          python3 -m pip install --user polib
+      - name: Validate JSON syntax and style
+        run: |
+          python3 build-scripts/validate_json.py
+          make style-all-json-parallel RELEASE=1
+          git diff --exit-code -- data
+      - name: Check C++ formatting
+        run: |
+          astyle -Q -X --dry-run src/game.h >/dev/null
+          make astyle-check
+      - name: Validate translations
+        run: |
+          for po_file in lang/po/*.po; do
+            echo "Checking $po_file"
+            msgfmt -c -o /dev/null "$po_file"
+          done
+          python3 tools/check_po_printf_format.py
+
+  desktop-build:
+    needs: validate
+    uses: ./.github/workflows/desktop-build.yml
+    permissions:
+      contents: read
+
+  draft-release:
+    needs: [validate, desktop-build]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Download game archives
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: Cataclysm-RODINA-${{ github.sha }}-*
+          path: dist
+          merge-multiple: true
+      - name: Verify archives and build manifests
+        run: |
+          version="${GITHUB_REF_NAME#rodina-v}"
+          linux="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-linux-x64.tar.gz"
+          windows="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-windows-x64.zip"
+          tar -tzf "$linux" >/dev/null
+          unzip -tq "$windows" >/dev/null
+          tar -xOf "$linux" "cataclysm-rodina-${version}/VERSION.txt" | grep -Fx "rodina version: $version"
+          unzip -p "$windows" VERSION.txt | tr -d '\r' | grep -Fx "rodina version: $version"
+          tar -xOf "$linux" "cataclysm-rodina-${version}/VERSION.txt" | grep -Fx "commit sha: $GITHUB_SHA"
+          unzip -p "$windows" VERSION.txt | tr -d '\r' | grep -Fx "commit sha: $GITHUB_SHA"
+          tar -xOf "$linux" "cataclysm-rodina-${version}/VERSION.txt" | grep -Fx "upstream version: CDDA 0.I-1"
+          unzip -p "$windows" VERSION.txt | tr -d '\r' | grep -Fx "upstream version: CDDA 0.I-1"
+          tar -xOf "$linux" "cataclysm-rodina-${version}/lang/mo/ru/LC_MESSAGES/cataclysm-dda.mo" >/dev/null
+          unzip -p "$windows" lang/mo/ru/LC_MESSAGES/cataclysm-dda.mo >/dev/null
+          tar -xOf "$linux" "cataclysm-rodina-${version}/data/sound/Basic/soundpack.txt" >/dev/null
+          unzip -p "$windows" data/sound/Basic/soundpack.txt >/dev/null
+          tar -xOf "$linux" "cataclysm-rodina-${version}/RESOURCE-TREES.txt" > linux-trees.txt
+          unzip -p "$windows" RESOURCE-TREES.txt | tr -d '\r' > windows-trees.txt
+          cmp linux-trees.txt windows-trees.txt
+          tar -xOf "$linux" "cataclysm-rodina-${version}/BUILD-MANIFEST.json" \
+            > "dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-linux-x64-manifest.json"
+          unzip -p "$windows" BUILD-MANIFEST.json \
+            > "dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-windows-x64-manifest.json"
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import subprocess
+
+          def git_object(revision):
+              return subprocess.check_output(["git", "rev-parse", revision], text=True).strip()
+
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit(message)
+
+          expected_resources = {
+              "data_tree": git_object("HEAD:data"),
+              "gfx_tree": git_object("HEAD:gfx"),
+              "sound_tree": git_object("HEAD:data/sound/Basic"),
+              "russian_po_blob": git_object("HEAD:lang/po/ru.po"),
+          }
+          version = os.environ["GITHUB_REF_NAME"].removeprefix("rodina-v")
+          for platform in ("linux-x64", "windows-x64"):
+              path = pathlib.Path(f"dist/Cataclysm-RODINA-{os.environ['GITHUB_REF_NAME']}-{platform}-manifest.json")
+              manifest = json.loads(path.read_text(encoding="utf-8"))
+              require(manifest.get("schema_version") == 1, f"Invalid schema in {path}")
+              require(manifest.get("product") == "Cataclysm: RODINA", f"Invalid product in {path}")
+              require(manifest.get("rodina_version") == version, f"Invalid version in {path}")
+              require(manifest.get("git_sha") == os.environ["GITHUB_SHA"], f"Invalid SHA in {path}")
+              require(manifest.get("cdda_base") == "0.I-1", f"Invalid CDDA base in {path}")
+              require(manifest.get("platform") == platform, f"Invalid platform in {path}")
+              require(manifest.get("bundled_resources") == expected_resources, f"Invalid resources in {path}")
+              require(manifest.get("external_game_resources") == [], f"Unexpected external assets in {path}")
+              toolchain = manifest.get("toolchain", {})
+              require(all(toolchain.get(key) for key in ("compiler", "build_tool", "gettext")),
+                      f"Incomplete toolchain in {path}")
+              require(bool(manifest.get("build_dependencies")), f"Missing dependencies in {path}")
+          PY
+          cd dist
+          sha256sum *.tar.gz *.zip *.json > SHA256SUMS.txt
+      - name: Create draft prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          printf 'Cataclysm: RODINA %s\n\nBased on CDDA 0.I-1. Commit: %s\n\n' \
+            "${GITHUB_REF_NAME#rodina-v}" "$GITHUB_SHA" > release-notes.txt
+          if [[ "${GITHUB_REF_NAME#rodina-v}" == 0.0.* ]]; then
+            printf 'Technical infrastructure release. It does not include the setting conversion.\n\n' >> release-notes.txt
+          fi
+          printf 'Build manifests and checksums are attached. Linux requires system SDL2 libraries.\n' >> release-notes.txt
+          if gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft > release-state.txt 2>/dev/null; then
+            test "$(cat release-state.txt)" = true
+            gh release upload "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/*.json dist/SHA256SUMS.txt --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/*.json dist/SHA256SUMS.txt \
+              --verify-tag --draft --prerelease --latest=false \
+              --title "Cataclysm: RODINA ${GITHUB_REF_NAME#rodina-v}" --notes-file release-notes.txt
+          fi

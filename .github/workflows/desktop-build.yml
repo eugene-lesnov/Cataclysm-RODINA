@@ -68,12 +68,26 @@ jobs:
           XDG_CONFIG_HOME="$test_dir" XDG_DATA_HOME="$test_dir" \
             ./tests/cata_test --rng-seed time --order lex --user-dir="$test_dir" \
             '~[slow] ~[.],starting_items'
+      - name: Write Linux build manifest
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        run: |
+          python3 build-scripts/write_build_manifest.py \
+            --version "$RODINA_VERSION" --sha "$GITHUB_SHA" --platform linux-x64 \
+            --toolchain "compiler=GCC $(g++ -dumpfullversion -dumpversion)" \
+            --toolchain "build_tool=$(make --version | sed -n '1p')" \
+            --toolchain "gettext=$(msgfmt --version | sed -n '1p')" \
+            --toolchain "ccache=$(ccache --version | sed -n '1p')" \
+            --toolchain "runner=ubuntu-22.04" \
+            --dependency "sdl2=$(pkg-config --modversion sdl2)" \
+            --dependency "sdl2_image=$(pkg-config --modversion SDL2_image)" \
+            --dependency "sdl2_mixer=$(pkg-config --modversion SDL2_mixer)" \
+            --dependency "sdl2_ttf=$(pkg-config --modversion SDL2_ttf)"
       - name: Package Linux game
         if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
         run: |
           make TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
             BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 CCACHE=1 TESTS=0 \
-            USE_XDG_DIR=1 VERSION="$RODINA_VERSION" bindist
+            USE_XDG_DIR=1 VERSION="$RODINA_VERSION" RELEASE_MANIFEST=1 bindist
           mv "cataclysm-rodina-${RODINA_VERSION}.tar.gz" \
             "Cataclysm-RODINA-${BUILD_ID}-linux-x64.tar.gz"
       - name: Upload Linux archive
@@ -97,10 +111,17 @@ jobs:
       - name: Prepare build version
         run: |
           if ($env:GITHUB_REF -like 'refs/tags/rodina-v*') {
-            "RODINA_VERSION=$($env:GITHUB_REF_NAME -replace '^rodina-v', '')" >> $env:GITHUB_ENV
+            $version = $env:GITHUB_REF_NAME -replace '^rodina-v', ''
+            if ($version -match '^(\d+)\.(\d+)\.(\d+)(-rc\.\d+)?$') {
+              "RODINA_VERSION_RESOURCE=$($Matches[1]),$($Matches[2]),$($Matches[3]),0" >> $env:GITHUB_ENV
+            } else {
+              throw "Invalid release version: $version"
+            }
+            "RODINA_VERSION=$version" >> $env:GITHUB_ENV
             "BUILD_ID=$env:GITHUB_REF_NAME" >> $env:GITHUB_ENV
           } else {
             "RODINA_VERSION=0.1-dev" >> $env:GITHUB_ENV
+            "RODINA_VERSION_RESOURCE=0,1,0,0" >> $env:GITHUB_ENV
             "BUILD_ID=$env:GITHUB_SHA" >> $env:GITHUB_ENV
           }
       - name: Install CMake 3.31.6
@@ -124,7 +145,9 @@ jobs:
           install: gettext make
       - name: Compile Russian translation
         shell: msys2 {0}
-        run: lang/compile_mo.sh ru
+        run: |
+          lang/compile_mo.sh ru
+          echo "GETTEXT_VERSION=$(msgfmt --version | sed -n '1p')" >> "$GITHUB_ENV"
       - name: Build Windows game
         env:
           BACKTRACE: 1
@@ -133,6 +156,12 @@ jobs:
         run: |
           msbuild -m -p:Configuration=Release -p:Platform=x64 "-target:Cataclysm-vcpkg-static;JsonFormatter-vcpkg-static;zzip" msvc-full-features\Cataclysm-vcpkg-static.sln
           if ($LASTEXITCODE -ne 0) { throw "MSBuild failed." }
+      - name: Verify Windows product version
+        run: |
+          $productVersion = (Get-Item .\cataclysm-rodina-tiles.exe).VersionInfo.ProductVersion
+          if ($productVersion -ne $env:RODINA_VERSION) {
+            throw "Windows product version $productVersion does not match RODINA_VERSION $env:RODINA_VERSION."
+          }
       - name: Load game data and core mod
         run: |
           $smokeDir = Join-Path $env:RUNNER_TEMP 'rodina-smoke'
@@ -149,8 +178,33 @@ jobs:
             }
             throw "Game data smoke check failed."
           }
+      - name: Write Windows build manifest
+        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        run: |
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+          $vsRoot = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          $toolset = (Get-Content (Join-Path $vsRoot 'VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt')).Trim()
+          $compilerPath = Join-Path $vsRoot "VC\Tools\MSVC\$toolset\bin\Hostx64\x64\cl.exe"
+          $compilerVersion = (Get-Item $compilerPath).VersionInfo.ProductVersion
+          $msbuildVersion = (& msbuild -version -nologo | Select-Object -Last 1).Trim()
+          $cmakeVersion = (& cmake --version | Select-Object -First 1).Trim()
+          $vcpkgRoot = Join-Path $env:RUNNER_WORKSPACE 'b\vcpkg'
+          $vcpkgCommit = (& git -C $vcpkgRoot rev-parse HEAD).Trim()
+          $vcpkgManifestBlob = (& git rev-parse HEAD:msvc-full-features/vcpkg.json).Trim()
+          python build-scripts/write_build_manifest.py `
+            --version $env:RODINA_VERSION --sha $env:GITHUB_SHA --platform windows-x64 `
+            --toolchain "compiler=MSVC $toolset (cl.exe $compilerVersion)" `
+            --toolchain "build_tool=MSBuild $msbuildVersion" `
+            --toolchain "cmake=$cmakeVersion" `
+            --toolchain "gettext=$env:GETTEXT_VERSION" `
+            --toolchain 'runner=windows-2022' `
+            --dependency "vcpkg_commit=$vcpkgCommit" `
+            --dependency "vcpkg_manifest_blob=$vcpkgManifestBlob"
+          if ($LASTEXITCODE -ne 0) { throw "Could not write Windows build manifest." }
       - name: Package Windows game
         if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        env:
+          RELEASE_MANIFEST: 1
         run: |
           .\build-scripts\windist.ps1
           Move-Item "cataclysm-rodina-$($env:RODINA_VERSION).zip" "Cataclysm-RODINA-$($env:BUILD_ID)-windows-x64.zip"

@@ -536,6 +536,9 @@ TOOL_CXXFLAGS = -DCATA_IN_TOOL
 DEFINES += -DZSTD_STATIC_LINKING_ONLY -DZSTD_DISABLE_ASM
 
 BINDIST_EXTRAS += README.md CREDITS.md doc LICENSE.txt LICENSE-Apache-Robot-Font.txt LICENSE-OFL-Terminus-Font.txt VERSION.txt $(JSON_FORMATTER_BIN)
+ifeq ($(RELEASE_MANIFEST),1)
+  BINDIST_EXTRAS += BUILD-MANIFEST.json
+endif
 BINDIST    = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).tar.gz
 W32BINDIST = $(BUILD_PREFIX)cataclysm-rodina-$(VERSION).zip
 BINDIST_CMD    = tar --transform=s@^$(BINDIST_DIR)@cataclysm-rodina-$(VERSION)@ -czvf $(BINDIST) $(BINDIST_DIR)
@@ -1091,7 +1094,7 @@ $(BUILD_PREFIX)$(TARGET_NAME).a: $(OBJS)
 version:
 	@( GITSHA=$$(git rev-parse --short=12 HEAD 2>/dev/null || echo unknown) ; \
         FULLSHA=$$(git rev-parse HEAD 2>/dev/null || echo unknown) ; \
-        DIRTYFLAG=$$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && { git diff --quiet HEAD -- . || echo -dirty; }) ; \
+        DIRTYFLAG=$$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && { git diff --quiet HEAD -- . ':(exclude)VERSION.txt' || echo -dirty; }) ; \
         VERSION_STRING="$$GITSHA$$DIRTYFLAG" ; \
         [ -e "$(SRC_DIR)/version.h" ] && \
           OLDVERSION=$$(grep '^#define VERSION ' $(SRC_DIR)/version.h | cut -d '"' -f2) ; \
