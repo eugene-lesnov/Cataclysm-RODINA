@@ -21,8 +21,13 @@ jobs:
         run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
       - name: Prepare build version
         run: |
-          if [[ "$GITHUB_REF" == refs/tags/rodina-v* ]]; then
-            echo "RODINA_VERSION=${GITHUB_REF_NAME#rodina-v}" >> "$GITHUB_ENV"
+          if [[ "$GITHUB_REF" == refs/tags/rodina-* ]]; then
+            version="${GITHUB_REF_NAME#rodina-}"
+            if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]; then
+              echo "Invalid release version: $version" >&2
+              exit 1
+            fi
+            echo "RODINA_VERSION=$version" >> "$GITHUB_ENV"
             echo "BUILD_ID=$GITHUB_REF_NAME" >> "$GITHUB_ENV"
           else
             echo "RODINA_VERSION=0.1-dev" >> "$GITHUB_ENV"
@@ -41,7 +46,7 @@ jobs:
           restore-keys: linux-ccache-ubuntu-22.04-gcc-
       - name: Build Linux game
         env:
-          BUILD_TESTS: ${{ startsWith(github.ref, 'refs/tags/rodina-v') && '0' || '1' }}
+          BUILD_TESTS: ${{ startsWith(github.ref, 'refs/tags/rodina-') && '0' || '1' }}
         run: |
           make -j3 TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
             BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 CCACHE=1 \
@@ -60,7 +65,7 @@ jobs:
             exit 1
           fi
       - name: Run unit and integration tests
-        if: ${{ !startsWith(github.ref, 'refs/tags/rodina-v') }}
+        if: ${{ !startsWith(github.ref, 'refs/tags/rodina-') }}
         run: |
           test_dir=$(mktemp -d)
           trap 'rm -r -- "$test_dir"' EXIT
@@ -69,7 +74,7 @@ jobs:
             ./tests/cata_test --rng-seed time --order lex --user-dir="$test_dir" \
             '~[slow] ~[.],starting_items'
       - name: Write Linux build manifest
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         run: |
           python3 build-scripts/write_build_manifest.py \
             --version "$RODINA_VERSION" --sha "$GITHUB_SHA" --platform linux-x64 \
@@ -83,7 +88,7 @@ jobs:
             --dependency "sdl2_mixer=$(pkg-config --modversion SDL2_mixer)" \
             --dependency "sdl2_ttf=$(pkg-config --modversion SDL2_ttf)"
       - name: Package Linux game
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         run: |
           make TILES=1 SOUND=1 RELEASE=1 LOCALIZE=1 LANGUAGES=ru \
             BACKTRACE=1 LIBBACKTRACE=0 PCH=0 ASTYLE=0 LINTJSON=0 CCACHE=1 TESTS=0 \
@@ -91,7 +96,7 @@ jobs:
           mv "cataclysm-rodina-${RODINA_VERSION}.tar.gz" \
             "Cataclysm-RODINA-${BUILD_ID}-linux-x64.tar.gz"
       - name: Upload Linux archive
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Cataclysm-RODINA-${{ github.sha }}-linux-x64
@@ -110,8 +115,8 @@ jobs:
           if ((git rev-parse HEAD) -ne $env:GITHUB_SHA) { throw "Checkout does not match GITHUB_SHA." }
       - name: Prepare build version
         run: |
-          if ($env:GITHUB_REF -like 'refs/tags/rodina-v*') {
-            $version = $env:GITHUB_REF_NAME -replace '^rodina-v', ''
+          if ($env:GITHUB_REF -like 'refs/tags/rodina-*') {
+            $version = $env:GITHUB_REF_NAME -replace '^rodina-', ''
             if ($version -match '^(\d+)\.(\d+)\.(\d+)(-rc\.\d+)?$') {
               "RODINA_VERSION_RESOURCE=$($Matches[1]),$($Matches[2]),$($Matches[3]),0" >> $env:GITHUB_ENV
             } else {
@@ -179,7 +184,7 @@ jobs:
             throw "Game data smoke check failed."
           }
       - name: Write Windows build manifest
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         run: |
           $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
           $vsRoot = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
@@ -202,14 +207,14 @@ jobs:
             --dependency "vcpkg_manifest_blob=$vcpkgManifestBlob"
           if ($LASTEXITCODE -ne 0) { throw "Could not write Windows build manifest." }
       - name: Package Windows game
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         env:
           RELEASE_MANIFEST: 1
         run: |
           .\build-scripts\windist.ps1
           Move-Item "cataclysm-rodina-$($env:RODINA_VERSION).zip" "Cataclysm-RODINA-$($env:BUILD_ID)-windows-x64.zip"
       - name: Upload Windows archive
-        if: startsWith(github.ref, 'refs/tags/rodina-v') || github.event_name == 'workflow_dispatch'
+        if: startsWith(github.ref, 'refs/tags/rodina-') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Cataclysm-RODINA-${{ github.sha }}-windows-x64

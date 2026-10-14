@@ -21,8 +21,8 @@ jobs:
           fetch-depth: 0
       - name: Validate release tag and source
         run: |
-          [[ "$GITHUB_REF" == refs/tags/rodina-v* ]]
-          [[ "$GITHUB_REF_NAME" =~ ^rodina-v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]
+          [[ "$GITHUB_REF" == refs/tags/rodina-* ]]
+          [[ "$GITHUB_REF_NAME" =~ ^rodina-[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/master
       - name: Install validation tools
@@ -70,7 +70,7 @@ jobs:
           merge-multiple: true
       - name: Verify archives and build manifests
         run: |
-          version="${GITHUB_REF_NAME#rodina-v}"
+          version="${GITHUB_REF_NAME#rodina-}"
           linux="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-linux-x64.tar.gz"
           windows="dist/Cataclysm-RODINA-${GITHUB_REF_NAME}-windows-x64.zip"
           tar -tzf "$linux" >/dev/null
@@ -111,7 +111,7 @@ jobs:
               "sound_tree": git_object("HEAD:data/sound/Basic"),
               "russian_po_blob": git_object("HEAD:lang/po/ru.po"),
           }
-          version = os.environ["GITHUB_REF_NAME"].removeprefix("rodina-v")
+          version = os.environ["GITHUB_REF_NAME"].removeprefix("rodina-")
           for platform in ("linux-x64", "windows-x64"):
               path = pathlib.Path(f"dist/Cataclysm-RODINA-{os.environ['GITHUB_REF_NAME']}-{platform}-manifest.json")
               manifest = json.loads(path.read_text(encoding="utf-8"))
@@ -136,8 +136,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           printf 'Cataclysm: RODINA %s\n\nBased on CDDA 0.I-1. Commit: %s\n\n' \
-            "${GITHUB_REF_NAME#rodina-v}" "$GITHUB_SHA" > release-notes.txt
-          if [[ "${GITHUB_REF_NAME#rodina-v}" == 0.0.* ]]; then
+            "${GITHUB_REF_NAME#rodina-}" "$GITHUB_SHA" > release-notes.txt
+          if [[ "${GITHUB_REF_NAME#rodina-}" == 0.0.* ]]; then
             printf 'Technical infrastructure release. It does not include the setting conversion.\n\n' >> release-notes.txt
           fi
           printf 'Build manifests and checksums are attached. Linux requires system SDL2 libraries.\n' >> release-notes.txt
@@ -147,5 +147,5 @@ jobs:
           else
             gh release create "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/*.json dist/SHA256SUMS.txt \
               --verify-tag --draft --prerelease --latest=false \
-              --title "Cataclysm: RODINA ${GITHUB_REF_NAME#rodina-v}" --notes-file release-notes.txt
+              --title "Cataclysm: RODINA ${GITHUB_REF_NAME#rodina-}" --notes-file release-notes.txt
           fi
