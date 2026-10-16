@@ -377,7 +377,7 @@
       "concatenate": [
         {
           "compare_string": [ "asked", { "npc_val": "general_none_Alonso_accent" } ],
-          "no": "My jewel of the New England, I give to you my biggest prize.",
+          "no": "My jewel of the district, I give to you my biggest prize.",
           "yes": { "gendered_line": "Yo, you're crazy hot!  I'm not stupid!", "relevant_genders": [ "u" ] }
         },
         {
@@ -449,7 +449,7 @@
       "concatenate": [
         {
           "compare_string": [ "asked", { "npc_val": "general_none_Alonso_accent" } ],
-          "no": "My jewel of the New England, I give to you my biggest prize.",
+          "no": "My jewel of the district, I give to you my biggest prize.",
           "yes": { "gendered_line": "Yo, you're crazy hot!  I'm not stupid!", "relevant_genders": [ "u" ] }
         },
         {

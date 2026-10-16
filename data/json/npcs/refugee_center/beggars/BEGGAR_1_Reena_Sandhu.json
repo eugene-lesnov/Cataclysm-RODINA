@@ -3,7 +3,7 @@
     "type": "effect_type",
     "id": "beggar_has_eaten",
     "name": [ "Full" ],
-    "desc": [ "This beggar in the refugee center has had something to eat recently." ]
+    "desc": [ "This beggar in the Emergency Service camp has had something to eat recently." ]
   },
   {
     "type": "npc",
@@ -83,7 +83,7 @@
         "yes": "Thank you again.  I really appreciate the food.",
         "no": {
           "u_is_wearing": "badge_marshal",
-          "yes": "Please, help me.  I need food.  Aren't you their sheriff?  Can't you help me?",
+          "yes": "Please, help me.  I need food.  Aren't you working with the district officers?  Can't you help me?",
           "no": "Please, help me.  I need food."
         }
       }

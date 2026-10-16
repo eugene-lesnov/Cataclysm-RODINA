@@ -3,7 +3,7 @@
     "type": "overmap_terrain",
     "abstract": "generic_evac_center",
     "vision_levels": "large_building",
-    "name": "refugee center",
+    "name": "Emergency Service camp",
     "see_cost": "full_high",
     "flags": [ "SOURCE_PEOPLE" ]
   },
@@ -48,7 +48,7 @@
       "evac_center_13_z2",
       "evac_center_14_z2"
     ],
-    "name": "refugee center roof",
+    "name": "Emergency Service camp roof",
     "vision_levels": "roof_or_air",
     "sym": "┼",
     "color": "white",

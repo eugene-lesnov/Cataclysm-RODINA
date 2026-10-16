@@ -9,7 +9,7 @@
     },
     "responses": [
       {
-        "text": "Who are you?  This is a refugee center, right?",
+        "text": "Who are you?  Is this the Emergency Service camp?",
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_Intro",
         "condition": { "not": { "compare_string": [ "yes", { "u_val": "general_meeting_u_met_Gavin" } ] } },
         "effect": { "u_add_var": "general_meeting_u_met_Gavin", "value": "yes" }
@@ -89,7 +89,7 @@
     "type": "talk_topic",
     "dynamic_line": {
       "concatenate": [
-        "Before you ask, we're full.  You're right about the refugee part, but we're way over capacity right now.  We don't have the food or space to take on anyone else.\"  He softens a little.  \"As for me, I do a lot of things here, but mostly I keep tabs on our supplies.  You can call me Smokes, or Gavin; whichever you prefer.  I also trade with people from outside, like you.  If you're in the market for hardware, we're selling, and if you have food, we are very much buying.  Anyways, uh, what can I do for you",
+        "This was a district Emergency Service camp.  The rescuers who survived still run the shelter, but we're far beyond its capacity.  We don't have the food or space to take on anyone else.\"  He softens a little.  \"I was one of the rescuers.  Now I keep track of supplies and trade with people from outside.  You can call me Smokes, or Gavin.  We sell tools, and we're always buying food.  What can I do for you",
         {
           "follower_present": "NC_STARTINGNPC_LIAM",
           "yes": "?\"\n\nLiam looks around at the crowded room, speaking in a soft voice for just your ears.  \"Can't honestly believe people are trying to crowd in here.  They're all so scared, this is a death trap.",
@@ -171,7 +171,7 @@
       { "text": "Who's in charge here?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_WhosInCharge" },
       { "text": "Is there any way I can join your group?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_AskJoin" },
       {
-        "text": "What's with these 'Free Merchant certified notes'?",
+        "text": "How do your camp vouchers work?",
         "topic": "TALK_FREE_MERCHANTS_MERCHANT_AboutMerch",
         "condition": { "u_has_item": "FMCNote" },
         "effect": { "u_add_var": "general_free_merchants_u_knows_about_merch", "value": "yes" }
@@ -350,7 +350,7 @@
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_TroubleWithFood",
     "type": "talk_topic",
-    "dynamic_line": "Yes we are.  The center had a good stock of those awful soy bars, but between all of us, it went fast.  We're making do with what we can skim off the edge of towns, but mostly we rely on trade from people like you.  Speaking of, we'll pay top dollar for anything preserved - canned, salted, dried, whatever.  Just talk to the broker in the back.",
+    "dynamic_line": "We are.  The Emergency Service left us a stock of ration bars, but it went fast.  Now we rely on salvage and trade.  The broker in the back will pay well in camp vouchers for preserved food: canned, salted, or dried.",
     "responses": [
       {
         "text": "I don't see that many of you around.",

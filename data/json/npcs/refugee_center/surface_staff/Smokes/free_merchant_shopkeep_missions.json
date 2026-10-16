@@ -4,7 +4,7 @@
     "//": "Breadcrumb quest from Free Merchants -> Hub 01.  Bring a hard drive to Hub 01 from the refugee center and then return.",
     "type": "mission_definition",
     "name": { "str": "Unknown Recipient" },
-    "description": "Deliver the FEMA hard drive to the strange group that Smokes mentioned.  Return to the evacuation center when the data's been delivered.",
+    "description": "Deliver the Emergency Service archive drive to the strange group that Smokes mentioned.  Return to the camp when the data's been delivered.",
     "goal": "MGOAL_CONDITION",
     "difficulty": 5,
     "start": {
@@ -45,8 +45,8 @@
   {
     "id": "MISSION_FREE_MERCHANTS_EVAC_1",
     "type": "mission_definition",
-    "name": { "str": "Clear Back Bay" },
-    "description": "Clear out the barricaded back area in the refugee center and lay the former leader of the Free Merchants to rest, in exchange for the local currency: Free Merchant certified notes.",
+    "name": { "str": "Clear the Camp's Sealed Bay" },
+    "description": "Clear the camp's barricaded triage bay and put its former rescue coordinator to rest.  The supply cooperative will pay in camp vouchers.",
     "goal": "MGOAL_KILL_MONSTER",
     "difficulty": 2,
     "value": 50000,
@@ -60,7 +60,7 @@
       "effect": [ { "mapgen_update": "smokes_take_down_back_bay_barricade", "om_terrain": "evac_center_8" } ],
       "update_mapgen": {
         "om_terrain": "evac_center_9",
-        "place_monster": [ { "group": "GROUP_REFUGEE_BOSS_ZOMBIE", "name": "Sean McLaughlin", "x": 10, "y": 10, "target": true } ]
+        "place_monster": [ { "group": "GROUP_REFUGEE_BOSS_ZOMBIE", "name": "Sergei Morozov", "x": 10, "y": 10, "target": true } ]
       }
     },
     "end": {
@@ -79,12 +79,12 @@
     "followup": "MISSION_FREE_MERCHANTS_EVAC_2",
     "dialogue": {
       "describe": "We need help…",
-      "offer": "If you really want to lend a hand we could use your help clearing out the dead in the back bay.  Fearful of going outside during the first days of the Cataclysm we ended up throwing our dead and the zombies we managed to kill in the sealed back bay.  Our promising leader at the time even fell… he turned into something different.  Kill all of them and make sure they won't bother us again.  We can't pay much, besides some of our own internal money which isn't good for that much yet, but it would help us to reclaim the bay.  <color_red>If you accept, I'll tell the guards to immediately take down the barricade in the back.  You should only accept if you're ready to do this now.</color>",
+      "offer": "We need help clearing the sealed triage bay.  In the first days, the camp was overwhelmed.  We isolated the sick there, then the dead started getting back up.  Sergei, the rescue coordinator, stayed behind so the others could escape.  He's still in there, changed.  Put him to rest and clear the bay so we can use it again.  The supply cooperative can pay you in camp vouchers.  <color_red>If you accept, I'll tell the guards to take down the barricade immediately.  Be ready before you say yes.</color>",
       "accepted": "Please be careful, we don't need any more deaths.",
       "rejected": "Come back when you get a chance, we really need to start reclaiming the region.",
       "advice": "If you can, get a friend or two to help you.",
       "inquire": "Will they be bothering us any longer?",
-      "success": "Thank you, having that big of a threat close to home was nerve wracking.  Here's some of our local certified notes, we've been paying these to our workers in exchange for supplies.  They're getting some value in the center as a trade item, I'm afraid they're all we have to spare at the moment.",
+      "success": "Thank you.  We can reopen the triage bay now, and Sergei can finally rest.  Here are the camp vouchers we promised.  The cooperative uses them to pay for work and supplies; you can trade them here at the camp.",
       "success_lie": "What good does this do us?",
       "failure": "It was a lost cause anyways…"
     }
@@ -93,7 +93,7 @@
     "id": "MISSION_FREE_MERCHANTS_EVAC_2",
     "type": "mission_definition",
     "name": { "str": "Missing Caravan" },
-    "description": "Investigate the last known location of a disappeared scavenger trading party, and eliminate any bandits or raiders in the vicinity in exchange for <reward_count:FMCNote> certified notes.",
+    "description": "Investigate the last known location of a missing supply party and eliminate the threat in exchange for <reward_count:FMCNote> camp vouchers.",
     "goal": "MGOAL_ASSASSINATE",
     "difficulty": 5,
     "value": 5000,
@@ -171,7 +171,7 @@
     "followup": "MISSION_FREE_MERCHANTS_EVAC_3",
     "dialogue": {
       "describe": "We need help…",
-      "offer": "This is a bit more involved than the last request, we recently lost a scavenger party coming to trade with us and would like you to investigate.  We strongly suspect a raider band or horde caught them off-guard.  I can give you the coordinates of their last radio message but little else.  In either case, deal with the threat so that the scavengers can continue to pass through in relative safety.  The best reward I can offer is a claim to the supplies they were carrying, plus thirty certified notes - that's our own internal money, good for trading and such.",
+      "offer": "This is more involved than the last job.  A supply party coming to trade with us has disappeared.  We suspect raiders or a horde.  I can give you the coordinates from their last radio message.  Find out what happened and deal with the threat so others can still reach the camp.  You can keep their supplies, and we'll pay thirty camp vouchers as well.",
       "accepted": "Our community survives on trade, we appreciate it.",
       "rejected": "Come back when you get a chance, we really need to start reclaiming the region.",
       "advice": "If you can, get a friend or two to help you.",
@@ -185,7 +185,7 @@
     "id": "MISSION_FREE_MERCHANTS_EVAC_3",
     "type": "mission_definition",
     "name": { "str": "Retrieve Prospectus" },
-    "description": "Visit the farming commune and bring the foreman's prospectus back to the refugee center, for <reward_count:FMCNote> certified notes.",
+    "description": "Visit the farming commune and bring the foreman's prospectus back to the camp, for <reward_count:FMCNote> camp vouchers.",
     "goal": "MGOAL_FIND_ITEM",
     "difficulty": 5,
     "value": 50000,
@@ -215,7 +215,7 @@
     "followup": "MISSION_FREE_MERCHANTS_EVAC_4",
     "dialogue": {
       "describe": "We need help…",
-      "offer": "We recently set out some skilled people to start an outpost, to secure us some food supplies in a safer location.  The new outpost that we've started could use your assistance.  I need you to get the foreman's prospectus before we begin to send additional refugees to the farming commune.  Consult with the foreman to get more detailed tasks.  We've got 50 Certified Notes for you if you can do this for us.",
+      "offer": "We recently set out some skilled people to start an outpost, to secure us some food supplies in a safer location.  The new outpost that we've started could use your assistance.  I need you to get the foreman's prospectus before we begin to send additional refugees to the farming commune.  Consult with the foreman to get more detailed tasks.  We've got 50 camp vouchers for you if you can do this for us.",
       "accepted": "I'm sure the outpost will expand quickly with your assistance.",
       "rejected": "Come back when you get a chance, we really need to start reclaiming the region.",
       "advice": "Just follow your map.",
@@ -292,7 +292,7 @@
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_Robofac1",
     "type": "talk_topic",
-    "dynamic_line": "The doctor paid us in advance to get some old FEMA info from our computers here, and told us to deliver the data to an isolated building afterwards.  We still haven't done that.  I'm half worried it might have been some kind of trap, or trick.",
+    "dynamic_line": "The doctor paid us in advance for an old Emergency Service archive from the camp computers.  He asked us to deliver the drive to an isolated building.  We still haven't done it.  I'm half worried it might be a trap.",
     "responses": [
       { "text": "Where's that building at, exactly?", "topic": "TALK_FREE_MERCHANTS_MERCHANT_Robofac2" },
       { "text": "You seem right to be suspicious.", "topic": "TALK_FREE_MERCHANTS_MERCHANT_Talk" }

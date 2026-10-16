@@ -14,7 +14,7 @@
     "type": "npc_class",
     "id": "NC_SCAVENGER_MERC",
     "name": { "str": "Mercenary" },
-    "job_description": "Fighting for the all-mighty dollar.",
+    "job_description": "I take dangerous jobs for camp vouchers and supplies.",
     "common": false,
     "traits": [
       { "trait": "BGSS_Scavenger_Merc_1" },
@@ -124,7 +124,7 @@
   {
     "id": "TALK_SCAVENGER_MERC_MERCH",
     "type": "talk_topic",
-    "dynamic_line": "Merch is what they call dollar bills around here.  Free Merchant Credit Notes or something.  If you want to buy stuff around here and you don't want to barter away your guns, you need merch.",
+    "dynamic_line": "They call the camp vouchers 'merch'.  The supply cooperative issues them for work and accepts them in the store.  If you want to buy something without bartering away your gear, you'll need a few.",
     "responses": [
       { "text": "I see.  Let's try this again from the start.", "topic": "TALK_SCAVENGER_MERC" },
       { "text": "Okay, how much merch do I need?", "topic": "TALK_SCAVENGER_MERC_HIRE" },

@@ -117,7 +117,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_CARAVAN_MERCHANT_Story",
-    "dynamic_line": "We're with a larger group of survivors, working out of one of the old FEMA bunkers.  Folks have taken to calling us Free Merchants, although that sounds kinda on the nose to me.  We know about a few survivor groups and we make regular trips around, sharing supplies back and forth and bringing them home.  We're on the way back now.",
+    "dynamic_line": "We work out of the district Emergency Service camp.  The rescuers kept it open, and our supply cooperative handles trade now.  People call us the Free Merchants.  We travel between survivor groups, exchanging food and equipment, and we're heading home.",
     "responses": [
       { "text": "That's interesting.  Well, let's trade.", "topic": "TALK_CARAVAN_MERCHANT_Trade", "effect": "start_trade" },
       {
@@ -234,7 +234,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_CARAVAN_GUARD_A_Merc",
-    "dynamic_line": "Yeah, these guys snagged some kind of FEMA evacuation bunker during the early part of <the_cataclysm> and hoard the space.  They don't let anyone else join, but they need supplies, so they send out traders, and those traders need protection, so they send out guys like me.",
+    "dynamic_line": "Their camp started as an Emergency Service evacuation site.  The people there are short on space and supplies, so they send traders out to keep it running.  Traders need guards; that's where I come in.",
     "responses": [
       { "text": "You looking for work?  I might be hiring.", "topic": "TALK_CARAVAN_GUARD_A_Hire" },
       {

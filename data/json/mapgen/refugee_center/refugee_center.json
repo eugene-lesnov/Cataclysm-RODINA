@@ -45,9 +45,11 @@
         { "type": "NPC_INVESTIGATE_ONLY", "faction": "wasteland_scavengers", "x": [ 48, 71 ], "y": [ 23, 23 ] }
       ],
       "place_vehicles": [
-        { "vehicle": "schoolbus", "x": 32, "y": 18, "chance": 75, "rotation": 0 },
+        { "vehicle": "van_full-size", "x": 32, "y": 18, "chance": 75, "rotation": 0 },
         { "vehicle": "car", "x": 49, "y": 20, "chance": 75, "rotation": 270 }
-      ]
+      ],
+      "place_furniture": [ { "furn": "f_sign", "x": 60, "y": 16 } ],
+      "place_signs": [ { "signage": "DISTRICT EMERGENCY SERVICE\nEVACUATION CAMP\nMEDICAL AID, WATER, SUPPLIES", "x": 60, "y": 16 } ]
     }
   },
   {
@@ -104,7 +106,7 @@
         { "type": "NPC_NO_INVESTIGATE", "faction": "lobby_beggars", "x": [ 72, 95 ], "y": [ 0, 23 ] }
       ],
       "place_vehicles": [
-        { "vehicle": "schoolbus", "x": 19, "y": 13, "chance": 75, "rotation": 270 },
+        { "vehicle": "van_full-size", "x": 19, "y": 13, "chance": 75, "rotation": 270 },
         { "vehicle": "flatbed_truck", "x": 99, "y": 18, "chance": 75, "rotation": 90 }
       ],
       "items": {
@@ -212,7 +214,7 @@
         "u": [ { "item": "cannedfood", "chance": 80, "repeat": [ 1, 8 ] }, { "item": "pasta", "chance": 70, "repeat": [ 1, 8 ] } ]
       },
       "place_vehicles": [
-        { "vehicle": "schoolbus", "x": 4, "y": 8, "chance": 75, "rotation": 270 },
+        { "vehicle": "bus", "x": 4, "y": 8, "chance": 75, "rotation": 270 },
         { "vehicle": "car", "x": 89, "y": 16, "chance": 75, "rotation": 90 },
         { "vehicle": "pickup", "x": 90, "y": 8, "chance": 75, "rotation": 90 }
       ],
@@ -300,7 +302,7 @@
         "w": { "item": "shelter", "repeat": [ 1, 12 ] }
       },
       "place_vehicles": [
-        { "vehicle": "hippie_van", "x": 21, "y": 17, "chance": 75, "rotation": 90 },
+        { "vehicle": "ambulance", "x": 21, "y": 17, "chance": 75, "rotation": 90 },
         { "vehicle": "policecar", "x": 22, "y": 7, "chance": 75, "rotation": 90 },
         { "vehicle": "car_mini", "x": 99, "y": 15, "chance": 75, "rotation": 90 }
       ],
@@ -385,7 +387,7 @@
         "...................................................._______,,_______...................................................."
       ],
       "palettes": [ "evac_center" ],
-      "place_vehicles": [ { "vehicle": "schoolbus", "x": 32, "y": 6, "chance": 75, "rotation": 180 } ]
+      "place_vehicles": [ { "vehicle": "bus", "x": 32, "y": 6, "chance": 75, "rotation": 180 } ]
     }
   }
 ]

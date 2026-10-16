@@ -340,9 +340,9 @@ void mission_start::reveal_refugee_center( mission *miss )
                 "evac_center_18", 1, false );
         overmap_buffer.reveal_route( dest_road, dest_refugee_center, 1, false );
 
-        add_msg( _( "You mark the refugee center and the road that leads to it…" ) );
+        add_msg( _( "You mark the Emergency Service camp and the road that leads to it…" ) );
     } else {
-        add_msg( _( "You mark the refugee center, but you have no idea how to get there by road…" ) );
+        add_msg( _( "You mark the Emergency Service camp, but you have no idea how to get there by road…" ) );
     }
 }
 

@@ -22,7 +22,7 @@
   {
     "type": "talk_topic",
     "id": "COMP_EMERGENCY_MESSAGE",
-    "dynamic_line": "GREETINGS CITIZEN.  A BIOLOGICAL ATTACK HAS TAKEN PLACE AND A STATE OF EMERGENCY HAS BEEN DECLARED.  EMERGENCY PERSONNEL WILL BE AIDING YOU SHORTLY.  TO ENSURE YOUR SAFETY PLEASE FOLLOW THE STEPS BELOW.\n 1. DO NOT PANIC.\n 2. REMAIN INSIDE THE BUILDING.\n 3. SEEK SHELTER IN THE BASEMENT.\n 4. USE PROVIDED GAS MASKS.\n 5. AWAIT FURTHER INSTRUCTIONS.",
+    "dynamic_line": "EMERGENCY SERVICE NOTICE.  EVACUATION IS UNDER WAY IN THE DISTRICT.  RESCUE TEAMS ARE WORKING TO REACH THIS SHELTER.\n 1. REMAIN CALM.\n 2. STAY INSIDE WHILE THE BUILDING IS SAFE.\n 3. USE THE BASEMENT IF THE ENTRANCE IS THREATENED.\n 4. KEEP YOUR MASK AND SUPPLIES WITH YOU.\n 5. CHECK THE INFORMATION BOARD FOR THE CAMP ROUTE.",
     "responses": [ { "text": "Press any key.", "topic": "COMP_REFUGEE_CENTER_MAIN" } ]
   },
   {
@@ -40,16 +40,28 @@
   {
     "type": "talk_topic",
     "id": "COMP_FIND_REFUGEE_CENTER",
-    "dynamic_line": "REFUGEE CENTER FOUND!  IF YOU HAVE ANY FEEDBACK CONCERNING YOUR VISIT PLEASE CONTACT\n THE DEPARTMENT OF EMERGENCY MANAGEMENT PUBLIC AFFAIRS OFFICE.\n THE LOCAL OFFICE CAN BE REACHED BETWEEN THE HOURS OF 9AM AND\n 4PM AT 555-0164.\n\nIF YOU WOULD LIKE TO SPEAK WITH SOMEONE IN PERSON OR WOULD LIKE\nTO WRITE US A LETTER PLEASE SEND IT TO…",
+    "dynamic_line": "EMERGENCY SERVICE CAMP ROUTE.\n The district evacuation map identifies a camp with medical aid, water, and onward transport.\n Its last update is several days old.  Check the roads before you travel.",
     "responses": [
       {
-        "condition": { "math": [ "find_refugee_center != 1" ] },
+        "condition": {
+          "and": [
+            { "math": [ "find_refugee_center != 1" ] },
+            { "not": { "u_has_mission": "MISSION_REACH_REFUGEE_CENTER" } },
+            { "not": { "compare_string": [ "yes", { "u_val": "found_refugee_center" } ] } }
+          ]
+        },
         "text": "Make a note of the location.",
         "topic": "COMP_REFUGEE_CENTER_MAIN",
         "effect": [ { "assign_mission": "MISSION_REACH_REFUGEE_CENTER" }, { "math": [ "find_refugee_center = 1" ] } ]
       },
       {
-        "condition": { "math": [ "find_refugee_center == 1" ] },
+        "condition": {
+          "or": [
+            { "math": [ "find_refugee_center == 1" ] },
+            { "u_has_mission": "MISSION_REACH_REFUGEE_CENTER" },
+            { "compare_string": [ "yes", { "u_val": "found_refugee_center" } ] }
+          ]
+        },
         "text": "Press any key.",
         "topic": "COMP_REFUGEE_CENTER_MAIN"
       }

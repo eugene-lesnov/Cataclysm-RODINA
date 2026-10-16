@@ -159,7 +159,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_FREE_MERCHANT_STOCKS_FMCN",
-    "dynamic_line": "We call them \"Free Merchant Certified Notes\".  We started signing money almost as soon as we got here as a way of showing it represented actual goods and services we had to trade.  Within a few days we'd organized the system, and now it's been evolving into a form of cash.  Internally they're traded for labor and services in exchange for food rations and other trade goods, but we've been using them with suppliers we regularly trade with as well, those that have faith in us."
+    "dynamic_line": "We call them camp vouchers.  When the Emergency Service supplies ran low, our trading cooperative began issuing numbered vouchers on unused shelter forms.  Each one is a claim on food, water, or other goods we can provide.  We pay workers with them and accept them at the camp store.  Some regular suppliers take them too, because they trust us to honor them."
   },
   {
     "type": "talk_topic",
@@ -187,7 +187,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_FREE_MERCHANT_STOCKS_SEALED1wrong",
-    "dynamic_line": "We didn't have great organization when we first arrived.  A few of the earliest arrivals set up a triage and sorting system, with the sick and infirm getting set aside to wait.  It's cruel, but we could see there was only space for so many, and we didn't know what was causing people to turn into zombies at the time, so we were trying to quarantine out infection.  A couple folks died in there, and it escalated.  One of the first people here, Jacob, had taken charge of the whole thing.  When the triage area had to be evacuated he stayed behind to make sure everyone who could get out got out.  It was a hell of a loss.",
+    "dynamic_line": "This was an Emergency Service camp, but even its rescuers couldn't handle everyone who arrived.  They used the back bay for triage and isolated people who seemed ill.  When the dead started getting up, panic spread.  Sergei Morozov, the rescue coordinator, stayed behind so the others could get out.  We sealed the bay after that.  It was a terrible loss.",
     "speaker_effect": [ { "effect": { "u_add_var": "general_conversation_told_about_FM_evacuation", "value": "yes" } } ],
     "responses": [ { "text": "Thanks, can I ask you something else?", "topic": "TALK_FREE_MERCHANT_STOCKS" } ]
   },
@@ -213,7 +213,7 @@
     "id": "MISSION_BROKER_1",
     "type": "mission_definition",
     "name": { "str": "In a Pickle Pt. 2" },
-    "description": "Deliver 50 large three-liter jars in exchange for <reward_count:FMCNote> certified notes.",
+    "description": "Deliver 50 large three-liter jars in exchange for <reward_count:FMCNote> camp vouchers.",
     "goal": "MGOAL_FIND_ITEM",
     "difficulty": 3,
     "value": 20000,

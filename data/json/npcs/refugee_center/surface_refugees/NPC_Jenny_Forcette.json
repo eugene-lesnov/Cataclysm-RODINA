@@ -167,7 +167,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_JENNY_Background1",
-    "dynamic_line": "Me?  I trained at MIT in mechanical engineering, I worked for a long time as senior engineer at Marduk Thermal in Rhode Island.  It was a good job, but I landed my dream gig at Boston Dynamics and moved up north to start there.\"  She tips back her head and lets out a long, wistful sigh.  \"I had just finished my orientation and was going to start work when the riots started.  Just my damn luck.",
+    "dynamic_line": "Me?  I studied mechanical engineering at the regional technical university and worked on heating systems for years.  Then a robotics workshop in the oblast capital offered me the job I'd always wanted.\"  She sighs.  \"I'd barely finished my first week when the evacuation began.  Just my luck.",
     "responses": [
       {
         "text": "That's impressive, but there must be more to you than just your job.",
@@ -205,7 +205,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_JENNY_Survival",
-    "dynamic_line": "*shrugs, looking distant.  \"I don't really like to talk about that time much.  None of us do.  Short story is that I made it to one of the evacuation shelters and got loaded onto a bus.  It was supposed to go to some sort of FEMA support camp, but there was a roadblock on the way there.  A few people just jumped out and ran for the military for protection.  They… it… it was bad.  The driver managed to get us turned around and booked it, and I guess they didn't chase us.  She took us back to one of the shelters and we found the address for this place.  Only a few of us decided to risk it, the rest stayed at the shelter to try their luck a different way.  I still wonder how they did.\"",
+    "dynamic_line": "*shrugs, looking distant.  \"I don't like talking about that time.  I reached a district shelter and got on an evacuation bus.  We were meant to come to this Emergency Service camp, but there was a roadblock.  Some people ran toward the soldiers for help.  It went badly.  The driver turned us around and took us back to the shelter.  The terminal there still had directions to this camp.  A few of us followed them on foot; the others stayed behind.  I still wonder what happened to them.\"",
     "responses": [
       { "text": "<done_conversation_section>", "topic": "TALK_NONE" },
       { "text": "<end_talking_leave>", "topic": "TALK_DONE" }
@@ -450,7 +450,7 @@
       "no": "Living here?  Yeah, I guess I live here now.  It's… it's weird.  We're crowded into this tiny space, I don't know these people, but we're sharing bathrooms and we've all been through the same stuff.  It's not great.  At night we can hear the <zombies> outside, and we all just lie there awake, thinking the same things but too scared to talk about it.",
       "yes": {
         "math": [ "time_since('cataclysm', 'unit':'days') >= 60" ],
-        "no": "It's been over a month now, so I guess I'm starting to get used to it.  Things were pretty rough after Sean died, but it wasn't our first big loss and it won't be the last I guess.  I've made a couple friends, and in a weird way we're all like family.  We were all hoping they'd let us downstairs sooner than this though.  We're never quite sure if there's going to be enough food to go around.  I'm really hoping I can lose myself in this project.  Still haven't had a good night's sleep since <the_cataclysm>.",
+        "no": "It's been over a month now, so I guess I'm starting to get used to it.  Things were pretty rough after Sergei died, but it wasn't our first big loss and it won't be the last.  I've made a couple friends, and in a weird way we're all like family.  We were all hoping they'd let us downstairs sooner than this though.  We're never quite sure if there's going to be enough food to go around.  I'm really hoping I can lose myself in this project.  Still haven't had a good night's sleep since <the_cataclysm>.",
         "yes": {
           "math": [ "time_since('cataclysm', 'unit':'days') >= 120" ],
           "no": "There's good and there's bad.  We're all pretty sick of being cooped up in here for months, never knowing if there's going to be food to eat or not.  It's starting to look like they're never going to let us go down to the secure basement, and none of us have slept well since we were brought in.  We know we've got it pretty good… we're safe, we're alive.  It's just, like, what kind of life are we even living?",

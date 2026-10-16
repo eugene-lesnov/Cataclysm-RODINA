@@ -826,12 +826,12 @@ void talk_function::commune_refuge_caravan( mission_data &mission_key, npc &p )
                            "raiders or hostile groups, so only a strong party is recommended.  The "
                            "rewards are significant for those participating, but are even more "
                            "important for the factions that profit.\n\n"
-                           "The commune is sending food to the Free Merchants in the Refugee "
-                           "Center as part of a tax and in exchange for skilled labor." );
+                           "The commune sends food to the supply cooperative at the Emergency "
+                           "Service camp in exchange for skilled labor." );
     mission_id miss_id = {
         Caravan_Commune_Center_Job, caravan_commune_center_job_assign_parameter, {}, std::nullopt
     };
-    mission_key.add_start( miss_id, _( "Caravan Commune-Refugee Center" ),
+    mission_key.add_start( miss_id, _( "Caravan Commune-Emergency Service Camp" ),
                            entry );
 
     std::vector<npc_ptr> npc_list = companion_list( p, miss_id );
@@ -855,7 +855,7 @@ void talk_function::commune_refuge_caravan( mission_data &mission_key, npc &p )
                     "from the commune, are you ready to depart?" );
         miss_id.parameters = caravan_commune_center_job_active_parameter;
         mission_key.add_start( miss_id,
-                               _( "Begin Commune-Refugee Center Run" ), entry );
+                               _( "Begin Commune-Camp Run" ), entry );
     }
 
     miss_id.parameters = caravan_commune_center_job_active_parameter;
@@ -895,7 +895,7 @@ void talk_function::commune_refuge_caravan( mission_data &mission_key, npc &p )
 
     if( display_return ) {
         miss_id.parameters = caravan_commune_center_job_assign_parameter;
-        mission_key.add_return( miss_id, _( "Recover Commune-Refugee Center" ),
+        mission_key.add_return( miss_id, _( "Recover Commune-Camp Caravan" ),
                                 return_entry, ready_return );
     }
 }

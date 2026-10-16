@@ -7802,9 +7802,9 @@ void overmap::place_radios()
                                             "  Supplies, amenities and shelter are stocked." ), i, j );
                 radios.emplace_back( pos_sm, strength() / 2, message );
             } else if( is_ot_match( "fema_entrance", ter( pos_omt ), ot_match_type::prefix ) ) {
-                message = string_format( _( "This is FEMA camp %d%d."
-                                            "  Supplies are limited, please bring supplemental food, water, and bedding."
-                                            "  This is FEMA camp %d%d.  A designated long-term emergency shelter." ), i, j, i, j );
+                message = string_format( _( "This is Emergency Service field camp %d%d."
+                                            "  Supplies are limited; bring food, water, and bedding if you can."
+                                            "  This is field camp %d%d.  Approach the checkpoint for current instructions." ), i, j, i, j );
                 radios.emplace_back( pos_sm, strength(), message );
             }
         }

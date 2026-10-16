@@ -63,6 +63,8 @@
         "    #####:##+#:#####4   "
       ],
       "palettes": [ "shelter" ],
+      "place_furniture": [ { "furn": "f_sign", "x": 3, "y": 7 } ],
+      "place_signs": [ { "signage": "DISTRICT EMERGENCY SERVICE\nEVACUATION SHELTER\nCAMP DIRECTIONS INSIDE", "x": 3, "y": 7 } ],
       "place_zones": [ { "type": "ZONE_START_POINT", "faction": "your_followers", "x": [ 7, 17 ], "y": [ 10, 15 ] } ]
     }
   },
@@ -133,6 +135,8 @@
         "    #####:##+#:#####    "
       ],
       "palettes": [ "shelter" ],
+      "place_furniture": [ { "furn": "f_sign", "x": 3, "y": 7 } ],
+      "place_signs": [ { "signage": "DISTRICT EMERGENCY SERVICE\nEVACUATION SHELTER\nCAMP DIRECTIONS INSIDE", "x": 3, "y": 7 } ],
       "place_zones": [ { "type": "ZONE_START_POINT", "faction": "your_followers", "x": [ 7, 17 ], "y": [ 13, 15 ] } ]
     }
   },
@@ -203,6 +207,8 @@
         "            ##:#+#:##   "
       ],
       "palettes": [ "shelter" ],
+      "place_furniture": [ { "furn": "f_sign", "x": 3, "y": 5 } ],
+      "place_signs": [ { "signage": "DISTRICT EMERGENCY SERVICE\nEVACUATION SHELTER\nCAMP DIRECTIONS INSIDE", "x": 3, "y": 5 } ],
       "place_zones": [ { "type": "ZONE_START_POINT", "faction": "your_followers", "x": [ 7, 17 ], "y": [ 11, 13 ] } ]
     }
   },

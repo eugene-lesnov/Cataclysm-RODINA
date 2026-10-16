@@ -36,7 +36,7 @@
       "H": "f_sofa",
       "L": "f_locker",
       "O": "f_oven",
-      "P": "f_indoor_plant",
+      "P": "f_table",
       "S": "f_sink",
       "T": "f_table",
       "U": "f_statue",
@@ -61,8 +61,14 @@
       "~": "f_shower"
     },
     "vendingmachines": { "l": { "lootable": true } },
-    "items": { "t": { "item": "SUS_toilet", "chance": 50 } },
+    "items": { "P": [ { "item": "rodina_camp_triage_supplies", "chance": 100 } ], "t": { "item": "SUS_toilet", "chance": 50 } },
     "toilets": { "t": {  } }
+  },
+  {
+    "type": "item_group",
+    "id": "rodina_camp_triage_supplies",
+    "subtype": "collection",
+    "entries": [ { "item": "bandages", "prob": 50 }, { "item": "disinfectant", "prob": 30 } ]
   },
   {
     "type": "palette",

@@ -71,12 +71,12 @@
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_AboutMe_Basic",
     "type": "talk_topic",
-    "dynamic_line": "Well, I'm Gavin, like I said.  I was a fireman before <the_cataclysm>, and I was also on duty when everything fell apart.  I'd rather not go into detail, but other than that, I wasn't really much to write home about.  My family was Irish, I never married, and I liked woodworking.  I volunteered to take inventory of what the center had when I got off the bus, one thing leads to another, and now I'm here."
+    "dynamic_line": "Well, I'm Gavin, like I said.  I worked as a firefighter-rescuer for the district Emergency Service before <the_cataclysm>.  I was on duty when everything fell apart.  I'd rather not go into detail.  I never married, and I liked woodworking.  I took inventory of the camp supplies when the rescuers regrouped here; one thing led to another, and now I manage the store."
   },
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_AboutMe_Smokes",
     "type": "talk_topic",
-    "dynamic_line": "*rolls his eyes.  \"Tell me about it.  My actual name is Gavin, which I think I told you.  I used to be a firefighter, and people started recognizing me because of the helmet.  Someone called me 'smokes' because of it, and it stuck.  I hate it.  I've never even touched a cigarette.\"",
+    "dynamic_line": "*rolls his eyes.  \"Tell me about it.  My name is Gavin.  I wore this helmet on rescue calls, so somebody started calling me 'Smokes'.  It stuck.  I've never even touched a cigarette.\"",
     "responses": [
       {
         "text": "[PER 8] If you hate it, then why are you smiling?",
@@ -94,7 +94,7 @@
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_AboutMerch",
     "type": "talk_topic",
-    "dynamic_line": "Oh, merch.  They're just paper notes we've started using for local cash.  We started out paying each other with dollar bills, but there's so much paper money out there that it's just useless now.  For our internal use, we started certifying bills that represent food and labor in the center here.  We started trading them internally, and then they started circling around, and now other people have started adopting them, too."
+    "dynamic_line": "Those are our camp vouchers.  When the old rubles stopped buying anything, the supply cooperative began numbering unused shelter forms and stamping them.  We pay people for work with them, and the camp store accepts them for food and equipment.  Some traders take them too, because they know we'll honor them."
   },
   {
     "id": [
@@ -166,7 +166,7 @@
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_OutsideWorld1",
     "type": "talk_topic",
-    "dynamic_line": "Yeah.  Someone came through this way a while back saying he had tried to drive into Syracuse after the outbreak.  Didn't even make it downtown before he ran into a wall of zombies that he said could stop a tank.  He hightailed it out, but he said there were several thousand at least.  I guess when you get a bunch of them together, they end up making enough noise to attract everyone in the neighborhood.  Thankfully, we haven't had a mob like that pass by here, because I'm not sure the fence would do much to keep them out."
+    "dynamic_line": "Yeah.  Someone came through this way a while back saying he had tried to drive into a nearby city after the outbreak.  Didn't even make it downtown before he ran into a wall of zombies that he said could stop a tank.  He hightailed it out, but he said there were several thousand at least.  I guess when you get a bunch of them together, they end up making enough noise to attract everyone in the neighborhood.  Thankfully, we haven't had a mob like that pass by here, because I'm not sure the fence would do much to keep them out."
   },
   {
     "id": "TALK_FREE_MERCHANTS_MERCHANT_OutsideWorld2",

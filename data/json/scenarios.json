@@ -4,19 +4,19 @@
     "id": "evacuee",
     "name": "Evacuee",
     "points": 0,
-    "description": "You have survived the initial wave of panic, and have achieved (relative) safety in one of the many government evac shelters.",
+    "description": "You reached a district Emergency Service shelter during the evacuation.  The rescue convoy never arrived, and the roads outside are yours to face.",
     "allowed_locs": [ "sloc_shelter_a", "sloc_shelter_b", "sloc_shelter_c" ],
-    "start_name": "Evac Shelter",
+    "start_name": "Emergency Service shelter",
     "flags": [ "CITY_START" ]
   },
   {
     "type": "scenario",
     "id": "refugeecenter",
-    "name": "Refugee Center",
+    "name": "Emergency Service Camp",
     "points": 0,
-    "description": "You have survived the initial wave of panic, and have made your way to a refugee center.",
+    "description": "You survived the first days of the Cataclysm and reached an Emergency Service camp, now kept running by rescuers and the people they sheltered.",
     "allowed_locs": [ "sloc_refugee_center" ],
-    "start_name": "Refugee Center",
+    "start_name": "Emergency Service Camp",
     "flags": [ "LONE_START" ]
   },
   {

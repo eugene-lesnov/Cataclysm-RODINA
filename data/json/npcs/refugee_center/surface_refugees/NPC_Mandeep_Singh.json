@@ -153,7 +153,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_Mandeep_Background2",
-    "dynamic_line": "*he blinks, looking a bit surprised.  \"'Before'.  It sounds so dramatic, doesn't it?  I suppose drama is appropriate.  Well, in India, I was actually a junior university professor, in archaeology.  When I brought my family to the United States, I was to have a job at Emerson.\"  He smiles sadly.  \"Things don't always work out as we hope.  Most lately, I have been driving truck for UPS.\"",
+    "dynamic_line": "*he blinks, looking a bit surprised.  \"'Before'.  It sounds so dramatic, doesn't it?  In India I taught archaeology at a university.  I brought my family here for a position at the regional museum.\"  He smiles sadly.  \"Things don't always work out as we hope.  Lately I was driving a delivery truck.\"",
     "responses": [
       { "text": "What happened with your professor job?", "topic": "TALK_REFUGEE_Mandeep_Background3" },
       { "text": "How did you and your family make it here?", "topic": "TALK_REFUGEE_Mandeep_Survival" },

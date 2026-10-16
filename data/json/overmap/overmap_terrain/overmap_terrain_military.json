@@ -3,7 +3,7 @@
     "type": "overmap_terrain",
     "id": "fema_road",
     "vision_levels": "large_pavement",
-    "name": "FEMA camp road",
+    "name": "Emergency Service field camp road",
     "color": "dark_gray",
     "see_cost": "none",
     "spawns": { "group": "GROUP_ZOMBIE", "population": [ 6, 12 ], "chance": 100 },
@@ -14,7 +14,7 @@
     "type": "overmap_terrain",
     "id": "fema_housing",
     "vision_levels": "isolated_camp",
-    "name": "FEMA camp housing",
+    "name": "Emergency Service field camp housing",
     "sym": "H",
     "color": "blue",
     "see_cost": "medium",
@@ -25,7 +25,7 @@
     "type": "overmap_terrain",
     "id": "fema_military_building",
     "vision_levels": "isolated_building",
-    "name": "FEMA camp outpost",
+    "name": "Emergency Service field camp outpost",
     "sym": "M",
     "color": "red",
     "see_cost": "medium",
@@ -36,7 +36,7 @@
     "type": "overmap_terrain",
     "id": "fema_storage",
     "vision_levels": "isolated_building",
-    "name": "FEMA camp storage",
+    "name": "Emergency Service field camp storage",
     "sym": "S",
     "color": "light_blue",
     "see_cost": "medium",
@@ -47,7 +47,7 @@
     "type": "overmap_terrain",
     "id": "fema_entrance",
     "vision_levels": "isolated_building",
-    "name": "FEMA camp entrance checkpoint",
+    "name": "Emergency Service field camp checkpoint",
     "sym": "S",
     "color": "light_blue",
     "see_cost": "medium",
@@ -58,7 +58,7 @@
     "type": "overmap_terrain",
     "id": "fema_bus",
     "vision_levels": "large_pavement",
-    "name": "FEMA camp bus stop",
+    "name": "Emergency Service field camp bus stop",
     "sym": "B",
     "color": "dark_gray",
     "see_cost": "medium",
@@ -76,7 +76,7 @@
   {
     "type": "overmap_terrain",
     "id": [ "shelter", "shelter_vandal", "shelter_unfinished", "shelter_survivor" ],
-    "name": "evac shelter A-23",
+    "name": "Emergency Service shelter A-23",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_DOWN", "SOURCE_PEOPLE", "SOURCE_SAFETY" ]
   },
@@ -89,7 +89,7 @@
   {
     "type": "overmap_terrain",
     "id": [ "shelter_1", "shelter_1_vandal", "shelter_1_unfinished", "shelter_1_survivor" ],
-    "name": "evac shelter B-05",
+    "name": "Emergency Service shelter B-05",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_DOWN", "SOURCE_PEOPLE", "SOURCE_SAFETY" ]
   },
@@ -103,7 +103,7 @@
     "type": "overmap_terrain",
     "id": [ "shelter_1b", "shelter_1b_vandal", "shelter_1b_unfinished", "shelter_1b_survivor" ],
     "copy-from": "shelter_abstract",
-    "name": "evac shelter B-19",
+    "name": "Emergency Service shelter B-19",
     "flags": [ "KNOWN_DOWN", "SOURCE_PEOPLE", "SOURCE_SAFETY" ]
   },
   {
@@ -115,7 +115,7 @@
   {
     "type": "overmap_terrain",
     "id": [ "shelter_2", "shelter_2_vandal", "shelter_2_unfinished", "shelter_2_survivor" ],
-    "name": "evac shelter C-41",
+    "name": "Emergency Service shelter C-41",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_DOWN", "SOURCE_PEOPLE", "SOURCE_SAFETY" ]
   },
@@ -128,52 +128,52 @@
   {
     "type": "overmap_terrain",
     "id": [ "shelter_roof" ],
-    "name": "evac shelter roof A-23",
+    "name": "Emergency Service shelter roof A-23",
     "copy-from": "shelter_abstract"
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_roof_1" ],
-    "name": "evac shelter roof B-05",
+    "name": "Emergency Service shelter roof B-05",
     "copy-from": "shelter_abstract"
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_roof_1b" ],
-    "name": "evac shelter roof B-19",
+    "name": "Emergency Service shelter roof B-19",
     "copy-from": "shelter_abstract"
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_roof_2" ],
-    "name": "evac shelter roof C-41",
+    "name": "Emergency Service shelter roof C-41",
     "copy-from": "shelter_abstract"
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_under", "shelter_under_vandal", "shelter_under_unfinished", "shelter_under_infested" ],
-    "name": "evac shelter basement A-23",
+    "name": "Emergency Service shelter basement A-23",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_under_1b", "shelter_under_1b_vandal", "shelter_under_1b_unfinished", "shelter_under_1b_infested" ],
-    "name": "evac shelter basement B-19",
+    "name": "Emergency Service shelter basement B-19",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_under_2", "shelter_under_2_vandal", "shelter_under_2_unfinished", "shelter_under_2_infested" ],
-    "name": "evac shelter basement C-41",
+    "name": "Emergency Service shelter basement C-41",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_UP" ]
   },
   {
     "type": "overmap_terrain",
     "id": [ "shelter_under_1", "shelter_under_1_vandal", "shelter_under_1_unfinished", "shelter_under_1_infested" ],
-    "name": "evac shelter basement B-05",
+    "name": "Emergency Service shelter basement B-05",
     "copy-from": "shelter_abstract",
     "flags": [ "KNOWN_UP" ]
   },

@@ -2083,7 +2083,7 @@
         "point": [ 7, 7, 0 ],
         "overmap": "evac_center_13_north",
         "camp": "free_merchants",
-        "camp_name": "Refugee Center"
+        "camp_name": "Emergency Service Camp"
       },
       { "point": [ 8, 7, 0 ], "overmap": "evac_center_14_north" },
       { "point": [ 9, 7, 0 ], "overmap": "evac_center_15_north" },

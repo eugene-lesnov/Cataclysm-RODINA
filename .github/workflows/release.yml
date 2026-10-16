@@ -139,6 +139,8 @@ jobs:
             "${GITHUB_REF_NAME#rodina-}" "$GITHUB_SHA" > release-notes.txt
           if [[ "${GITHUB_REF_NAME#rodina-}" == 0.0.* ]]; then
             printf 'Technical infrastructure release. It does not include the setting conversion.\n\n' >> release-notes.txt
+          elif [[ "${GITHUB_REF_NAME#rodina-}" == 0.1.0 ]]; then
+            printf 'First setting vertical slice: the evacuee start, district Emergency Service shelters, the evacuation route, and the former Refugee Center as a staffed Emergency Service camp. Includes the first camp mission, supplies, signs, radio messages, and Russian text for the main route.\n\n' >> release-notes.txt
           fi
           printf 'Build manifests and checksums are attached. Linux requires system SDL2 libraries.\n' >> release-notes.txt
           if gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft > release-state.txt 2>/dev/null; then

@@ -65,7 +65,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_CARAVAN_REFUGEE_A1_Job",
-    "dynamic_line": "We're just trying to find a safe place right now.  I think there's a FEMA camp nearby that should have room for us.",
+    "dynamic_line": "We're just trying to find a safe place.  Someone told us there's an Emergency Service field camp nearby, but we don't know if it still has room.",
     "responses": [
       { "text": "That's it?  What's your story?", "topic": "TALK_CARAVAN_REFUGEE_A_Story" },
       { "text": "Good luck with that.  <end_talking_leave>", "topic": "TALK_DONE" }
@@ -104,14 +104,11 @@
   {
     "type": "talk_topic",
     "id": "TALK_CARAVAN_REFUGEE_A_Story",
-    "dynamic_line": "We were at the same little evacuation hut, but it was all messed up, just used condoms and broken bottles and lipstick writing on the walls.  We found another group of refugees like us on the road, but they had all been killed, all ripped up, blood everywhere.  We took their food and made it all the way to a big refugee center, but somebody there with a gun told us there was no room, so we're going to a FEMA camp.  They should have more room and supplies.  No guarantees, but it's a chance.",
+    "dynamic_line": "We left a vandalized evacuation shelter and found another group dead on the road.  We took their food and reached the larger Emergency Service camp, but a guard said there was no room.  Now we're trying a field camp farther out.  It may have space; it may have nothing.  We have to try.",
     "responses": [
+      { "text": "Can you give me directions to that field camp?", "topic": "TALK_CARAVAN_REFUGEE_A_FEMA" },
       {
-        "text": "Can you give me directions to that FEMA camp?  I want to go there too if it's so great.",
-        "topic": "TALK_CARAVAN_REFUGEE_A_FEMA"
-      },
-      {
-        "text": "I haven't been to any refugee center.  Can you tell me where it is?",
+        "text": "Where is the larger Emergency Service camp?",
         "topic": "TALK_CARAVAN_REFUGEE_A_CENTER",
         "condition": {
           "and": [
@@ -130,7 +127,7 @@
     "speaker_effect": { "effect": { "assign_mission": "MISSION_REACH_FEMA_CA" } },
     "responses": [
       {
-        "text": "I haven't been to any refugee center.  Can you tell me where it is?",
+        "text": "Where is the larger Emergency Service camp?",
         "topic": "TALK_CARAVAN_REFUGEE_A_CENTER",
         "condition": {
           "and": [
@@ -145,13 +142,20 @@
   {
     "id": "MISSION_REACH_FEMA_CA",
     "type": "mission_definition",
-    "name": { "str": "Reach FEMA Camp" },
+    "name": { "str": "Reach the Emergency Service field camp" },
     "goal": "MGOAL_GO_TO_TYPE",
     "difficulty": 2,
     "value": 60000,
-    "start": { "assign_mission_target": { "om_terrain": "fema", "reveal_radius": 5, "om_special": "FEMA Camp" } },
+    "start": {
+      "assign_mission_target": {
+        "om_terrain": "fema_entrance",
+        "om_terrain_match_type": "PREFIX",
+        "reveal_radius": 5,
+        "om_special": "fema_camp_mutable"
+      }
+    },
     "origins": [ "ORIGIN_SECONDARY" ],
-    "destination": "fema",
+    "destination": "fema_entrance",
     "dialogue": {
       "describe": "Things must be better at the camp…",
       "offer": "We're all in this together, looking forward to meeting you there.",

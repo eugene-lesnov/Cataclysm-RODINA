@@ -13,11 +13,11 @@
       },
       {
         "id": "flier_4",
-        "text": "This is a somewhat weather-worn advertisement for the 'new' FEMA evacuation shelters.  Beneath the colorful photo it reads, \"Familiarize yourself with your nearest emergency shelter.  It could save your life.\""
+        "text": "A weather-worn district Emergency Service notice shows the nearest evacuation shelter.  Beneath the photograph it reads: \"Learn the route to your shelter before an emergency.  It could save your life.\""
       },
       {
         "id": "flier_5",
-        "text": "This is an advertisement for a FEMA evacuation shelter.  Beneath a picture of a shelter it reads, \"Contact your local FEMA office to arrange a tour of your nearest evacuation shelter.  Be prepared!\""
+        "text": "This is an Emergency Service leaflet showing the inside of an evacuation shelter.  It reads: \"Ask the district office about shelter locations, supplies, and evacuation procedures.  Be prepared.\""
       },
       {
         "id": "flier_6",
@@ -49,15 +49,15 @@
       },
       {
         "id": "flier_13",
-        "text": "This is a government-issued, air-dropped alert.  \"EVACUATION ALERT.  Please make your way to the nearest FEMA evacuation shelter.  Avoid crowds.  Looters and rioters may turn violent against unarmed civilians.  Seek protection from police and military forces if traveling in groups.\""
+        "text": "This air-dropped Emergency Service alert reads: \"EVACUATION.  Go to the nearest marked shelter if the route is safe.  Avoid crowds and follow directions from police and rescuers.  Call 112 if you can still reach the emergency line.\""
       },
       {
         "id": "flier_14",
-        "text": "This is a government-issued, air-dropped alert.  \"EVACUATION ALERT.  Please make your way to the nearest FEMA evacuation shelter.  Travel in groups and avoid crowds.  This is believed to be a biological agent that causes violent behavior: do not attempt to engage looters or rioters.\""
+        "text": "This air-dropped Emergency Service alert reads: \"EVACUATION.  Travel in small groups to the nearest marked shelter.  Avoid anyone behaving violently.  Do not enter a roadblock without instructions from the personnel there.\""
       },
       {
         "id": "flier_15",
-        "text": "This is a glossy, high-quality flier.  \"What they don't want you to know!  Reading this may save your life.\"  Inside is a series of warnings recommending people avoid the evacuation shelters, and worse, the FEMA evacuation camps, along with some high-quality telephoto shots showing bodies being shoveled into huge pits by excavation machines."
+        "text": "This glossy anonymous leaflet warns against the evacuation shelters and the field camps.  Blurred photographs show excavators filling pits.  Nothing on the page says when or where the photographs were taken."
       },
       {
         "id": "flier_16",
@@ -121,19 +121,19 @@
       },
       {
         "id": "flier_31",
-        "text": "This is a public notice from the Centers for Disease Control.  Its message, repeated in several languages, reads: \"BOIL WATER ADVISORY.  An unidentified agent has contaminated local groundwater.  It is highly infectious and can cause erratic and violent behavior.  Boil all water, and isolate any loved ones showing concerning symptoms.  Visit www.cdc.gov/cdda-advisory for more information.\""
+        "text": "This public health notice, repeated in several languages, reads: \"BOIL WATER.  The district water supply may be unsafe.  Boil drinking water and keep anyone with severe symptoms away from shared supplies.  Contact the local medical post or call 112 for advice.\""
       },
       {
         "id": "flier_32",
-        "text": "This is a public alert from the Centers for Disease Control.  Its message, repeated in several languages, reads: PUBLIC HEALTH ALERT: Due to recent events, the CDC is issuing a warning to avoid public areas and spaces.  An unknown biological contaminant is suspected to be affecting citizens.  The CDC would like to remind the public to cover your nose and mouth when sneezing, wash your hands frequently, and receive an up-to-date flu shot if possible.  Boiling water is recommended until further notice."
+        "text": "This notice from the district public health service, repeated in several languages, advises residents to avoid crowds, wash their hands, and boil drinking water until further notice.  It says medical teams are investigating unexplained violent incidents."
       },
       {
         "id": "flier_33",
-        "text": "This is a public alert from the Federal Emergency Management Agency.  Its message, repeated in several languages, reads: STAY IN YOUR HOMES!  All residents of the New England Disaster Area are advised to shelter in place wherever possible.  The United States Armed Forces are working to contain the area.  If there is a nearby evacuation shelter you can get to safely, you are recommended to do so.  Otherwise, stay in your homes until authorized personnel evacuate you to a secured facility.  Thank you for your compliance."
+        "text": "This Emergency Service alert, repeated in several languages, reads: \"STAY INDOORS IF THE ROADS ARE UNSAFE.  District shelters remain open where personnel can reach them.  Follow the posted route to a shelter only if you can travel safely.  Listen to local radio for transport notices.\""
       },
       {
         "id": "flier_34",
-        "text": "This is a public alert from the Federal Emergency Management Agency.  Its message, repeated in several languages, consists of a list of towns serving as major evacuation points from the New England Disaster Area.  Someone has scribbled off most of the town names, and scrawled \"OVERRUN\" next to each one, with the exception of the Tacoma evacuation point."
+        "text": "This district Emergency Service leaflet lists towns with evacuation shelters and the routes to a larger camp.  Most entries have been crossed out by hand and marked \"OVERRUN\".  One route is circled, but its road condition is unknown."
       },
       {
         "id": "flier_35",
@@ -145,7 +145,7 @@
       },
       {
         "id": "flier_37",
-        "text": "This is a public warning from the Federal Government.  Its brief message, repeated in several languages, reads:  The President of the United States has declared unilateral martial law to be in effect for the 48 contiguous states in response to the ongoing national crisis.  Continue to shelter in place until evacuated to an appropriate emergency management camp by authorized military personnel.  A 24-hour curfew has been established.  This curfew will remain in effect until further notice.  Stay indoors.  Violators will be shot on sight."
+        "text": "This warning from the republic administration, repeated in several languages, announces an emergency curfew.  Residents are told to stay indoors until police, army, or Emergency Service personnel announce a safe route to a shelter or camp."
       },
       {
         "id": "flier_38",
@@ -209,7 +209,7 @@
       },
       {
         "id": "flier_53",
-        "text": "This is a flier for Red Ryder BB Guns.  On it a child is pulling a shining red wagon containing a cooked pheasant, a wooden rifle held over one shoulder.  The child has a dog trailing beside him and a satisfied look on his face.  The caption reads \"When you chose Red Ryder, you invested in the American Dream.  You invested in our Independence.\""
+        "text": "A toy-shop leaflet shows a child pulling a red wagon and carrying a wooden rifle, with a dog trotting beside him.  The caption promises a sturdy toy for long summers in the village."
       },
       {
         "id": "flier_54",
@@ -225,7 +225,7 @@
       },
       {
         "id": "flier_57",
-        "text": "This is a public alert from the Center of Disease Control.  Its message, repeated in several languages reads: \"ADVISORY.  Do not attempt to bring infected loved ones or friends to any hospitals, they are being currently overwhelmed due to the volume of incoming patients.  Restrain those believed to be infected, and wait for further information at www.cdc.gov.\""
+        "text": "This district medical alert, repeated in several languages, reads: \"Hospitals are overwhelmed.  Do not bring violent or unconscious patients to a crowded waiting room without calling ahead.  Keep a safe distance and call 112 if the line is working.\""
       },
       {
         "id": "flier_59",
@@ -324,7 +324,7 @@
       {
         "id": "flier_81",
         "text": {
-          "str": "This is an old coupon insert for Marigold Market:\n\n - BOGO!  Cascade Cola six-packs!\n - ATOMIC POWER THIRST!  Now with 20% more FRUIT RU-238!\n - $2 MEAT! Aunt Janice's Pickled Meat now just $2.49!\n - 75% OFF! DaiZoom bars by SoyPelusa.",
+          "str": "This is an old coupon insert for Marigold Market:\n\n - TWO FOR ONE!  Cascade Cola six-packs!\n - ATOMIC POWER THIRST!  Now with 20% more FRUIT RU-238!\n - PICKLED MEAT! Aunt Janice's jars now just 249 rubles!\n - 75% OFF! DaiZoom bars by SoyPelusa.",
           "//NOLINT(cata-text-style)": "intentional format"
         }
       },

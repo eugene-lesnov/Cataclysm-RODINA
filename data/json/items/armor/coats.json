@@ -1260,7 +1260,7 @@
     "type": "ITEM",
     "subtypes": [ "ARMOR" ],
     "name": { "str": "emergency jacket" },
-    "description": "A bright, cheaply made FEMA-issue windbreaker jacket with a hood.  One size, fits none.  Helps keep you unfrozen & visible for rescuers.",
+    "description": "A bright hooded windbreaker from a district evacuation shelter, marked with reflective Emergency Service stripes.  One size, fits none.  It keeps you visible to rescuers.",
     "weight": "197 g",
     "volume": "2250 ml",
     "price": "10 USD",

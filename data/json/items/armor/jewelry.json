@@ -1840,8 +1840,8 @@
     "copy-from": "badge_abstract",
     "type": "ITEM",
     "subtypes": [ "ARMOR" ],
-    "name": { "str": "marshal badge" },
-    "description": "A bright silver star strikes fear into the eyes of ne'er-do-wells.",
+    "name": { "str": "field officer badge" },
+    "description": "A plain metal badge marked with the seal of the district emergency command.  It identifies a field officer working with the remaining authorities.",
     "proportional": { "price": 2 }
   },
   {

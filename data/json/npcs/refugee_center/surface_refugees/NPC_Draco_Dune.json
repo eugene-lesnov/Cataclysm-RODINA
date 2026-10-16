@@ -233,7 +233,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_Draco_6e",
-    "dynamic_line": "Me too!  For now, anyway, that's not really possible for me.  I mean, I guess you know better than me about that.  Man, I used to travel all around.  Saw halfa the States with my guitar on my back.  Now, though, well, I think I'll stay inside til this all flies over.",
+    "dynamic_line": "Me too!  For now, anyway, that's not really possible for me.  I mean, I guess you know better than me about that.  Man, I used to travel all around.  Saw half the oblasts with my guitar on my back.  Now, though, well, I think I'll stay inside til this all flies over.",
     "responses": [
       { "text": "Maybe I could help with something?", "topic": "TALK_REFUGEE_Draco_7" },
       { "text": "Well then, I'll leave you here where it's safe.", "topic": "TALK_DONE" }
@@ -279,7 +279,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_Draco_8",
-    "dynamic_line": "Well now, my friend-o!  You just asked a mighty fine question.  Folks have been missing the little things in life.  New shoes, new cellphones, can't exactly go shopping, or, well, I guess you sorta can, if you mind the broken glass.  I left my wallet in an outdoorsman's store when I 'bought' this warmer coat.  Figured that's kinda it, you know?  It didn't matter anymore.  I don't think my insurance's going to pay out for any health care I get now.  I did what you see in the movies though, I rolled a joint with a hundred dollar bill.  Ended up coughing and rerolling it in regular paper though.  Was too harsh.  Just letting you know in case you get the smart idea of trying it.",
+    "dynamic_line": "Well now, my friend-o!  You just asked a mighty fine question.  Folks have been missing the little things in life.  New shoes, new cellphones, can't exactly go shopping, or, well, I guess you sorta can, if you mind the broken glass.  I left my wallet in an outdoorsman's store when I 'bought' this warmer coat.  Figured that's kinda it, you know?  It didn't matter anymore.  I don't think my insurance's going to pay out for any health care I get now.  I did what you see in the movies though, I rolled a joint with a hundred-ruble note.  Ended up coughing and rerolling it in regular paper though.  Was too harsh.  Just letting you know in case you get the smart idea of trying it.",
     "responses": [ { "text": "Go on.", "topic": "TALK_REFUGEE_Draco_9" } ]
   },
   {
@@ -334,7 +334,7 @@
     "dynamic_line": {
       "npc_has_effect": "u_sold_to_Draco",
       "yes": "Yeah, no worries, though.  I'm good at the moment.  Ask me again later and maybe I'll have scrounged up some more cash for you.",
-      "no": "Amazing!  My lucky day.  Let's see here.  What can I offer… I can scrounge up some merch bucks for, say, five joints or joints-worth of the good stuff."
+      "no": "Amazing!  My lucky day.  Let's see here.  What can I offer… I can scrounge up some camp vouchers for, say, five joints or joints-worth of the good stuff."
     },
     "responses": [
       {

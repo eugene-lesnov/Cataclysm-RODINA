@@ -3,7 +3,7 @@
     "type": "npc",
     "id": "old_guard_rep",
     "name_suffix": "Representative",
-    "class": "NC_COWBOY",
+    "class": "NC_SOLDIER",
     "attitude": 0,
     "mission": 7,
     "chat": "TALK_OLD_GUARD_REP",
@@ -13,7 +13,7 @@
   {
     "id": "TALK_OLD_GUARD_REP",
     "type": "talk_topic",
-    "dynamic_line": { "u_has_any_trait": [ "PROF_FED" ], "yes": "Marshal…", "no": "Citizen…" },
+    "dynamic_line": { "u_has_any_trait": [ "PROF_FED" ], "yes": "Officer…", "no": "Citizen…" },
     "responses": [
       {
         "text": "I'm trying to put a cleanup crew together to tidy up the back room.  Can you help?",
@@ -88,7 +88,7 @@
   {
     "id": "TALK_OLD_GUARD_REP_NEW",
     "type": "talk_topic",
-    "dynamic_line": "I'm the region's federal liaison.  Most people here call us the 'Old Guard' and I rather like the sound of it.  Despite how things currently appear, the federal government was not entirely destroyed.  After the outbreak I was chosen to coordinate civilian and militia efforts in support of military operations.",
+    "dynamic_line": "I was a liaison for the oblast administration.  People call the officials and soldiers still working together the 'Old Guard'.  After communications failed, I was sent to coordinate civilian volunteers and the remaining units in this district.",
     "responses": [
       { "text": "So what are you actually doing here?", "topic": "TALK_OLD_GUARD_REP_NEW_DOING" },
       { "text": "Never mind…", "topic": "TALK_OLD_GUARD_REP" }
@@ -116,9 +116,9 @@
   {
     "id": "TALK_OLD_GUARD_REP_WORLD",
     "type": "talk_topic",
-    "dynamic_line": "There isn't much pushed out by public relations that I'd actually believe.  From what I gather, communication between the regional force commands is almost non-existent.  What I do know is that the 'Old Guard' is currently based out of the 2nd Fleet and patrols the Atlantic coast trying to provide support to the remaining footholds.",
+    "dynamic_line": "Reliable news is scarce.  Command posts in neighboring districts barely reach one another by radio.  The Old Guard still has a few mobile relief columns, but I can't tell you where they are now.",
     "responses": [
-      { "text": "The 2nd Fleet?", "topic": "TALK_OLD_GUARD_REP_WORLD_2NDFLEET" },
+      { "text": "Mobile relief columns?", "topic": "TALK_OLD_GUARD_REP_WORLD_2NDFLEET" },
       { "text": "Tell me about the footholds.", "topic": "TALK_OLD_GUARD_REP_WORLD_FOOTHOLDS" },
       { "text": "Never mind…", "topic": "TALK_OLD_GUARD_REP" }
     ]
@@ -126,7 +126,7 @@
   {
     "id": "TALK_OLD_GUARD_REP_WORLD_2NDFLEET",
     "type": "talk_topic",
-    "dynamic_line": "I don't know much about how it formed but it is the armada of military and commercial ships that's floating off the coast.  They have everything from supertankers and carriers to fishing trawlers… even a few NATO ships.  Most civilians are offered a cabin on one of the liners to retire to if they serve as a federal employee for a few years.",
+    "dynamic_line": "Soldiers, rescuers, and civilian drivers pulled vehicles and supplies together when the fixed command posts fell silent.  They move people between shelters where roads are passable.  We have not had a reliable update from them in days.",
     "responses": [ { "text": "Hmmm…", "topic": "TALK_OLD_GUARD_REP" } ]
   },
   {
@@ -227,7 +227,7 @@
       "describe": "We need help…",
       "offer": "I don't like sending untested men into the field but if you have stayed alive so far you might have some skills.  There are at least a pair of bandits squatting in a local cabin, anyone who preys upon civilians meets a quick end… execute both of them for their crimes.  Complete this and the Old Guard will consider you an asset in the region.",
       "accepted": "Contractor, I welcome you aboard.",
-      "rejected": "The States will remain a wasteland unless good men choose to save it.",
+      "rejected": "The district will remain dangerous unless people are willing to help.",
       "advice": "They might suspect you are coming, keep an eye out for traps.",
       "inquire": "Have you completed your mission?",
       "success": "The Old Guard thanks you for eliminating the criminals.  You won't be forgotten.",
@@ -239,7 +239,7 @@
     "id": "MISSION_OLD_GUARD_REP_2",
     "type": "mission_definition",
     "name": { "str": "Deal with Informant" },
-    "description": "The Hell's Raiders bandit group may have an informant working inside the Refugee Center.  Investigate and bring them to justice without arousing any suspicions.",
+    "description": "The Hell's Raiders may have an informant inside the Emergency Service camp.  Investigate without causing a panic.",
     "goal": "MGOAL_ASSASSINATE",
     "difficulty": 5,
     "value": 50000,
@@ -349,12 +349,12 @@
     "followup": "MISSION_OLD_GUARD_REPEATER_BEGIN",
     "dialogue": {
       "describe": "We need help…",
-      "offer": "I've located a Hell's Raiders encampment in the region that appears to be coordinating operations against the Free Merchants.  We know almost nothing about the command structure in the 'gang' so I need to send someone in to decapitate the leadership.  The raid will be held under orders of the U.S. Marshals Service and by agreeing to the mission you will become a marshal, swearing to assist the federal government in regaining order.",
-      "accepted": "Now repeat after me… I do solemnly swear that I will support and defend the Constitution of the United States against all enemies, foreign and domestic… that I will bear true faith and allegiance to the same… that I take this obligation freely, without any mental reservation or purpose of evasion… and that I will well and faithfully discharge the duties of the office on which I am about to enter.  To establish justice, insure domestic tranquility, provide for the common defense, promote the general welfare and secure the blessings of liberty.  So help me God.  Congratulations Marshal, don't forget your badge and gun.  As a marshal all men or women assisting you are considered deputy marshals so keep them in line.",
+      "offer": "I've located a raider camp coordinating attacks on our supply convoys.  We know little about its leaders.  I need someone to stop them.  If you accept, I can register you as a field officer working with the remaining district units and issue you a badge.",
+      "accepted": "I am recording your pledge to protect civilians and follow the district emergency command's orders.  You are now a field officer.  Here are your badge and equipment; anyone assisting you will be under your responsibility.",
       "rejected": "Come back when you get a chance, we could use a few good men.",
       "advice": "I'd recommend having two deputies… it would be a death trap if a single man got surrounded.",
       "inquire": "Has the leadership been dealt with?",
-      "success": "Marshal, you continue to impress us.  We may have some hope of long term survival yet thanks to you.",
+      "success": "Officer, you continue to impress us.  We may have some hope of long term survival yet thanks to you.",
       "success_lie": "What good does this do us?",
       "failure": "It was a lost cause anyways…"
     }
@@ -371,13 +371,13 @@
     "has_generic_rewards": false,
     "followup": "MISSION_OLD_GUARD_REPEATER",
     "dialogue": {
-      "describe": "I don't need anything major for now, Marshal.  Well, except…",
-      "offer": "For now, the perimeter of the Refugee Center is free of threats.  That means we can afford to divert our attention to others in need of help.  However, our communication with the wasteland is lacking at best and nonexistent at worst.  We need to broaden our reach to intercept and send radio broadcasts.  Unfortunately Radio Towers are out of the question to widen our broadcasts, as the emergency grid for them is out of action.  However, Radio Stations in towns or urban areas should still have some juice left.  I want you to install something called a \"radio repeater mod\" in these stations that can broaden their reach and allow them to pick weaker signals.  Sadly, I have neither these devices nor a manual for them at my disposal.  You'll need to find instructions and assemble them yourself.  Are you up for this task?",
-      "accepted": "As I said, I have no repeaters or manuals at my disposal.  But you might want to try you chances in Libraries or maybe other survivors.  Godspeed, Marshal.",
-      "rejected": "Come back when you get a chance Marshal.  We really need get in touch with rest of the region.",
+      "describe": "I don't need anything major for now, Officer.  Well, except…",
+      "offer": "The camp perimeter is secure for now, but we can barely reach other survivors by radio.  The emergency grid that powered the relay towers has failed.  Some town radio stations may still have electricity.  Install a radio repeater mod at one of their terminals so we can send messages beyond the district.  I have neither a device nor instructions; you will need to find a manual and assemble one.  Will you help?",
+      "accepted": "As I said, I have no repeaters or manuals at my disposal.  You might find a manual in a library or ask other survivors.  Stay safe, Officer.",
+      "rejected": "Come back when you get a chance, Officer.  We need to get in touch with the rest of the region.",
       "advice": "As I recommended, libraries would be a good start.  Or any place that sells books and manuals, really.",
-      "inquire": "Have you set up a repeater yet, Marshal?",
-      "success": "Thank you for the good work, Marshal.  It's not much but please accept these supplies to compensate.  Come back to me if you are willing to install more.",
+      "inquire": "Have you set up a repeater yet, Officer?",
+      "success": "Thank you for the good work, Officer.  It's not much but please accept these supplies to compensate.  Come back to me if you are willing to install more.",
       "success_lie": "Huh; that's weird, the boys at comms say that they didn't really see an improvement.  Well, if you want to try again, come to me.  Maybe this time it'll work.",
       "failure": "That's a damn shame…  You can come back anytime if you want to try again."
     },
@@ -407,12 +407,12 @@
     "followup": "MISSION_OLD_GUARD_REPEATER",
     "dialogue": {
       "describe": "We need more help…",
-      "offer": "We need more repeaters to expand our range and ability of our communications.  You know the drill Marshal, find or assemble a radio repeater mod and set it up in a Radio Station.  Radio Towers are still off the table.",
-      "accepted": "Stay safe, Marshal.",
-      "rejected": "Come back when you get a chance Marshal.  We really need get in touch with rest of the region.",
-      "advice": "You can find the Radio Stations in towns or urban centers.  I still have no repeater mod available Marshal.  However you can craft one yourself, if you find the manual.  Try libraries or bookstores if you still don't have one.",
-      "inquire": "Have you set up a repeater yet, Marshal?",
-      "success": "Good work, Marshal.  Here's some supplies for your next venture.  Come back to me if you are willing to install more.",
+      "offer": "We need more repeaters to expand our range and ability of our communications.  You know the drill Officer, find or assemble a radio repeater mod and set it up in a Radio Station.  Radio Towers are still off the table.",
+      "accepted": "Stay safe, Officer.",
+      "rejected": "Come back when you get a chance, Officer.  We need to get in touch with the rest of the region.",
+      "advice": "You can find the Radio Stations in towns or urban centers.  I still have no repeater mod available Officer.  However you can craft one yourself, if you find the manual.  Try libraries or bookstores if you still don't have one.",
+      "inquire": "Have you set up a repeater yet, Officer?",
+      "success": "Good work, Officer.  Here's some supplies for your next venture.  Come back to me if you are willing to install more.",
       "success_lie": "Huh, that's weird, the boys at comms say that they didn't really see an improvement.  Well, if you want to try again, come to me.  Maybe this time it'll work.",
       "failure": "Oh well, you can try again anytime."
     },
@@ -485,7 +485,7 @@
   {
     "id": "TALK_OLD_GUARD_REP_SUNKEN_HELICOPTER_PROOF",
     "type": "talk_topic",
-    "dynamic_line": "&He crosses his arms.  \"Fine.  Go talk to the guards, that crash was all the talk among them for a while.  Look, I'm not trying to do you over, I wouldn't risk my reputation and my job for a handful of cash, feel free to tell everyone in the center that I'm a liar sending people to their death for a quick buck if you find out that I lied.\"",
+    "dynamic_line": "&He crosses his arms.  \"Fine.  Go talk to the guards, that crash was all the talk among them for a while.  Look, I'm not trying to do you over, I wouldn't risk my reputation and my job for a handful of cash, feel free to tell everyone in the camp that I'm a liar sending people to their death for a quick buck if you find out that I lied.\"",
     "responses": [ { "text": "I see…", "topic": "TALK_NONE" } ]
   },
   {

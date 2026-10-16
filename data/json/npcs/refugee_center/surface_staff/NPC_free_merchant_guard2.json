@@ -13,7 +13,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_EVAC_GUARD2",
-    "dynamic_line": { "u_is_wearing": "badge_marshal", "yes": "Hello marshal.", "no": "Hello." },
+    "dynamic_line": { "u_is_wearing": "badge_marshal", "yes": "Hello officer.", "no": "Hello." },
     "responses": [
       { "text": "I am actually new.", "topic": "TALK_EVAC_GUARD2_NEW" },
       { "text": "Are there any rules I should follow while inside?", "topic": "TALK_EVAC_GUARD2_RULES" },

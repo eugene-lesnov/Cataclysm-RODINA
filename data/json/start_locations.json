@@ -8,7 +8,7 @@
   {
     "type": "start_location",
     "id": "sloc_shelter_a",
-    "name": "Shelter - Open Floorplan",
+    "name": "Emergency shelter - Open Floorplan",
     "terrain": [ "shelter" ]
   },
   {
@@ -30,13 +30,13 @@
   {
     "type": "start_location",
     "id": "sloc_shelter_b",
-    "name": "Shelter - Compartmentalized",
+    "name": "Emergency shelter - Compartmentalized",
     "terrain": [ "shelter_1", "shelter_1b" ]
   },
   {
     "type": "start_location",
     "id": "sloc_shelter_c",
-    "name": "Shelter - Central Pillar",
+    "name": "Emergency shelter - Central Pillar",
     "terrain": [ "shelter_2" ]
   },
   {
@@ -78,7 +78,7 @@
   {
     "type": "start_location",
     "id": "sloc_refugee_center",
-    "name": "Refugee Center",
+    "name": "Emergency Service Camp",
     "terrain": [ "evac_center_18" ],
     "flags": [ "ALLOW_OUTSIDE" ]
   },

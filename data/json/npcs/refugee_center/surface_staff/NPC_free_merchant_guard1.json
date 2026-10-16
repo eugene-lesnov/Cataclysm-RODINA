@@ -14,7 +14,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_EVAC_GUARD1",
-    "dynamic_line": { "u_is_wearing": "badge_marshal", "yes": "Hello marshal.", "no": "Hello there." },
+    "dynamic_line": { "u_is_wearing": "badge_marshal", "yes": "Hello officer.", "no": "Hello there." },
     "responses": [
       { "text": "What is this place?", "topic": "TALK_EVAC_GUARD1_PLACE" },
       { "text": "Can I join you guys?", "topic": "TALK_EVAC_GUARD1_JOIN" },
@@ -25,7 +25,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_EVAC_GUARD1_PLACE",
-    "dynamic_line": "This is a refugee center that we've made into a sort of trading hub.",
+    "dynamic_line": "This was a district Emergency Service evacuation camp.  The rescuers held it together after the Cataclysm, and our supply cooperative now handles trade here.",
     "responses": [
       { "text": "So are you with the government or something?", "topic": "TALK_EVAC_GUARD1_GOVERNMENT" },
       { "text": "What do you trade?", "topic": "TALK_EVAC_GUARD1_TRADE" }
@@ -34,7 +34,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_EVAC_GUARD1_GOVERNMENT",
-    "dynamic_line": "Ha ha ha, no.  Though there is Old Guard somewhere around here if you have any questions relating to what the government is up to.",
+    "dynamic_line": "Not anymore.  The service lost contact with headquarters.  The Old Guard liaison may know what remains of the republic's authorities.",
     "responses": [
       { "text": "Oh, okay.", "topic": "TALK_EVAC_GUARD1" },
       { "text": "Oh, okay.  I'll go look for him", "topic": "TALK_DONE" }
@@ -95,7 +95,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_EVAC_GUARD1_OLDGUARD",
-    "dynamic_line": "That's just our nickname for them.  They're what's left of the federal government.  Don't know how legitimate they are but they are named after some military unit that once protected the president.  Their liaison is usually hanging around here somewhere.",
+    "dynamic_line": "That's our nickname for the remaining officials and soldiers trying to restore order.  I don't know how much authority they still have.  Their liaison is usually somewhere in the camp.",
     "responses": [
       { "text": "Whatever, I had another question.", "topic": "TALK_EVAC_GUARD1" },
       { "text": "Okay, I'll go look for him then.", "topic": "TALK_DONE" }
@@ -111,7 +111,7 @@
     "id": "MISSION_EVAC_SMOKER_GET_CIGARETTES",
     "type": "mission_definition",
     "name": { "str": "Smokes, let's go." },
-    "description": "Make a friend at the refugee center by handing over around five packs - 100 cigarettes.",
+    "description": "Make a friend among the camp guards by handing over around five packs - 100 cigarettes.",
     "goal": "MGOAL_FIND_ITEM",
     "difficulty": 2,
     "value": 800,

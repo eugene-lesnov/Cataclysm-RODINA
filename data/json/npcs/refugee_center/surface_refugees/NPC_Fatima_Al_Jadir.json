@@ -145,7 +145,7 @@
   {
     "type": "talk_topic",
     "id": "TALK_REFUGEE_Fatima_Background",
-    "dynamic_line": "Before <the_cataclysm> I had just finished welding school actually, and was about to start looking for a job.  That was fun, being a young Muslim woman in a Massachusetts trade college, let me tell you.",
+    "dynamic_line": "Before <the_cataclysm> I had just finished welding school in the regional college and was about to start looking for a job.  Being a young Muslim woman in a welding workshop got me plenty of looks, let me tell you.",
     "responses": [
       {
         "text": "Welding seems like a pretty non-traditional occupational choice; is there a story there?",
