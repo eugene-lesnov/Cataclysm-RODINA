@@ -1,7 +1,7 @@
 [
   {
     "type": "mapgen",
-    "om_terrain": "rodina_homestead",
+    "om_terrain": [ "rodina_homestead", "house_w_1" ],
     "object": {
       "fill_ter": "t_region_groundcover_urban",
       "rows": [
@@ -40,7 +40,7 @@
   },
   {
     "type": "mapgen",
-    "om_terrain": "rodina_homestead",
+    "om_terrain": [ "rodina_homestead", "house_w_1" ],
     "object": {
       "fill_ter": "t_region_groundcover_urban",
       "rows": [
@@ -79,7 +79,7 @@
   },
   {
     "type": "mapgen",
-    "om_terrain": "rodina_homestead_roof",
+    "om_terrain": [ "rodina_homestead_roof", "house_w_1_roof", "house_garage_roof" ],
     "object": {
       "fill_ter": "t_open_air",
       "rows": [
@@ -114,7 +114,7 @@
   },
   {
     "type": "mapgen",
-    "om_terrain": "rodina_homestead_cellar",
+    "om_terrain": [ "rodina_homestead_cellar", "house_w_1_basement", "house_garage_basement" ],
     "object": {
       "fill_ter": "t_region_groundcover_urban",
       "rows": [

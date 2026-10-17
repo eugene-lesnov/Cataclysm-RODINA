@@ -82,7 +82,6 @@
         "I": "f_flagpole"
       },
       "place_vehicles": [ { "vehicle": "pickup", "x": 3, "y": 19, "rotation": 270, "chance": 40 } ],
-      "item": { "I": { "item": "american_flag" } },
       "items": {
         "R": { "item": "mechanics", "chance": 70, "repeat": [ 1, 5 ] },
         "T": { "item": "SUS_toilet", "chance": 50 },

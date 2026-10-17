@@ -104,7 +104,6 @@
         { "chance": 10, "item": "guns_pistol_common", "x": 2, "y": 9 },
         { "chance": 25, "item": "SUS_office_desk", "x": [ 3, 4 ], "y": 4 }
       ],
-      "place_item": [ { "chance": 100, "item": "american_flag", "x": 7, "y": 2 } ],
       "items": {
         "w": { "item": "casings", "chance": 60, "repeat": 7 },
         "a": { "item": "casings", "chance": 50, "repeat": 5 },
@@ -113,20 +112,20 @@
         "d": { "item": "ear_protection", "chance": 80 }
       },
       "place_signs": [
-        { "signage": "<family_name> Family Shooting Range", "x": 10, "y": 4 },
+        { "signage": "Sports shooting range", "x": 10, "y": 4 },
         { "signage": "Open sunrise to sunset, everyday besides Sundays", "x": 13, "y": 4 },
-        { "signage": "5 YARDS", "x": 1, "y": 14 },
-        { "signage": "5 YARDS", "x": 22, "y": 14 },
-        { "signage": "10 YARDS", "x": 1, "y": 19 },
-        { "signage": "10 YARDS", "x": 22, "y": 19 },
-        { "signage": "15 YARDS", "x": 1, "y": 24 },
-        { "signage": "15 YARDS", "x": 22, "y": 24 },
-        { "signage": "20 YARDS", "x": 1, "y": 29 },
-        { "signage": "20 YARDS", "x": 22, "y": 29 },
-        { "signage": "25 YARDS", "x": 1, "y": 34 },
-        { "signage": "25 YARDS", "x": 22, "y": 34 },
-        { "signage": "30 YARDS", "x": 1, "y": 39 },
-        { "signage": "30 YARDS", "x": 22, "y": 39 }
+        { "signage": "5 METERS", "x": 1, "y": 14 },
+        { "signage": "5 METERS", "x": 22, "y": 14 },
+        { "signage": "10 METERS", "x": 1, "y": 19 },
+        { "signage": "10 METERS", "x": 22, "y": 19 },
+        { "signage": "15 METERS", "x": 1, "y": 24 },
+        { "signage": "15 METERS", "x": 22, "y": 24 },
+        { "signage": "20 METERS", "x": 1, "y": 29 },
+        { "signage": "20 METERS", "x": 22, "y": 29 },
+        { "signage": "25 METERS", "x": 1, "y": 34 },
+        { "signage": "25 METERS", "x": 22, "y": 34 },
+        { "signage": "30 METERS", "x": 1, "y": 39 },
+        { "signage": "30 METERS", "x": 22, "y": 39 }
       ]
     }
   },

@@ -1,0 +1,37 @@
+[
+  {
+    "type": "item_group",
+    "id": "rodina_school_supplies",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "paper", "prob": 35, "charges": [ 1, 5 ] },
+      { "item": "pencil", "prob": 25 },
+      { "item": "pen", "prob": 20 },
+      { "item": "ruler", "prob": 10 },
+      { "item": "eraser", "prob": 10 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "rodina_school_books",
+    "subtype": "distribution",
+    "entries": [
+      { "group": "kids_books", "prob": 60 },
+      { "item": "manual_first_aid", "prob": 25 },
+      { "item": "textbook_chemistry", "variant": "textbook_chemistry", "prob": 10 },
+      { "item": "textbook_electronics", "prob": 5 }
+    ]
+  },
+  {
+    "type": "item_group",
+    "id": "rodina_school_sports",
+    "subtype": "distribution",
+    "entries": [
+      { "item": "basketball", "prob": 25 },
+      { "item": "indoor_volleyball", "prob": 25 },
+      { "item": "shuttlecock", "prob": 15 },
+      { "item": "hockey_stick", "prob": 10 },
+      { "item": "towel", "prob": 25 }
+    ]
+  }
+]

@@ -378,7 +378,6 @@
         "m": "t_ramp_up_low"
       },
       "furniture": { "6": "f_console", ":": "f_server", "f": "f_filing_cabinet", "A": "f_indoor_flagpole" },
-      "item": { "A": { "item": "american_flag" } },
       "items": { "f": { "item": "SUS_office_filing_cabinet", "chance": 100, "repeat": [ 10, 30 ] } },
       "monster": { "T": { "monster": "mon_robofac_laserturret_mk1" } },
       "npcs": { "G": { "class": "hub_security" }, "Q": { "class": "hub_security_head" } }
@@ -464,7 +463,6 @@
         "f": "f_filing_cabinet",
         "A": "f_indoor_flagpole"
       },
-      "item": { "A": { "item": "american_flag" } },
       "items": {
         "F": { "item": "SUS_fridge", "chance": 80 },
         "f": { "item": "SUS_office_filing_cabinet", "chance": 100, "repeat": [ 1, 3 ] },

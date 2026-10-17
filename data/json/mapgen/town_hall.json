@@ -76,11 +76,7 @@
       "I": { "item": "SUS_office_filing_cabinet", "chance": 80 },
       "T": { "item": "SUS_toilet", "chance": 50 }
     },
-    "item": {
-      "]": { "item": "american_flag" },
-      "[": { "item": "american_flag" },
-      "I": [ { "item": "subwaymap", "chance": 2 }, { "item": "sewermap", "chance": 2 } ]
-    },
+    "item": { "I": [ { "item": "subwaymap", "chance": 2 }, { "item": "sewermap", "chance": 2 } ] },
     "vendingmachines": { "4": { "item_group": "vending_drink", "lootable": true }, "5": { "item_group": "vending_food", "lootable": true } },
     "monster": { " ": { "group": "GROUP_CIVILIAN", "chance": 1 } }
   },

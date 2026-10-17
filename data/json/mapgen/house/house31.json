@@ -43,7 +43,8 @@
         "U": "t_thconc_floor",
         "q": "t_thconc_floor",
         "N": "t_thconc_floor",
-        "~": "t_thconc_floor"
+        "~": "t_thconc_floor",
+        "#": "t_brick_wall"
       },
       "place_nested": [ { "chunks": [ "rolling_trash_can_1x1" ], "x": 11, "y": 1 } ]
     }

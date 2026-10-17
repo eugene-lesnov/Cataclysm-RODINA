@@ -81,7 +81,6 @@
           { "item": "fireman_head", "chance": 70 }
         ]
       },
-      "item": { "/": { "item": "american_flag" } },
       "place_monster": [ { "group": "GROUP_FIRE", "x": [ 2, 21 ], "y": [ 9, 21 ], "repeat": [ 2, 6 ] } ],
       "place_vehicles": [
         { "vehicle": "fire_engine", "x": 10, "y": [ 11, 14 ], "chance": 20, "rotation": 270 },
@@ -239,7 +238,6 @@
         { "item": "snacks", "x": 8, "y": 17, "chance": 70 },
         { "item": "kitchen", "x": [ 8, 9 ], "y": 21, "chance": 70 }
       ],
-      "item": { "/": { "item": "american_flag" } },
       "place_monster": [ { "group": "GROUP_FIRE", "x": 10, "y": 16, "repeat": [ 2, 6 ] } ],
       "place_vehicles": [
         { "vehicle": "fire_truck", "x": 5, "y": 5, "rotation": 270, "chance": 20 },

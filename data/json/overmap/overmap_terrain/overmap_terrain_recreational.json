@@ -491,7 +491,7 @@
     ],
     "copy-from": "generic_city_building",
     "vision_levels": "blends_till_details",
-    "name": "football field",
+    "name": "soccer field",
     "sym": "O",
     "color": "light_green",
     "see_cost": "none"

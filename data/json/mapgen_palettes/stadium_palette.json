@@ -147,7 +147,7 @@
       ],
       "T": { "item": "SUS_toilet", "chance": 50 }
     },
-    "item": { "T": { "item": "toilet_paper", "chance": 33 }, "/": { "item": "american_flag", "chance": 100 } },
+    "item": { "T": { "item": "toilet_paper", "chance": 33 } },
     "toilets": { "T": {  } },
     "vehicles": {
       "1": { "vehicle": "food_cart", "chance": 33, "rotation": [ 0, 90, 180, 270 ] },

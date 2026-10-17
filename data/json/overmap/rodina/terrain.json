@@ -353,5 +353,120 @@
     "see_cost": "none",
     "mondensity": 2,
     "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": [ "rodina_brick_ground", "rodina_brick_middle", "rodina_brick_top" ],
+    "name": "brick apartment block",
+    "sym": "A",
+    "color": "brown",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_brick_cellar",
+    "name": "brick apartment block basement",
+    "sym": "A",
+    "color": "brown",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_brick_roof",
+    "name": "brick apartment block roof",
+    "sym": "A",
+    "color": "brown",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_play_courtyard",
+    "name": "residential courtyard and playground",
+    "sym": ".",
+    "color": "green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": [ "rodina_school_ground", "rodina_school_upper" ],
+    "name": "neighborhood school",
+    "sym": "S",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_school_roof",
+    "name": "neighborhood school roof",
+    "sym": "S",
+    "color": "light_blue",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_school_gym_canteen",
+    "name": "school gym and canteen",
+    "sym": "S",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_school_gym_canteen_roof",
+    "name": "school gym and canteen roof",
+    "sym": "S",
+    "color": "light_blue",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_school_yard",
+    "name": "school courtyard",
+    "sym": ".",
+    "color": "green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_school_sports_ground",
+    "name": "school sports ground",
+    "sym": ".",
+    "color": "green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_kindergarten_yard",
+    "name": "kindergarten playground",
+    "sym": ".",
+    "color": "green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
   }
 ]

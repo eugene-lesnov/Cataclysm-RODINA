@@ -74,7 +74,7 @@
       "vehicles": { "Á": { "vehicle": "parking_garage", "chance": 33, "rotation": 90 } },
       "toilets": { "T": {  } },
       "vendingmachines": { "v": { "item_group": "vending_drink_items", "lootable": true } },
-      "item": { "W": { "item": "greeting_card", "repeat": [ 10, 30 ] }, "/": { "item": "american_flag", "chance": 100 } },
+      "item": { "W": { "item": "greeting_card", "repeat": [ 10, 30 ] } },
       "items": {
         "X": [ { "item": "antique", "chance": 50 }, { "item": "art", "chance": 50 }, { "item": "jewelry_safe", "chance": 10 } ],
         "{": [ { "item": "clothing_outdoor_torso", "chance": 50 }, { "item": "bags", "chance": 50 } ],
@@ -220,7 +220,7 @@
         "5": "f_bench",
         "/": "f_flagpole"
       },
-      "item": { "e": { "item": "greeting_card", "repeat": [ 10, 30 ] }, "/": { "item": "american_flag" } },
+      "item": { "e": { "item": "greeting_card", "repeat": [ 10, 30 ] } },
       "items": {
         "l": [ { "item": "clothing_outdoor_torso", "chance": 50 }, { "item": "bags", "chance": 50 } ],
         "X": [ { "item": "antique", "chance": 50 }, { "item": "art", "chance": 50 }, { "item": "jewelry_safe", "chance": 10 } ],
