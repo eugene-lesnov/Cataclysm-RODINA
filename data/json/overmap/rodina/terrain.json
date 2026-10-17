@@ -1,0 +1,357 @@
+[
+  {
+    "type": "overmap_terrain",
+    "id": [ "rodina_panel_ground", "rodina_panel_even", "rodina_panel_odd", "rodina_panel_top" ],
+    "name": "panel apartment block",
+    "sym": "A",
+    "color": "light_green",
+    "vision_levels": "large_city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_panel_cellar",
+    "name": "apartment block basement",
+    "sym": "A",
+    "color": "light_green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_panel_roof",
+    "name": "apartment block roof",
+    "sym": "A",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_courtyard_shop",
+    "name": "residential courtyard with a shop",
+    "sym": ".",
+    "color": "green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_courtyard_shop_roof",
+    "name": "courtyard shop roof",
+    "sym": ".",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_garage_cooperative",
+    "name": "garage cooperative",
+    "sym": "O",
+    "color": "light_gray",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_garage_cooperative_roof",
+    "name": "garage cooperative roofs",
+    "sym": "O",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_town_square",
+    "name": "town square and bus stop",
+    "sym": ".",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_town_square_roof",
+    "name": "town square and bus stop roof",
+    "sym": ".",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_local_administration",
+    "name": "local administration and post office",
+    "sym": "G",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_local_administration_roof",
+    "name": "local administration and post office roof",
+    "sym": "G",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_market_pharmacy",
+    "name": "market shops and pharmacy",
+    "sym": "s",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_market_pharmacy_roof",
+    "name": "market shops and pharmacy roof",
+    "sym": "s",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_outpatient_clinic",
+    "name": "outpatient clinic",
+    "sym": "H",
+    "color": "light_blue",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_outpatient_clinic_roof",
+    "name": "outpatient clinic roof",
+    "sym": "H",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_repair_workshop",
+    "name": "repair workshop",
+    "sym": "O",
+    "color": "light_gray",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_repair_workshop_roof",
+    "name": "repair workshop roof",
+    "sym": "O",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_service_warehouse",
+    "name": "maintenance depot warehouse",
+    "sym": "w",
+    "color": "light_gray",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_service_warehouse_roof",
+    "name": "maintenance depot warehouse roof",
+    "sym": "w",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_boiler_house",
+    "name": "boiler house",
+    "sym": "F",
+    "color": "light_gray",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_boiler_house_roof",
+    "name": "boiler house roof",
+    "sym": "F",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_workers_dorm",
+    "name": "workers' dormitory",
+    "sym": "A",
+    "color": "light_gray",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_workers_dorm_roof",
+    "name": "workers' dormitory roof",
+    "sym": "A",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_workers_dorm_upper",
+    "name": "workers' dormitory upper floor",
+    "sym": "A",
+    "color": "light_green",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_homestead",
+    "name": "house with a vegetable garden",
+    "sym": "^",
+    "color": "brown",
+    "vision_levels": "isolated_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_homestead_roof",
+    "name": "house with a vegetable garden roof",
+    "sym": "^",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_village_services",
+    "name": "village shop and medical aid post",
+    "sym": "^",
+    "color": "brown",
+    "vision_levels": "isolated_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_village_services_roof",
+    "name": "village shop and medical aid post roof",
+    "sym": "^",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_farmyard",
+    "name": "cooperative farmyard",
+    "sym": "^",
+    "color": "brown",
+    "vision_levels": "isolated_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_farmyard_roof",
+    "name": "cooperative farmyard roof",
+    "sym": "^",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_dacha",
+    "name": "dacha plot",
+    "sym": "^",
+    "color": "brown",
+    "vision_levels": "isolated_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_dacha_roof",
+    "name": "dacha plot roof",
+    "sym": "^",
+    "color": "light_green",
+    "vision_levels": "roof_or_air",
+    "see_cost": "none"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_homestead_cellar",
+    "name": "household root cellar",
+    "sym": "^",
+    "color": "brown",
+    "vision_levels": "city_building",
+    "see_cost": "high",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_vegetable_plots",
+    "name": "cooperative vegetable plots",
+    "sym": ".",
+    "color": "brown",
+    "vision_levels": "always_full",
+    "see_cost": "none",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "rodina_garden_lane_end",
+    "name": "garden association turning area",
+    "sym": ".",
+    "color": "brown",
+    "vision_levels": "always_full",
+    "see_cost": "none",
+    "mondensity": 2,
+    "flags": [ "GENERIC_LOOT", "PP_GENERATE_RIOT_DAMAGE" ]
+  }
+]

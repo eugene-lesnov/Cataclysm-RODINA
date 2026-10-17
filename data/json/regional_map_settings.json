@@ -818,6 +818,9 @@
       "park_radius": 20,
       "park_sigma": 80,
       "houses": {
+        "rodina_residential_courtyard": 600,
+        "rodina_residential_courtyard_side": 600,
+        "rodina_homestead": 800,
         "2storyModern01": 5,
         "2storyModern02": 50,
         "2StoryModern03": 50,
@@ -1051,6 +1054,7 @@
         "cs_open_sewer": 33
       },
       "shops": {
+        "rodina_civic_center": 2500,
         "deserter_city": 100,
         "bus_station": 200,
         "city_block_2": 300,

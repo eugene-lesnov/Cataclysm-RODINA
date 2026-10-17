@@ -1,0 +1,498 @@
+[
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_homestead",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "ffffffffggg~ffffffffffff",
+        "f       ~~~~    ~      f",
+        "f       ~~~~    ~      f",
+        "f       ~~~~    ~      f",
+        "f |||w|||+||||| ~ |||||f",
+        "f |b....|.O..>| ~ |.W.|f",
+        "f |b..d.|...FS| ~ |...|f",
+        "f w.....|.tc..w ~ |...|f",
+        "f |.....+....v| ~ +...|f",
+        "f |.....|||+||| ~ |..R|f",
+        "f |.h...|T...S| ~ |||||f",
+        "f w...R.|.....| ~      f",
+        "f |....u|.....| ~      f",
+        "f |||w|||||+||| ~      f",
+        "f               ~      f",
+        "f~~~~~~~~~~~~~~~~~~P~~~f",
+        "f~~~~~~~~~~~~~~~~~~~~~~f",
+        "f               ~      f",
+        "f z z z z z z   ~      f",
+        "f z z z z z z   ~   n  f",
+        "f z z z z z z   ~      f",
+        "f z z z z z z   ~      f",
+        "f               ~      f",
+        "ffffffffffffffffffffffff"
+      ],
+      "palettes": [ "rodina_home" ],
+      "place_items": [
+        { "item": "farming_tools", "x": 20, "y": 5, "chance": 50 },
+        { "item": "farming_seeds", "x": 21, "y": 9, "chance": 50 }
+      ],
+      "place_monster": [ { "group": "GROUP_VANILLA", "x": [ 4, 7 ], "y": [ 8, 11 ], "chance": 50 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_homestead",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "ffffffffggg~ffffffffffff",
+        "f       ~~~~    ~      f",
+        "f       ~~~~    ~      f",
+        "f       ~~~~    ~      f",
+        "f |||w|||+||||| ~ |||||f",
+        "f |b....|.O..>| ~ |.W.|f",
+        "f |b..d.|...FS| ~ |...|f",
+        "f w.....|.tc..w ~ |...|f",
+        "f |.....+....v| ~ +...|f",
+        "f |.....|||+||| ~ |..R|f",
+        "f |.h...|T...S| ~ |||||f",
+        "f w...e.|.....| ~      f",
+        "f |....u|.....| ~      f",
+        "f |||w|||||+||| ~      f",
+        "f               ~      f",
+        "f~~~~~~~~~~~~~~~~~~P~~~f",
+        "f~~~~~~~~~~~~~~~~~~~~~~f",
+        "f               ~      f",
+        "f z z z z z z   ~      f",
+        "f z z z z z z   ~   n  f",
+        "f z z z z z z   ~      f",
+        "f z z z z z z   ~      f",
+        "f               ~      f",
+        "ffffffffffffffffffffffff"
+      ],
+      "palettes": [ "rodina_home" ],
+      "place_items": [
+        { "item": "farming_tools", "x": 20, "y": 5, "chance": 50 },
+        { "item": "farming_seeds", "x": 21, "y": 9, "chance": 50 }
+      ],
+      "place_monster": [ { "group": "GROUP_VANILLA", "x": [ 4, 7 ], "y": [ 8, 11 ], "chance": 50 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_homestead_roof",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "  -------------   ----- ",
+        "  -...........-   -...- ",
+        "  -...........-   -...- ",
+        "  -...........-   -...- ",
+        "  -...........-   -...- ",
+        "  -...........-   -...- ",
+        "  -...........-   ----- ",
+        "  -...........-         ",
+        "  -...........-         ",
+        "  -------------         ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "palettes": [ "roof_palette" ],
+      "terrain": { ".": "t_shingle_flat_roof", "H": "t_concrete_wall" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_homestead_cellar",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXX#######XXXXXXXXX",
+        "XXXXXXXX#....<#XXXXXXXXX",
+        "XXXXXXXX#.....#XXXXXXXXX",
+        "XXXXXXXX#R....#XXXXXXXXX",
+        "XXXXXXXX#R....#XXXXXXXXX",
+        "XXXXXXXX#R....#XXXXXXXXX",
+        "XXXXXXXX#R....#XXXXXXXXX",
+        "XXXXXXXX#R..C.#XXXXXXXXX",
+        "XXXXXXXX#.....#XXXXXXXXX",
+        "XXXXXXXX#######XXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX",
+        "XXXXXXXXXXXXXXXXXXXXXXXX"
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "terrain": { "X": "t_rock" },
+      "place_items": [
+        { "item": "cannedfood", "x": 9, "y": [ 7, 11 ], "chance": 55, "repeat": [ 1, 2 ] },
+        { "item": "farming_seeds", "x": 12, "y": 11, "chance": 40 }
+      ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_village_services",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "ssssssssssssssssssssssss",
+        "ssssssssssssssssssssssss",
+        "ss                    ss",
+        "ss                    ss",
+        "ss|w||+||w|||w||+||w||ss",
+        "ss|F.......|.........|ss",
+        "ss|......t.|........S|ss",
+        "ss|........|.b.......|ss",
+        "ss|..R..R..|.b.......|ss",
+        "ss|........|.........|ss",
+        "ss|........|.......R.|ss",
+        "ss|........|.........|ss",
+        "ss|........|.........|ss",
+        "ss|||||+||||.........|ss",
+        "ss|........|.........|ss",
+        "ss|........|....ec...|ss",
+        "ss|.C...ec.|.........|ss",
+        "ss|p.......|........T|ss",
+        "ss|........|.........|ss",
+        "ss||||+|||||||||+|||||ss",
+        "ss                    ss",
+        "ss                    ss",
+        "ssssssssssssssssssssssss",
+        "ssssssssssssssssssssssss"
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "place_signs": [
+        { "signage": "VILLAGE SHOP\nPOST OFFICE", "x": 5, "y": 3 },
+        { "signage": "MEDICAL AID POST\nEmergency number: 112.", "x": 15, "y": 3 }
+      ],
+      "place_items": [
+        { "item": "cannedfood", "x": 5, "y": 8, "chance": 60 },
+        { "item": "tools_home", "x": 8, "y": 8, "chance": 45 },
+        { "item": "SUS_fridge", "x": 3, "y": 5, "chance": 55 },
+        { "item": "softdrugs", "x": 19, "y": 10, "chance": 55 },
+        { "item": "hospital_medical_items", "x": 16, "y": 15, "chance": 35 }
+      ],
+      "place_monster": [ { "group": "GROUP_VANILLA", "x": [ 4, 9 ], "y": [ 9, 12 ], "chance": 60 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_village_services_roof",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "  --------------------  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  -..................-  ",
+        "  --------------------  ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "palettes": [ "roof_palette" ],
+      "terrain": { ".": "t_flat_roof", "H": "t_concrete_wall" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_farmyard",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "         ~~~~~~         ",
+        "         ~~~~~~         ",
+        "         ~~~~~~         ",
+        "         ~~~~~~ ||||||| ",
+        " ||||||||~~~~~~ |.....| ",
+        " |WR.R..|~~~~~~ |.CCC.| ",
+        " |......|~~~~~~ |.CCC.| ",
+        " |......|~~~~~~ |.CCC.| ",
+        " |......|~~~~~~ |.....| ",
+        " |......|~~~~~~ |.....| ",
+        " |......G~~~~~~ G.....| ",
+        " |......G~~~~~~ G...R.| ",
+        " |......G~~~~~~ G.....| ",
+        " |......|~~~~~~ |.....| ",
+        " ||||||||~~~~~~ ||||||| ",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~P~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "         ~~~~~~         ",
+        "         ~~~~~~         ",
+        "         ~~~~~~         "
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "place_signs": [ { "signage": "AGRICULTURAL COOPERATIVE\nWORKSHOP AND STOREHOUSE", "x": 7, "y": 2 } ],
+      "place_items": [
+        { "item": "farming_tools", "x": 2, "y": 5, "chance": 65 },
+        { "item": "hardware", "x": 3, "y": 5, "chance": 50 },
+        { "item": "mechanics", "x": 5, "y": 5, "chance": 45 },
+        { "item": "farm_supply_animal_feed", "x": [ 18, 20 ], "y": [ 5, 7 ], "chance": 60, "repeat": [ 1, 2 ] },
+        { "item": "farming_seeds", "x": 20, "y": 11, "chance": 60 }
+      ],
+      "place_monster": [ { "group": "GROUP_VANILLA", "x": [ 9, 14 ], "y": [ 9, 17 ], "chance": 60, "repeat": [ 1, 2 ] } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_farmyard_roof",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        "                        ",
+        "                        ",
+        "                        ",
+        "                ------- ",
+        " --------       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " -......-       -.....- ",
+        " --------       ------- ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "palettes": [ "roof_palette" ],
+      "terrain": { ".": "t_flat_roof", "H": "t_concrete_wall" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_vegetable_plots",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "          ~~~~          ",
+        "          ~~~~          ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "          ~~~~          ",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "          ~~~~          ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "          ~~~~          ",
+        "          ~~~~          "
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "terrain": { "Y": "t_region_tree_fruit" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_vegetable_plots",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "          ~~~~          ",
+        "          ~~~~          ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "  z z z z ~~~~ z z z z  ",
+        "          ~~~~          ",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "          ~~~~          ",
+        "          ~~~~ z z z z  ",
+        "   Y   Y  ~~~~ z z z z  ",
+        "          ~~~~ z z z z  ",
+        "          ~~~~ z z z z  ",
+        "          ~~~~ z z z z  ",
+        "   Y   Y  ~~~~ z z z z  ",
+        "          ~~~~ z z z z  ",
+        "          ~~~~          ",
+        "          ~~~~          "
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "terrain": { "Y": "t_region_tree_fruit" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_dacha",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "ffffffffffggg~ffffffffff",
+        "f         ~~~~  ~      f",
+        "f         ~~~~  ~      f",
+        "f         ~~~~  ~      f",
+        "f   |||||||+||| ~      f",
+        "f   |b.d.....F| ~   n  f",
+        "f   |b........| ~      f",
+        "f   |........v| ~      f",
+        "f   w.........w ~      f",
+        "f   |...tc....| ~      f",
+        "f   |R........| ~      f",
+        "f   |.........| ~      f",
+        "f   |||||||+||| ~      f",
+        "f         ~~~~  ~      f",
+        "f         ~~~~  ~      f",
+        "f         ~~~~  ~      f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f  z z z  ~~~~  ~ z z  f",
+        "f         ~~~~  ~      f",
+        "ffffffffffffffffffffffff"
+      ],
+      "palettes": [ "rodina_home" ],
+      "place_items": [
+        { "item": "farming_tools", "x": 5, "y": 10, "chance": 35 },
+        { "item": "farming_seeds", "x": 7, "y": 5, "chance": 40 }
+      ],
+      "place_monster": [ { "group": "GROUP_VANILLA", "x": [ 10, 13 ], "y": [ 8, 10 ], "chance": 35 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_dacha_roof",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "    -----------         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -.........-         ",
+        "    -----------         ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "palettes": [ "roof_palette" ],
+      "terrain": { ".": "t_shingle_flat_roof", "H": "t_concrete_wall" }
+    }
+  },
+  {
+    "type": "mapgen",
+    "om_terrain": "rodina_garden_lane_end",
+    "object": {
+      "fill_ter": "t_region_groundcover_urban",
+      "rows": [
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "        ~~~~~~~~        ",
+        "  ~~~~~~~~~~~~~~~~~~~~  ",
+        "  ~~~~~~~~~~~~~~~~~~~~  ",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "~~~~~~~~~~~~~~~~~~~~~~~~",
+        "  ~~~~~~~~~~~~~~~~~~~~  ",
+        "  ~~~~~~~~~~~~~~~~~~~~  ",
+        "  ~~~~~~~~~~~~~~~~~~~~  ",
+        "                        ",
+        "                        ",
+        "     P           a  j   ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "palettes": [ "rodina_settlement" ],
+      "place_signs": [
+        {
+          "signage": "GARDEN ASSOCIATION\nShared water pump by the turning area.\nKeep access to the plots clear.",
+          "x": 7,
+          "y": 18
+        }
+      ]
+    }
+  }
+]
